@@ -10,9 +10,22 @@ function generateCode() {
 }
 
 function App() {
+  const [roomGenerated, updateRoomGenerated] = useState(false);
   const [status, updateStatus] = useState("Loaded");
+  const [name, updateName] = useState("None Entered");
   const [code, updateCode] = useState(generateCode());
   const [inputCode, _updateInputCode] = useState(generateCode());
+
+  const checkRoomStatus = (e) => {
+    if (roomGenerated == false)
+    {
+      console.log("Room Is Not Generated!");
+    }
+    else
+    {
+      console.log("Room Exists");
+    }
+  }
 
   const updateInputCode = (e) => {
     _updateInputCode(e.target.value);
@@ -23,8 +36,26 @@ function App() {
     console.log("Submitted: ", inputCode)
   }
 
+  const updateRoomCode = (e) => {
+    updateCode(generateCode);
+    updateRoomGenerated(true);
+  }
+
+  const updateUserName = (e) => {
+    updateName(e.target.value);
+  }
+
   return (
     <div className="App">
+      <div className="App-Form">
+          <input placeholder="Enter Display Name" onChange={updateUserName} /> <br />
+          <button onClick={updateRoomCode}>Generate Room</button>
+          <p>
+            Code: {code} <br />
+            Is A Room Generated? {roomGenerated.toString()}
+          </p>
+
+      </div>
       <p>
         {status}
       </p>
