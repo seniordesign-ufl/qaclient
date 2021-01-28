@@ -8,14 +8,15 @@ const mysql = require("mysql");
 const fs = require('fs');
 const connection = mysql.createConnection({
       host : '35.196.27.6',
+      user : 'root',
+      password : 'Pbeq0hcDejpO12cN',
+      database : 'smol_talk',
+      port: '3307',
       ssl: {
         ca: fs.readFileSync('server/server-ca.pem'),
         key: fs.readFileSync('server/client-key.pem'),
         cert: fs.readFileSync('server/client-cert.pem'),
       },
-      user : 'smoll-talk',
-      password : 'Pbeq0hcDejpO12cN',
-      database : 'smol_talk',
 });
 
 connection.connect();
