@@ -6,10 +6,7 @@ const PORT = process.env.PORT || 5000;
 
 const mysql = require("mysql");
 const fs = require('fs');
-const knex = require('knex')({
-    client: 'mysql',
-    version: '5.7',
-    connection: {
+const connection = mysql.createConnection({
       host : '35.196.27.6',
       ssl: {
         ca: fs.readFileSync('server/server-ca.pem'),
@@ -19,8 +16,9 @@ const knex = require('knex')({
       user : 'smoll-talk',
       password : 'Pbeq0hcDejpO12cN',
       database : 'smol_talk',
-    },
 });
+
+connection.connect();
 
 const app = express();
 
@@ -30,8 +28,10 @@ app.use(express.static(path.resolve(__dirname, '../react/build')));
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, '../react/build', 'index.html'));
-    knex('users')
-    .insert({name: 'john', groupID: '1'})
+    connection.query('INSERT INTO users (name, groupID) VALUES (John, test)', function (error, results, fields) {
+        if (error) throw error;
+        console.log("Added to database");
+    });
 });
 
 app.listen(PORT, function () {
