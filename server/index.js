@@ -12,9 +12,9 @@ const knex = require('knex')({
     connection: {
       host : '35.196.27.6',
       ssl: {
-        ca: fs.readFileSync('./server-ca.pem'),
-        key: fs.readFileSync('./client-key.pem'),
-        cert: fs.readFileSync('./client-cert.pem'),
+        ca: fs.readFileSync('server/server-ca.pem'),
+        key: fs.readFileSync('server/client-key.pem'),
+        cert: fs.readFileSync('server/client-cert.pem'),
       },
       user : 'smoll-talk',
       password : 'Pbeq0hcDejpO12cN',
