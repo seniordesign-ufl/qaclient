@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "knex": "^0.21.16",
+    "mysql": "^2.18.1"
   },
   "scripts": {
     "start": "node server",
