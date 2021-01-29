@@ -11,23 +11,12 @@ function generateCode() {
 }
 
 function App() {
-  const [roomGenerated, updateRoomGenerated] = useState(false);
   const [showLink, updateShowLink] = useState(false);
   const [status, updateStatus] = useState("Loaded");
   const [name, updateName] = useState("");
+  const [displayName, updateDisplayName] = useState("");
   const [code, updateCode] = useState(generateCode());
   const [inputCode, _updateInputCode] = useState(generateCode());
-
-  const checkRoomStatus = (e) => {
-    if (roomGenerated == false)
-    {
-      console.log("Room Is Not Generated!");
-    }
-    else
-    {
-      console.log("Room Exists");
-    }
-  }
 
   const updateInputCode = (e) => {
     _updateInputCode(e.target.value);
@@ -38,10 +27,14 @@ function App() {
     console.log("Submitted: ", inputCode)
   }
 
+  /* 
+    Function That Executes When Generate Room Button Is Clicked
+    Updates The Room Code, Display Name, and Sets The Show Link Boolean to True
+    The Code and Display Name Will Be Sent Over To The Generate Component
+  */
   function handleGenerateClick (e) {
     updateCode(generateCode);
-    updateName(name);
-    updateRoomGenerated(true);
+    updateDisplayName(name);
     updateShowLink(true);
   }
 
@@ -52,9 +45,9 @@ function App() {
   return (
     <div className="App">
       <div className="App-Form">
-          <input placeholder="Enter Display Name" onChange={updateUserName} /> <br />
+          <input placeholder="Enter Display Name" onChange={updateUserName}/> <br /> <br />
           <button onClick={handleGenerateClick}>Generate Room</button>
-          {showLink ? <Generate room={code} name={name} /> : null}
+          {showLink ? <Generate room={code} name={displayName} /> : null}
       </div>
       <p>
         {status}
