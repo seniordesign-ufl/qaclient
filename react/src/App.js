@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from "react";
 import randomWords from "random-words";
+import Generate from "./Generate"
 
 var server = { urls: "stun:stun.stunprotocol.org:3478" };
 
@@ -10,22 +11,12 @@ function generateCode() {
 }
 
 function App() {
-  const [roomGenerated, updateRoomGenerated] = useState(false);
+  const [showLink, updateShowLink] = useState(false);
   const [status, updateStatus] = useState("Loaded");
-  const [name, updateName] = useState("None Entered");
+  const [name, updateName] = useState("");
+  const [displayName, updateDisplayName] = useState("");
   const [code, updateCode] = useState(generateCode());
   const [inputCode, _updateInputCode] = useState(generateCode());
-
-  const checkRoomStatus = (e) => {
-    if (roomGenerated == false)
-    {
-      console.log("Room Is Not Generated!");
-    }
-    else
-    {
-      console.log("Room Exists");
-    }
-  }
 
   const updateInputCode = (e) => {
     _updateInputCode(e.target.value);
@@ -45,16 +36,23 @@ function App() {
     updateName(e.target.value);
   }
 
+  /* 
+    Function That Executes When Generate Room Button Is Clicked
+    Updates The Room Code, Display Name, and Sets The Show Link Boolean to True
+    The Code and Display Name Will Be Sent Over To The Generate Component
+  */
+  function handleGenerateClick (e) {
+    updateCode(generateCode);
+    updateDisplayName(name);
+    updateShowLink(true);
+  }
+
   return (
     <div className="App">
       <div className="App-Form">
-          <input placeholder="Enter Display Name" onChange={updateUserName} /> <br />
-          <button onClick={updateRoomCode}>Generate Room</button>
-          <p>
-            Code: {code} <br />
-            Is A Room Generated? {roomGenerated.toString()}
-          </p>
-
+          <input placeholder="Enter Display Name" onChange={updateUserName} /> <br /> <br />
+          <button onClick={handleGenerateClick}>Generate Room</button>
+          {showLink ? <Generate room={code} name={displayName} /> : null}
       </div>
       <p>
         {status}
