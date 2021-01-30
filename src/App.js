@@ -1,9 +1,17 @@
+import React, { useState } from "react";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import randomWords from "random-words";
+import ReactDOM from "react-dom";
+
+/* Components */
+import Generate from "./Generate";
+import Join from "./Join";
+import Posts from "./Post";
+import PostContent from "./PostContent"
+
+/* Styling */
 import logo from "./logo.svg";
 import "./App.css";
-import React, { useState } from "react";
-import randomWords from "random-words";
-import Generate from "./Generate";
-import Join from "./Join"; 
 
 var server = { urls: "stun:stun.stunprotocol.org:3478" };
 
@@ -42,13 +50,22 @@ function App() {
   const updateUserName = (e) => {
     updateName(e.target.value);
   }
+
+  const Budget = () => {
+    console.log("WE've ARrived!");
+  }
   
   return (
     <div className="App">
       <div className="App-Form">
-          <input placeholder="Enter Display Name" onChange={updateUserName}/> <br /> <br />
-          <button onClick={handleGenerateClick}>Generate Room</button>
-          {showLink ? <Generate room={code} name={displayName} /> : null}
+        <BrowserRouter>
+          <Switch>
+            <Route path={`/room`} render={(props => <Join />)} />
+          </Switch>
+        </BrowserRouter>
+        <input placeholder="Enter Display Name" onChange={updateUserName}/> <br />
+        <button onClick={handleGenerateClick}>Generate Room</button>
+        {showLink ? <Generate room={code} name={displayName} /> : null}
       </div>
       <p>
         {status}
@@ -61,6 +78,8 @@ function App() {
         <form onSubmit={userSubmitCode}>
           <input onChange={updateInputCode}></input>
         </form>
+        <Posts />
+        <PostContent />
       </div>
     </div>
   );

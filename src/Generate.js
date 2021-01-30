@@ -1,4 +1,11 @@
 import React, { Component } from "react";
+import axios from "axios";
+
+function componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
+        console.log(res);
+    });
+}
 
 // Returns A Greeting and The Room Code That Is Generated
 function Generate (props) {
@@ -7,9 +14,10 @@ function Generate (props) {
             <h1>
                 Hi! {props.name}
             </h1>
-            <p>
-                Room Code: {props.room}
-            </p>
+            <div>
+                Room Code: {props.room} 
+            </div>
+            <button onClick={componentDidMount}>Click HERE!</button>
         </div>
     );
 }
