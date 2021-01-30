@@ -1,8 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-import { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import React, { useState } from "react";
 import randomWords from "random-words";
-import Generate from "./Generate"
+import Generate from "./Generate";
+import Join from "./Join"; 
 
 var server = { urls: "stun:stun.stunprotocol.org:3478" };
 
