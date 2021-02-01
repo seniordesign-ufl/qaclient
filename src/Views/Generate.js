@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 // Returns A Greeting and The Room Code That Is Generated
 function Generate (props) {
     
-    function componentDidMount() {
+    function AddToRoom() {
         axios.get(`http://localhost:3000/room/${props.room}/${props.name}/join`).then(res => {
             console.log(res);
         });
@@ -16,9 +17,8 @@ function Generate (props) {
                 Hi! {props.name}
             </h1>
             <div>
-                Room Code: {props.room} 
+                Room Code: <Link onClick={AddToRoom}>{props.room}</Link>
             </div>
-            <button onClick={componentDidMount}>Click HERE!</button>
         </div>
     );
 }

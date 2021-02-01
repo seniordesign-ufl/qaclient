@@ -4,7 +4,6 @@ import randomWords from "random-words";
 import ReactDOM from "react-dom";
 
 /* Views */
-import Generate from "./Views/Generate";
 import Join from "./Views/Join";
 import Posts from "./Views/Post";
 import PostContent from "./Views/PostContent"
@@ -57,16 +56,11 @@ function App() {
   
   return (
     <div className="App">
-      <div className="App-Form">
-        <BrowserRouter>
-          <Switch>
-            <Route path={`/`} render={(props => <Landing room={code} update_room={updateCode} name={displayName} update_name={updateDisplayName} should_show_link={showLink} update_show_link={updateShowLink} />)} />
-          </Switch>
-        </BrowserRouter>
-        <input placeholder="Enter Display Name" onChange={updateUserName}/> <br />
-        <button onClick={handleGenerateClick}>Generate Room</button>
-        {showLink ? <Generate room={code} name={displayName} /> : null}
-      </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path={`/`} render={(props => <Landing room={code} update_room={updateCode} name={displayName} update_name={updateDisplayName} should_show_link={showLink} update_show_link={updateShowLink} />)} />
+      </Switch>
+    </BrowserRouter>
       <p>
         {status}
       </p>
