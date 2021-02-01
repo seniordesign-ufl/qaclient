@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-function componentDidMount() {
-    axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
-        console.log(res);
-    });
-}
-
 // Returns A Greeting and The Room Code That Is Generated
 function Generate (props) {
+    
+    function componentDidMount() {
+        axios.get(`http://localhost:3000/room/${props.room}/${props.name}/join`).then(res => {
+            console.log(res);
+        });
+    }
+
     return (
         <div className="generate-class">
             <h1>

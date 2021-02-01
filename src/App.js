@@ -3,15 +3,15 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import randomWords from "random-words";
 import ReactDOM from "react-dom";
 
-/* Components */
-import Generate from "./Generate";
-import Join from "./Join";
-import Posts from "./Post";
-import PostContent from "./PostContent"
+/* Views */
+import Generate from "./Views/Generate";
+import Join from "./Views/Join";
+import Posts from "./Views/Post";
+import PostContent from "./Views/PostContent"
+import Landing from "./Views/LandingPage";
 
 /* Styling */
-import logo from "./logo.svg";
-import "./App.css";
+import "./Styling/App.css";
 
 var server = { urls: "stun:stun.stunprotocol.org:3478" };
 
@@ -60,7 +60,7 @@ function App() {
       <div className="App-Form">
         <BrowserRouter>
           <Switch>
-            <Route path={`/room`} render={(props => <Join />)} />
+            <Route path={`/`} render={(props => <Landing room={code} update_room={updateCode} name={displayName} update_name={updateDisplayName} should_show_link={showLink} update_show_link={updateShowLink} />)} />
           </Switch>
         </BrowserRouter>
         <input placeholder="Enter Display Name" onChange={updateUserName}/> <br />
