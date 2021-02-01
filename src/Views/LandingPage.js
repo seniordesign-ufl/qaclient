@@ -1,38 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../AppContext";
 
-import Generate from "./Generate";
+import Generate from "../components/Generate";
 
-function Landing (props) {
-
-    //props.room
-    //props.update_room
-    //props.name
-    //props.update_name
-    //props.should_show_link
-    //props.update_show_link
+function Landing(props) {
+    const [showLink, updateShowLink] = useState(false);
+    const [name, updateName] = useState("");
 
     /* 
     Function That Executes When Generate Room Button Is Clicked
     Updates The Room Code, Display Name, and Sets The Show Link Boolean to True
     The Code and Display Name Will Be Sent Over To The Generate Component
     */
-    function handleGenerateClick (e) {
-        props.update_room(props.room);
-        props.update_name(props.name);
-        props.update_show_link(true);
-    }
-
-    const updateUserName = (e) => {
-        props.update_name(e.target.value);
+    const appContext = useContext(AppContext);
+    function handleGenerateClick(e) {
+        appContext.dispatch({ type: "update-name", displayName: name });
+        updateShowLink(true);
     }
 
     return (
         <div className="landing-page">
             <div className="create">
-                <input placeholder="Enter Display Name" onChange={updateUserName} /> <br />
+                <input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
                 <button onClick={handleGenerateClick}>Generate Room</button>
             </div>
-            {props.should_show_link ? <Generate name={props.name} room={props.room} /> : null}
+            {showLink ? <Generate /> : null}
         </div>
     );
 }
