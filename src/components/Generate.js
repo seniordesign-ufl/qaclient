@@ -16,7 +16,7 @@ function Generate(props) {
     return (
         <div className="generate-class">
             <h1>
-                Hi! {contextState.name}
+                Hi! {props.name} {/*contextState.name*/}
             </h1>
             <div>
                 {/* Room Code: <Link onClick={AddToRoom}>{props.room}</Link> */}
