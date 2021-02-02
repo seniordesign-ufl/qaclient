@@ -12,6 +12,7 @@ import Landing from "./Views/LandingPage";
 /* Styling */
 import "./Styling/App.css";
 import { AppContext, ContextProvider } from "./AppContext";
+import Room from "./Views/Room";
 
 var server = { urls: "stun:stun.stunprotocol.org:3478" };
 
@@ -25,8 +26,11 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route path={`/`}>
+            <Route exact path={`/`}>
               <Landing />
+            </Route>
+            <Route path={`/room/:roomKey`}>
+              <Room />
             </Route>
           </Switch>
         </BrowserRouter>
