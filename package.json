@@ -3,14 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "express": "^4.17.1",
-    "fs": "0.0.1-security",
-    "knex": "^0.21.16",
-    "mysql": "^2.18.1"
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.1",
+    "random-words": "^1.1.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "socket.io-client": "^3.1.0",
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "node server",
-    "build": "cd react/ && npm install && npm run build"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
