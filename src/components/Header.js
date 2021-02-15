@@ -33,32 +33,49 @@ function Header(props) {
         };
     }, []);
 
-    return (
-        <div class="header">
-            <Container fluid>
-                <Row>
-                    <Col align="left">
-                        <a class="navbar-brand" href="/">SmallTalk</a>
-                    </Col>
-                    <Col xs={6} align="center">
-                        <InputGroup>
-                            <FormControl placeholder="Search Discussions..." onChange={handleSearch} />
-                            <InputGroup.Append>
-                                <Button><BsSearch/></Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    </Col>
-                    <Col align="right">
-                        <DropdownButton title="Sort By" id="basic-nav-dropdown">
-                            <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
-                            <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
-                            <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>
-                        </DropdownButton> 
-                    </Col>
-                </Row>
-            </Container>
-        </div>
-    )
+    if (AppContext.roomKey != null)
+    {
+        return (
+            <div class="header">
+                <Container fluid>
+                    <Row>
+                        <Col align="left">
+                            <a class="navbar-brand" href="/">SmallTalk</a>
+                        </Col>
+                        <Col xs={6} align="center">
+                            <InputGroup>
+                                <FormControl placeholder="Search Discussions..." onChange={handleSearch} />
+                                <InputGroup.Append>
+                                    <Button><BsSearch/></Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Col>
+                        <Col align="right">
+                            <DropdownButton title="Sort By" id="basic-nav-dropdown">
+                                <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
+                                <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
+                                <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>
+                            </DropdownButton> 
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        )
+    }
+    else
+    {
+        return (
+            <div class="header">
+                <Container fluid>
+                    <Row>
+                        <Col align="left">
+                            <a class="navbar-brand" href="/">SmallTalk</a>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        )
+    }
 };
 
 export default Header;
