@@ -4,6 +4,7 @@ import { AppContext } from "../AppContext";
 import { socket } from "../components/socket";
 
 import CreatePost from "../components/NewPost";
+import Header from "../components/Header";
 
 import { Button, Modal } from "react-bootstrap";
 
@@ -38,6 +39,7 @@ function Room(props) {
     }, [contextState.roomKey])
 
     return <div>
+        <Header />
         Users: {users.map((name, i) => <p key={i} >{name}</p>)}
         <input />
         <Button variant="dark" onClick={handleShow}>+ Start New Discussion</Button>
