@@ -14,12 +14,12 @@ function Header(props) {
 
     const handleSearch = (e) => {
         updateSearchItem(e.target.value)
-        socket.emit("search-for", {string: searchItem, groupID: contextState.roomKey})
+        socket.emit("search-for", {string: searchItem, groupID: props.roomKey})
     }
 
     const handleSort = (e) => {
         updateSortBy(e.target.innerText)
-        socket.emit("filter", {condition: sortBy, groupID: contextState.roomKey})
+        socket.emit("filter", {condition: sortBy, groupID: props.roomKey})
     }
 
     useEffect(() => {

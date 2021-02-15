@@ -57,10 +57,11 @@ function NewPost(props) {
             centered
             show={props.show}
         >
-            <Modal.Header>
+            <Modal.Header closeButton onClick={props.onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Create New Post
                 </Modal.Title>
+            </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group controlId="post.title">
@@ -83,7 +84,6 @@ function NewPost(props) {
                     <Button variant="secondary" onClick={props.onHide}>Close</Button>
                     <Button variant="primary" onClick={handleSubmitForm}>Create Post</Button>
                 </Modal.Footer>
-            </Modal.Header>
         </Modal>
     )
 };
