@@ -47,14 +47,16 @@ function Landing(props) {
     }
 
     return (
-        <div className="landing-page">
+        <div>
             <Header roomKey={appContext.roomKey} />
-            <div className="create">
-                <h3>Create a Discussion Room</h3><br /><br />
-                <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
-                <button type="button" class="btn btn-primary btn-lg" onClick={handleGenerateClick}>Generate Room</button>
+            <div className="landing-page">
+                <div className="create">
+                    <h3>Create a Discussion Room</h3><br /><br />
+                    <input type="text" id="displayName" class="form-control" aria-describedby="passwordHelpBlock" input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
+                    <button type="button" class="btn btn-primary btn-lg" onClick={handleGenerateClick}>Generate Room</button>
+                </div>
+                {showLink ? <Generate/> : null}
             </div>
-            {showLink ? <Generate/> : null}
         </div>
     );
 }
