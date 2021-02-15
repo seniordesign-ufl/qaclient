@@ -53,7 +53,7 @@ function PostSummary(props) {
                                 <Row>
                                     <Col>
                                         <footer className="blockquote-footer">
-                                            {props.post.author}
+                                            {props.post.isAnon ? 'Anonymous': props.post.author}
                                         </footer>
                                     </Col>
                                     <Col sm={2}>
