@@ -1,0 +1,21 @@
+.topnav {
+    background-color: white;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.navbar-brand {
+    color: #E98074;
+}
+
+/*.navbar-brand:hover {
+    background: #91c64b;
+
+}*/
+
+p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 6px;
+    width: 80%;
+}

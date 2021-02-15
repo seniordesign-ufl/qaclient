@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import { AppContext } from "../AppContext";
 import axios from "axios";
 
@@ -7,11 +8,15 @@ import { socket } from "../components/socket";
 
 import Header from "../components/Header";
 
+import "../Styling/LandingPage.css";
+
 function Landing(props) {
     const appContext = useContext(AppContext);
     const [showLink, updateShowLink] = useState(false);
     const [name, updateName] = useState("");
     // const [shareableLink, updateShareableLink] = useState("http://localhost:3000/room/");
+
+    const history = useHistory()
 
     useEffect(() => {
         socket.on('room-code', (roomCode) => {
@@ -45,8 +50,9 @@ function Landing(props) {
         <div className="landing-page">
             <Header roomKey={appContext.roomKey} />
             <div className="create">
-                <input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
-                <button onClick={handleGenerateClick}>Generate Room</button>
+                <h3>Create a Discussion Room</h3><br /><br />
+                <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
+                <button type="button" class="btn btn-primary btn-lg" onClick={handleGenerateClick}>Generate Room</button>
             </div>
             {showLink ? <Generate/> : null}
         </div>
