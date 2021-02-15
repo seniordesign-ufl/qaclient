@@ -12,6 +12,7 @@ import Room from "./Views/Room";
 
 /* Styling */
 import "./Styling/App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { AppContext, ContextProvider } from "./AppContext";
 
 var server = { urls: "stun:stun.stunprotocol.org:3478" };
