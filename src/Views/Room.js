@@ -3,12 +3,30 @@ import { useParams } from "react-router";
 import { AppContext } from "../AppContext";
 import { socket } from "../components/socket";
 
+import CreatePost from "../components/NewPost";
+
+import { Button, Modal } from "react-bootstrap";
+
 function Room(props) {
-    const { state, dispatch } = useContext(AppContext);
+    const { state: contextState, dispatch } = useContext(AppContext);
     const { roomKey } = useParams();
     const [users, setUsers] = useState([]);
+    // const [show, setShow] = useState(false)
+
+    // const handleModalClose = () => setShow(false);
+    // const handleModalOpen = () => {
+    //     setShow(true);
+    //     console.log(show);
+    // }
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
     useEffect(() => {
-        socket.emit("join", { userName: state.displayName, groupID: roomKey });
+        socket.emit("join", { userName: contextState.displayName, groupID: roomKey });
         socket.on('update-users', (r) => {
             const { names } = r;
             setUsers(names);
@@ -17,10 +35,13 @@ function Room(props) {
         return () => {
             socket.off('update-users');
         };
-    }, [state.roomKey])
+    }, [contextState.roomKey])
+
     return <div>
         Users: {users.map((name, i) => <p key={i} >{name}</p>)}
-        <input></input>
+        <input />
+        <Button variant="dark" onClick={handleShow}>New Post</Button>
+        {show ? <CreatePost show={show} onHide={() => setShow(false)} />: null}
     </div>
 }
 

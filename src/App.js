@@ -8,11 +8,13 @@ import Join from "./components/Join";
 import Posts from "./components/Post";
 import PostContent from "./components/PostContent"
 import Landing from "./Views/LandingPage";
+import Room from "./Views/Room";
 
 /* Styling */
 import "./Styling/App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { AppContext, ContextProvider } from "./AppContext";
-import Room from "./Views/Room";
+
 
 var server = { urls: "stun:stun.stunprotocol.org:3478" };
 
