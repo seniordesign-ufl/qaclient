@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../AppContext";
 import { socket } from "../components/socket";
 
@@ -12,33 +12,52 @@ import {BsChevronUp} from 'react-icons/bs'
 import {BsChatSquareDots} from 'react-icons/bs'
 
 function PostSummary(props) {
+    const [canUpvote, setCanUpvote] = useState(true)
+    const { state: contextState, dispatch } = useContext(AppContext);
+
+    function handleUpvote() {
+        if (canUpvote) {
+            const postUpdate = {
+                title: props.post.title,
+                upVote: 1
+            }
+            console.log(postUpdate)
+            socket.emit('update-post', ({postUpdate: postUpdate, groupID: contextState.roomKey}));
+            setCanUpvote(false);
+        }
+    }
+
+    function calculateTime() {
+        let diff = (new Date()).getTime() - new Date(props.post.time).getTime();
+        return (Math.round(diff / 60000))
+    }
 
     return (
         <div class='postSummary'>
-            <Card style={{ width: '80rem' }}>
+            <Card style={{ width: '100%' }}>
                 <Container>
                     <Row>
                         <Col sm='1'>
-                            <Button variant='light' style={{marginTop: '10px'}}><BsChevronUp /></Button>
+                            <Button variant='light' onClick={() => handleUpvote()} style={{marginTop: '10px'}}><BsChevronUp /></Button>
                             <br />
-                            <a>{props.upVotes}</a>
+                            <a>{props.post.upVotes}</a>
                             <br />
                             <Button variant='light' style={{marginTop: '10px'}}><BsChatSquareDots /></Button>
                             <br />
-                            <a>{props.comments}</a>
+                            <a>{props.post.comments}</a>
                         </Col>
                         <Col lg style={{textAlign: 'left'}}>
-                            <Card.Title>{props.title}</Card.Title>
-                            <Card.Text>{props.content}</Card.Text>
+                            <Card.Title>{props.post.title}</Card.Title>
+                            <Card.Text>{props.post.content}</Card.Text>
                             <blockquote>
                                 <Row>
                                     <Col>
                                         <footer className="blockquote-footer">
-                                            {props.author}
+                                            {props.post.author}
                                         </footer>
                                     </Col>
                                     <Col sm={2}>
-                                        <p class='postTime'>{props.time} mins ago</p>
+                                        <p class='postTime'>{calculateTime()} mins ago</p>
                                     </Col>
                                 </Row>
                             </blockquote> 

@@ -29,8 +29,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 posts: action.posts
-            }
-
+        }
     }
 }
 export function ContextProvider({ children }) {

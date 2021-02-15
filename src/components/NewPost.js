@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { AppContext } from "../AppContext";
 import { socket } from "./socket";
 
-import { Form, Modal, Button} from "react-bootstrap";
+import { Form, Modal, Button } from "react-bootstrap";
 
 function NewPost(props) {
     const { state: contextState, dispatch } = useContext(AppContext);
@@ -21,7 +21,8 @@ function NewPost(props) {
             title: title,
             content: body,
             author: contextState.displayName,
-            time: time 
+            time: time,
+            isAnon: anonymous
         };
 
         console.log(post.title)
@@ -30,13 +31,12 @@ function NewPost(props) {
         console.log(post.time)
 
         socket.emit("create-post", {post: post, groupID: contextState.roomKey});
-
+        props.onHide();
     };
 
     const handleTitleChange = (e) => {
         updateTitle(e.target.value);
     };
-    
     const handleBodyChange = (e) => {
         updateBody(e.target.value);
     };
@@ -50,17 +50,6 @@ function NewPost(props) {
         updateAnonymous(!anonymous)
     };
 
-    useEffect(() => {
-        socket.on('update-posts', (r) => {
-            const { names } = r;
-            // setUsers(names);
-        });
-        // unsubscribe from event for preventing memory leaks
-        return () => {
-            socket.off('update-posts');
-        };
-    }, [handleSubmitForm]);
-
     return (
         <Modal
             size="lg"
@@ -68,33 +57,33 @@ function NewPost(props) {
             centered
             show={props.show}
         >
-            <Modal.Header closeButton onClick={props.onHide}>
+            <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Create New Post
                 </Modal.Title>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="post.title">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Post Title" onChange={handleTitleChange} />
+                        </Form.Group>
+                        <Form.Group controlId="post.body">
+                            <Form.Label>Post Content Here</Form.Label>
+                            <Form.Control as="textarea" rows={5} onChange={handleBodyChange} />
+                        </Form.Group>
+                        <Form.Group controlId="post.attachments">
+                            <Form.File id="formAttachments" onChange={handleAttachment} />
+                        </Form.Group>
+                        <Form.Group controlId="post.anonymous">
+                            <Form.Check type={"checkbox"} id={"default-checkbox"} label={"Post Anonymously"} onClick={handleAnonymousCheck} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={props.onHide}>Close</Button>
+                    <Button variant="primary" onClick={handleSubmitForm}>Create Post</Button>
+                </Modal.Footer>
             </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group controlId="post.title">
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Post Title" onChange={handleTitleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="post.body">
-                        <Form.Label>Post Content Here</Form.Label>
-                        <Form.Control as="textarea" rows={5} onChange={handleBodyChange} />
-                    </Form.Group>
-                    <Form.Group controlId="post.attachments">
-                        <Form.File id="formAttachments" onChange={handleAttachment} />
-                    </Form.Group>
-                    <Form.Group controlId="post.anonymous">
-                        <Form.Check type={"checkbox"} id={"default-checkbox"} label={"Post Anonymously"} onClick={handleAnonymousCheck} />
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={props.onHide}>Close</Button>
-                <Button variant="primary" onClick={handleSubmitForm}>Create Post</Button>
-            </Modal.Footer>
         </Modal>
     )
 };
