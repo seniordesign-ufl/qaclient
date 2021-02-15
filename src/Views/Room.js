@@ -40,7 +40,7 @@ function Room(props) {
     return <div>
         Users: {users.map((name, i) => <p key={i} >{name}</p>)}
         <input />
-        <Button variant="dark" onClick={handleShow}>New Post</Button>
+        <Button variant="dark" onClick={handleShow}>+ Start New Discussion</Button>
         {show ? <CreatePost show={show} onHide={() => setShow(false)} />: null}
     </div>
 }
