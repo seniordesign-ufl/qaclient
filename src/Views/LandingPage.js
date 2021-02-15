@@ -41,6 +41,7 @@ function Landing(props) {
 
     return (
         <div className="landing-page">
+            <Header />
             <div className="create">
                 <input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
                 <button onClick={handleGenerateClick}>Generate Room</button>
