@@ -33,7 +33,7 @@ function Header(props) {
         };
     }, []);
 
-    if (AppContext.roomKey != null)
+    if (props.roomKey != null)
     {
         return (
             <div class="header">

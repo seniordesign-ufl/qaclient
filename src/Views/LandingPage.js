@@ -3,7 +3,9 @@ import { AppContext } from "../AppContext";
 import axios from "axios";
 
 import Generate from "../components/Generate";
-import { socket } from "../components/socket"
+import { socket } from "../components/socket";
+
+import Header from "../components/Header";
 
 function Landing(props) {
     const appContext = useContext(AppContext);
@@ -41,7 +43,7 @@ function Landing(props) {
 
     return (
         <div className="landing-page">
-            <Header />
+            <Header roomKey={appContext.roomKey} />
             <div className="create">
                 <input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
                 <button onClick={handleGenerateClick}>Generate Room</button>

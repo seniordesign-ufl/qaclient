@@ -11,7 +11,9 @@ import { Button, Modal } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {BsPerson} from 'react-icons/bs'
+import {BsPerson} from 'react-icons/bs';
+
+import Header from '../components/Header';
 
 function Room(props) {
     const { state: contextState, dispatch } = useContext(AppContext);
@@ -80,6 +82,7 @@ function Room(props) {
 
     return (
         <div className="room-page">
+            <Header roomKey={contextState.roomKey} />
             {contextState.displayName !== null ?
                 <div>
                     <Container className="roomContainer">
