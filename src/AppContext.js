@@ -5,7 +5,8 @@ export const AppContext = React.createContext()
 const initialState = {
     userId: null,
     displayName: null,
-    roomKey: null
+    roomKey: null,
+    posts: null
 };
 const reducer = (state, action) => {
     console.log(action);
@@ -25,6 +26,11 @@ const reducer = (state, action) => {
                 ...state,
                 userId: action.userId,
             }
+        case 'update-posts':
+            return {
+                ...state,
+                posts: action.posts
+        }
     }
 }
 export function ContextProvider({ children }) {
