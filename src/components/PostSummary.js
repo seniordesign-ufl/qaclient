@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../AppContext";
-import { socket } from "../components/socket";
+import { socket } from "../service/socket";
 
 //Bootstrap
 import Card from 'react-bootstrap/Card';
@@ -8,8 +8,8 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {BsChevronUp} from 'react-icons/bs'
-import {BsChatSquareDots} from 'react-icons/bs'
+import { BsChevronUp } from 'react-icons/bs'
+import { BsChatSquareDots } from 'react-icons/bs'
 
 function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
@@ -22,7 +22,7 @@ function PostSummary(props) {
                 upVote: 1
             }
             console.log(postUpdate)
-            socket.emit('update-post', ({postUpdate: postUpdate, groupID: contextState.roomKey}));
+            socket.emit('update-post', ({ postUpdate: postUpdate, groupID: contextState.roomKey }));
             setCanUpvote(false);
         }
     }
@@ -38,29 +38,29 @@ function PostSummary(props) {
                 <Container>
                     <Row>
                         <Col sm='1'>
-                            <Button variant='light' onClick={() => handleUpvote()} style={{marginTop: '10px'}}><BsChevronUp /></Button>
+                            <Button variant='light' onClick={() => handleUpvote()} style={{ marginTop: '10px' }}><BsChevronUp /></Button>
                             <br />
                             <a>{props.post.upVotes}</a>
                             <br />
-                            <Button variant='light' style={{marginTop: '10px'}}><BsChatSquareDots /></Button>
+                            <Button variant='light' style={{ marginTop: '10px' }}><BsChatSquareDots /></Button>
                             <br />
                             <a>{props.post.comments}</a>
                         </Col>
-                        <Col lg style={{textAlign: 'left'}}>
+                        <Col lg style={{ textAlign: 'left' }}>
                             <Card.Title>{props.post.title}</Card.Title>
                             <Card.Text>{props.post.content}</Card.Text>
                             <blockquote>
                                 <Row>
                                     <Col>
                                         <footer className="blockquote-footer">
-                                            {props.post.isAnon ? 'Anonymous': props.post.author}
+                                            {props.post.isAnon ? 'Anonymous' : props.post.author}
                                         </footer>
                                     </Col>
                                     <Col sm={2}>
                                         <p class='postTime'>{calculateTime()} mins ago</p>
                                     </Col>
                                 </Row>
-                            </blockquote> 
+                            </blockquote>
                         </Col>
                     </Row>
                 </Container>

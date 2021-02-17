@@ -1,9 +1,9 @@
-  
+
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import { socket } from "../components/socket";
+import { socket } from "../service/socket";
 
 // Returns A Greeting and The Room Code That Is Generated
 function Generate(props) {

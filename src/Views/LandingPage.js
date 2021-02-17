@@ -4,7 +4,7 @@ import { AppContext } from "../AppContext";
 import axios from "axios";
 
 import Generate from "../components/Generate";
-import { socket } from "../components/socket";
+import { socket } from "../service/socket";
 
 import Header from "../components/Header";
 
@@ -25,10 +25,10 @@ function Landing(props) {
         })
         // unsubscribe from event for preventing memory leaks
         return () => {
-           socket.off('room-code', ({}));
-           console.log("socket off");
+            socket.off('room-code', ({}));
+            console.log("socket off");
         };
-     }, []);
+    }, []);
 
     /* 
     Function That Executes When Generate Room Button Is Clicked
@@ -55,7 +55,7 @@ function Landing(props) {
                     <input type="text" id="displayName" class="form-control" aria-describedby="passwordHelpBlock" input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
                     <button type="button" class="btn btn-primary btn-lg" onClick={handleGenerateClick}>Generate Room</button>
                 </div>
-                {showLink ? <Generate/> : null}
+                {showLink ? <Generate /> : null}
             </div>
         </div>
     );

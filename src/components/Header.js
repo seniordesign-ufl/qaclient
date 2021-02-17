@@ -4,22 +4,22 @@ import '../Styling/Header.css';
 
 import { Form, Container, Row, Col, FormControl, Dropdown, DropdownButton, Button, InputGroup } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
-import { socket } from "./socket";
+import { socket } from "../service/socket";
 
 function Header(props) {
     const { state: contextState, dispatch } = useState(AppContext);
-    const [ displayWholeHeader, updateWholeDisplayHeader ] = useState(true);
-    const [ searchItem, updateSearchItem ] = useState("");
-    const [ sortBy, updateSortBy ] = useState("");
+    const [displayWholeHeader, updateWholeDisplayHeader] = useState(true);
+    const [searchItem, updateSearchItem] = useState("");
+    const [sortBy, updateSortBy] = useState("");
 
     const handleSearch = (e) => {
         updateSearchItem(e.target.value)
-        socket.emit("search-for", {string: searchItem, groupID: props.roomKey})
+        socket.emit("search-for", { string: searchItem, groupID: props.roomKey })
     }
 
     const handleSort = (e) => {
         updateSortBy(e.target.innerText)
-        socket.emit("filter", {condition: sortBy, groupID: props.roomKey})
+        socket.emit("filter", { condition: sortBy, groupID: props.roomKey })
     }
 
     useEffect(() => {
@@ -33,8 +33,7 @@ function Header(props) {
         };
     }, []);
 
-    if (props.roomKey != null)
-    {
+    if (props.roomKey != null) {
         return (
             <div class="header">
                 <Container fluid>
@@ -46,7 +45,7 @@ function Header(props) {
                             <InputGroup>
                                 <FormControl placeholder="Search Discussions..." onChange={handleSearch} />
                                 <InputGroup.Append>
-                                    <Button><BsSearch/></Button>
+                                    <Button><BsSearch /></Button>
                                 </InputGroup.Append>
                             </InputGroup>
                         </Col>
@@ -55,15 +54,14 @@ function Header(props) {
                                 <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
                                 <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
                                 <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>
-                            </DropdownButton> 
+                            </DropdownButton>
                         </Col>
                     </Row>
                 </Container>
             </div>
         )
     }
-    else
-    {
+    else {
         return (
             <div class="header">
                 <Container fluid>

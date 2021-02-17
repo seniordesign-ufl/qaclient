@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     userId: null,
     displayName: null,
     roomKey: null,
-    posts: null
+    posts: null,
 };
 const reducer = produce((draft, action) => {
     switch (action.type) {
