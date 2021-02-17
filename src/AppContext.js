@@ -1,39 +1,30 @@
 import React, { useReducer } from "react";
+import produce from "immer"
+
 export const AppContext = React.createContext()
 
-const initialState = {
+const INITIAL_STATE = {
     userId: null,
     displayName: null,
     roomKey: null,
     posts: null
 };
-const reducer = (state, action) => {
-    console.log(action);
+const reducer = produce((draft, action) => {
     switch (action.type) {
         case 'join-room':
-            return {
-                ...state,
-                roomKey: action.roomKey,
-            };
+            draft.roomKey = action.roomKey;
         case 'update-name':
-            return {
-                ...state,
-                displayName: action.displayName,
-            }
+            draft.displayName = action.displayName;
         case 'update-user-id':
-            return {
-                ...state,
-                userId: action.userId,
-            }
+            draft.userId = action.userId;
         case 'update-posts':
-            return {
-                ...state,
-                posts: action.posts
-        }
+            draft.posts = action.posts;
     }
-}
+
+}, INITIAL_STATE)
+
 export function ContextProvider({ children }) {
-    const [state, dispatch] = React.useReducer(reducer, initialState)
+    const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE)
     return (
         <AppContext.Provider value={{ state, dispatch }}>
             {children}
