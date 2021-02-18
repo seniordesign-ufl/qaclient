@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { AppContext } from "../AppContext";
-import { socket } from "../service/socket";
+import { API, AppContext } from "../AppContext";
 
 import { Form, Modal, Button } from "react-bootstrap";
 
@@ -30,7 +29,7 @@ function NewPost(props) {
         console.log(post.author)
         console.log(post.time)
 
-        socket.emit("create-post", { post: post, groupID: contextState.roomKey });
+        API.createPost(post, contextState.roomKey);
         props.onHide();
     };
 

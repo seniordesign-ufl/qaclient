@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { AppContext } from "../AppContext";
+import { API, AppContext } from "../AppContext";
 import axios from "axios";
 
 import Generate from "../components/Generate";
-import { socket } from "../service/socket";
 
 import Header from "../components/Header";
 
@@ -15,21 +14,6 @@ function Landing(props) {
     const [showLink, updateShowLink] = useState(false);
     const [name, updateName] = useState("");
     // const [shareableLink, updateShareableLink] = useState("http://localhost:3000/room/");
-
-    const history = useHistory()
-
-    useEffect(() => {
-        socket.on('room-code', (roomCode) => {
-            appContext.dispatch({ type: "join-room", roomKey: roomCode });
-            console.log(roomCode)
-        })
-        // unsubscribe from event for preventing memory leaks
-        return () => {
-            socket.off('room-code', ({}));
-            console.log("socket off");
-        };
-    }, []);
-
     /* 
     Function That Executes When Generate Room Button Is Clicked
     Updates The Room Code, Display Name, and Sets The Show Link Boolean to True
@@ -37,7 +21,7 @@ function Landing(props) {
     */
     function handleGenerateClick(e) {
         appContext.dispatch({ type: "update-name", displayName: name });
-        socket.emit('request-room');
+        API.requestRoom();
         updateShowLink(true);
 
         // axios.get(`http://localhost:3000/request-room`).then(res => {

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../AppContext";
-import { socket } from "../service/socket";
+import { API, AppContext } from "../AppContext";
 
 //Bootstrap
 import Card from 'react-bootstrap/Card';
@@ -22,7 +21,7 @@ function PostSummary(props) {
                 upVote: 1
             }
             console.log(postUpdate)
-            socket.emit('update-post', ({ postUpdate: postUpdate, groupID: contextState.roomKey }));
+            API.updatePost(postUpdate, contextState.roomKey);
             setCanUpvote(false);
         }
     }
