@@ -43,6 +43,12 @@ export const API = {
     },
     requestRoom: () => {
         socket.emit('request-room');
+    },
+    createPost: (post, groupID) => {
+        socket.emit('create-post', { post, groupID });
+    },
+    updatePost: (postUpdate, groupID) => {
+        socket.emit('update-post', { postUpdate, groupID });
     }
 }
 
