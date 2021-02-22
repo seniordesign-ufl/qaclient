@@ -1,7 +1,6 @@
 .landing-page {
     position: relative;
     border-radius: 6px;
-    padding: 50px;
     background: #FAFAFA;
     min-height: 200px;
     width: 50vw;
@@ -15,8 +14,14 @@
     0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
+.landing-box {
+    padding: 50px;
+    margin-top: 50px;
+    margin-bottom: 2em;
+}
 
-.landing-page button {
+
+.landing-page .generate-btn {
     background: #E98074;
     color: white;
     border-radius: 6px;
@@ -24,7 +29,31 @@
     border: 0;
 }
 
-.landing-page button:hover {
+.landing-page .generate-btn:hover {
     background: #f1a79f;
+}
+
+.link-box {
+    padding-top:1em;
+    min-height:3em;
+}
+
+.landing-page .copy-btn {
+    background: #E98074;
+    color: white;
+    width: 2em;
+    height: 2em;
+    border-radius: 6px;
+    border: 0;
+    padding: 0;
+    margin-left: 1em;
+}
+
+.clicked {
+    background: #f1a79f;
+}
+
+.landing-page .copy-btn > * {
+    text-align: center;
 }
 
