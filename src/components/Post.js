@@ -14,10 +14,6 @@ class Posts extends React.Component {
     }
 
     componentDidMount() {
-        // axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
-        //     console.log(res);
-        //     this.setState({posts: res.data});
-        // })
     }
 
     render() {

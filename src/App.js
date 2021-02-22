@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 /* Views */
-import Join from "./components/Join";
 import Posts from "./components/Post";
 import PostContent from "./components/PostContent"
 import Landing from "./Views/LandingPage";
