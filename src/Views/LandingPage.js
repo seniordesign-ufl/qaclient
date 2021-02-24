@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
  * @param {} props 
  */
 function Landing(props) {
-    const appContext = useContext(AppContext);
+    const { state: contextState, dispatch } = useContext(AppContext);
     const [showLink, updateShowLink] = useState(false);
     const [name, updateName] = useState("");
     /* 
@@ -24,13 +24,13 @@ function Landing(props) {
     The Code and Display Name Will Be Sent Over To The Generate Component
     */
     function handleGenerateClick(e) {
-        appContext.dispatch({ type: "update-name", displayName: name });
+        dispatch({ type: "update-name", displayName: name });
         API.requestRoom();
         updateShowLink(true);
     }
     return (
         <div>
-            <Header roomKey={appContext.roomKey} />
+            <Header roomKey={contextState.roomKey} />
             <div className="landing-page">
                 <div className="landing-box">
 
@@ -42,8 +42,8 @@ function Landing(props) {
                     <div className="link-box">
                         {showLink ? <Slideout>
                             <div>
-                                Link: <Link to={`/room/${appContext.roomKey}`}>{"https://localhost:3001/room/" + appContext.roomKey}</Link>
-                                <Copy link={`https://localhost:3001/room/${appContext.roomKey}`} />
+                                Link: <Link to={`/room/${contextState.roomKey}`}>{"https://localhost:3001/room/" + contextState.roomKey}</Link>
+                                <Copy link={`https://localhost:3001/room/${contextState.roomKey}`} />
                             </div>
                         </Slideout> : <div></div>}
                     </div>
