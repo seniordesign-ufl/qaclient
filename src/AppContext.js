@@ -66,17 +66,17 @@ export const API = {
     updatePost: (postUpdate, groupID) => {
         socket.emit('update-post', { postUpdate, groupID });
     },
-    removePost: (postID, groupID) => {
-        socket.emit('remove-post', {postID, groupID});
+    removePost: (title, groupID) => {
+        socket.emit('remove-post', { title, groupID });
     },
-    addComment: (comment, postID, groupID) => {
-        socket.emit('add-comment', {comment, postID, groupID});
+    addComment: (comment, postTitle, groupID) => {
+        socket.emit('add-comment', { comment, postTitle, groupID });
     },
     updateComment: (commentUpdate, groupID) => {
-        socket.emit('update-comment', {commentUpdate, groupID});
+        socket.emit('update-comment', { commentUpdate, groupID });
     },
     removeComment: (removeComment, groupID) => {
-        socket.emit('remove-comment', {removeComment, groupID})
+        socket.emit('remove-comment', { removeComment, groupID })
     }
 }
 

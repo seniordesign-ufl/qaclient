@@ -65,10 +65,10 @@ function PostSummary(props) {
                                 </Col>
 
                                 {/* Check if current display name matches name of post. If so allow them to remove it */
-                                contextState.displayName === props.post.author &&
-                                <Col sm={1}>
-                                    <Button onClick={handleShow} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
-                                </Col> 
+                                    contextState.displayName === props.post.author &&
+                                    <Col sm={1}>
+                                        <Button onClick={handleShow} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
+                                    </Col>
                                 }
                             </Row>
                             <Card.Text>{props.post.content}</Card.Text>
@@ -97,7 +97,7 @@ function PostSummary(props) {
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={() => {handleRemove(); handleClose()}}>
+                    <Button variant="primary" onClick={() => { handleRemove(); handleClose() }}>
                         Remove
                     </Button>
                 </Modal.Footer>
