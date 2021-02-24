@@ -33,7 +33,7 @@ function Landing(props) {
     }
     return (
         <div>
-            <Header />
+            <Header roomKey={contextState.roomKey} />
             <div className="landing-page">
                 <div className="landing-box">
 
