@@ -11,6 +11,7 @@ import Room from "./Views/Room";
 import "./Styling/App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ContextProvider } from "./AppContext";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         </BrowserRouter>
         {/* <Posts />
       <PostContent /> */}
+        <ToastContainer />
       </div>
     </ContextProvider>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { API, AppContext } from "../AppContext";
 
 //Bootstrap
@@ -12,7 +12,7 @@ import { BsChatSquareDots } from 'react-icons/bs'
 
 function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
-    const { state: contextState, dispatch } = useContext(AppContext);
+    const { state: contextState } = useContext(AppContext);
 
     function handleUpvote() {
         if (canUpvote) {
