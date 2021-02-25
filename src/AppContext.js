@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     roomKey: null,
     posts: [],
     users: [],
+    admin: false
 };
 const reducer = produce((draft, action) => {
     switch (action.type) {
@@ -26,7 +27,10 @@ const reducer = produce((draft, action) => {
             draft.posts = action.posts;
             break;
         case 'update-users':
-            draft.users = action.names;
+            draft.users = action.users;
+            break;
+        case 'admin-granted':
+            draft.admin = true;
             break;
     }
 
@@ -60,9 +64,9 @@ const socketEvents = (dispatch) => {
         dispatch({ type: "join-room", roomKey: roomCode });
         console.log("Socket event roomcode:", roomCode)
     });
-    socket.on('update-users', ({ names }) => {
-        dispatch({ type: "update-users", names });
-        console.log("Socket event update-users:", names)
+    socket.on('update-users', ({ users }) => {
+        dispatch({ type: "update-users", users: users });
+        console.log("Socket event update-users:", users)
     });
     socket.on('update-posts', ({ posts, groupID }) => {
         dispatch({ type: 'update-posts', posts: posts })
@@ -70,6 +74,10 @@ const socketEvents = (dispatch) => {
         // if (groupID === contextState.roomKey)
         //     handleClose();
         // console.log(contextState.posts)
+    });
+    socket.on('admin', () => {
+        dispatch({ type: 'admin-granted' });
+        console.log("Admin mode unlocked (ง •̀_•́)ง")
     });
 }
 export const initSockets = (dispatch) => {

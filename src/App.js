@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 /* Views */
-import Join from "./components/Join";
 import Posts from "./components/Post";
 import PostContent from "./components/PostContent"
 import Landing from "./Views/LandingPage";
@@ -12,6 +11,7 @@ import Room from "./Views/Room";
 import "./Styling/App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ContextProvider } from "./AppContext";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
         </BrowserRouter>
         {/* <Posts />
       <PostContent /> */}
+        <ToastContainer />
       </div>
     </ContextProvider>
   );

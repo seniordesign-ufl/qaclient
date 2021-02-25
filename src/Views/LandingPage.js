@@ -9,6 +9,8 @@ import Header from "../components/Header";
 import "../Styling/LandingPage.css";
 import Slideout from "../components/Slideout";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /**
  * Landing page, first view that user interacts with.
@@ -30,7 +32,7 @@ function Landing(props) {
     }
     return (
         <div>
-            <Header roomKey={contextState.roomKey} />
+            <Header />
             <div className="landing-page">
                 <div className="landing-box">
 
@@ -42,8 +44,8 @@ function Landing(props) {
                     <div className="link-box">
                         {showLink ? <Slideout>
                             <div>
-                                Link: <Link to={`/room/${contextState.roomKey}`}>{"https://localhost:3001/room/" + contextState.roomKey}</Link>
-                                <Copy link={`https://localhost:3001/room/${contextState.roomKey}`} />
+                                Link: <Link to={`/room/${appContext.state.roomKey}`}>{"https://localhost:3001/room/" + appContext.state.roomKey}</Link>
+                                <Copy link={`https://localhost:3001/room/${appContext.state.roomKey}`} />
                             </div>
                         </Slideout> : <div></div>}
                     </div>
@@ -61,6 +63,7 @@ function Copy(props) {
     const [clicked, setClicked] = useState(false);
     const doCopy = () => {
         navigator.clipboard.writeText(props.link);
+        toast("Copied!");
         setClicked(true);
     }
     return <>

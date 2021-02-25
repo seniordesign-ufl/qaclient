@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 class Posts extends React.Component {
     state = {
@@ -14,10 +13,6 @@ class Posts extends React.Component {
     }
 
     componentDidMount() {
-        // axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
-        //     console.log(res);
-        //     this.setState({posts: res.data});
-        // })
     }
 
     render() {

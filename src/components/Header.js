@@ -1,12 +1,28 @@
-import { React, useContext, useEffect, useState } from "react";
-import { API, AppContext } from "../AppContext";
+import { React, useContext, useState } from "react";
+import { AppContext } from "../AppContext";
 import '../Styling/Header.css';
 
-import { Form, Container, Row, Col, FormControl, Dropdown, DropdownButton, Button, InputGroup } from "react-bootstrap";
+import { Container, Row, Col, FormControl, Dropdown, DropdownButton, Button, InputGroup } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
+import { Route } from "react-router";
 
 function Header(props) {
-    const { state: contextState, dispatch } = useState(AppContext);
+    return (
+        <div class="header">
+            <Container fluid>
+                <Row>
+                    <Col align="left">
+                        <a class="navbar-brand" href="/">SmallTalk</a>
+                    </Col>
+                    {/* Only show when URL matches a room url. */}
+                    <Route exact path={"/room/:roomID/"} component={Searchbar} />
+                </Row>
+            </Container>
+        </div>
+    )
+};
+function Searchbar(props) {
+    const { state: contextState, dispatch } = useContext(AppContext);
     const [displayWholeHeader, updateWholeDisplayHeader] = useState(true);
     const [searchItem, updateSearchItem] = useState("");
     const [sortBy, updateSortBy] = useState("");
@@ -21,59 +37,23 @@ function Header(props) {
         // API.filter(sortBy, props.roomKey);
         // socket.emit("filter", { condition: sortBy, groupID: props.roomKey })
     }
+    return <>
+        <Col xs={5} align="center">
+            <InputGroup>
+                <FormControl placeholder="Search Discussions..." onChange={handleSearch} />
+                <InputGroup.Append>
+                    <Button><BsSearch /></Button>
+                </InputGroup.Append>
+            </InputGroup>
+        </Col>
+        <Col align="right">
+            <DropdownButton title="Sort By" id="basic-nav-dropdown">
+                <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
+                <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
+                <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>
+            </DropdownButton>
+        </Col>
+    </>
 
-    // useEffect(() => {
-    //     socket.on('update-posts', (r) => {
-    //         const { names } = r;
-    //         // setUsers(names);
-    //     });
-    //     // unsubscribe from event for preventing memory leaks
-    //     return () => {
-    //         socket.off('update-posts');
-    //     };
-    // }, []);
-
-    if (props.roomKey != null) {
-        return (
-            <div class="header">
-                <Container fluid>
-                    <Row>
-                        <Col align="left">
-                            <a class="navbar-brand" href="/">SmallTalk</a>
-                        </Col>
-                        <Col xs={6} align="center">
-                            <InputGroup>
-                                <FormControl placeholder="Search Discussions..." onChange={handleSearch} />
-                                <InputGroup.Append>
-                                    <Button><BsSearch /></Button>
-                                </InputGroup.Append>
-                            </InputGroup>
-                        </Col>
-                        <Col align="right">
-                            <DropdownButton title="Sort By" id="basic-nav-dropdown">
-                                <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
-                                <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
-                                <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>
-                            </DropdownButton>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div class="header">
-                <Container fluid>
-                    <Row>
-                        <Col align="left">
-                            <a class="navbar-brand" href="/">SmallTalk</a>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        )
-    }
-};
-
+}
 export default Header;
