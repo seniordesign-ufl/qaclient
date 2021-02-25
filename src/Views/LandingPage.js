@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
  * @param {} props 
  */
 function Landing(props) {
-    const appContext = useContext(AppContext);
+    const { state: contextState, dispatch } = useContext(AppContext);
     const [showLink, updateShowLink] = useState(false);
     const [name, updateName] = useState("");
     /* 
@@ -26,7 +26,7 @@ function Landing(props) {
     The Code and Display Name Will Be Sent Over To The Generate Component
     */
     function handleGenerateClick(e) {
-        appContext.dispatch({ type: "update-name", displayName: name });
+        dispatch({ type: "update-name", displayName: name });
         API.requestRoom();
         updateShowLink(true);
     }
