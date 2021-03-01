@@ -44,8 +44,8 @@ function Landing(props) {
                     <div className="link-box">
                         {showLink ? <Slideout>
                             <div>
-                                Link: <Link to={`/room/${appContext.state.roomKey}`}>{"https://localhost:3001/room/" + appContext.state.roomKey}</Link>
-                                <Copy link={`https://localhost:3001/room/${appContext.state.roomKey}`} />
+                                Link: <Link to={`/room/${contextState.roomKey}`}>{"https://localhost:3001/room/" + contextState.roomKey}</Link>
+                                <Copy link={`https://localhost:3001/room/${contextState.roomKey}`} />
                             </div>
                         </Slideout> : <div></div>}
                     </div>

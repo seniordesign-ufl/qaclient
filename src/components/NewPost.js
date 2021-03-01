@@ -27,7 +27,7 @@ function NewPost(props) {
         console.log(post.content)
         console.log(post.author)
         console.log(post.time)
-
+        console.log(contextState.roomKey);
         API.createPost(post, contextState.roomKey);
         props.onHide();
     };
