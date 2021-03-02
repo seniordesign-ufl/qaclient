@@ -19,9 +19,6 @@ export default function CommentList(props) {
 
     function mapPosts() {
         let posts_array = [];
-        // posts_array = contextState.posts;
-        console.log("Search Phrase");
-        console.log(contextState.search_phrase);
         if(contextState.search_phrase !== '')
         {
             for(let i = 0; i < contextState.posts.length; i++)
@@ -39,7 +36,7 @@ export default function CommentList(props) {
                 }
                 else if(contextState.filter_by == 'Date')
                 {
-                    posts_array.sort((a, b) => b.time - a.time);
+                    posts_array.sort((a, b) => b.time).reverse();
                 }
                 else if(contextState.filter_by == 'Solved')
                 {
@@ -55,14 +52,17 @@ export default function CommentList(props) {
         }
         else if(contextState.filter_by !== '')
         {
-            posts_array = contextState.posts;
+            for(let i = 0; i < contextState.posts.length; i++)
+            {
+                posts_array.push(contextState.posts[i]);
+            }
             if(contextState.filter_by == 'Popularity')
             {
                 posts_array.sort((a, b) => b.upVotes - a.upVotes);
             }
             else if(contextState.filter_by == 'Date')
             {
-                posts_array.sort((a, b) => b.time - a.time);
+                posts_array.sort((a, b) => b.time).reverse();
             }
             else
             {
@@ -79,19 +79,6 @@ export default function CommentList(props) {
         {
             posts_array = contextState.posts;
         }
-
-        // if(contextState.filter_by != '')
-        // {
-        //     if(contextState.search_phrase == '')
-        //     {
-        //         posts_array = contextState.posts;
-        //     }
-
-
-        // }
-
-        console.log("Array To Test")
-        console.log(posts_array)
 
         return (posts_array.length !== 0 ? 
                 posts_array.map((post, i) => <PostSummary select={props.selectPost} display={props.displayComments} post={post} key={i} />) 

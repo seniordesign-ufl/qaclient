@@ -24,18 +24,16 @@ function Header(props) {
 function Searchbar(props) {
     const { state: contextState, dispatch } = useContext(AppContext);
     const [displayWholeHeader, updateWholeDisplayHeader] = useState(true);
-    const [searchItem, updateSearchItem] = useState("");
-    const [sortBy, updateSortBy] = useState("");
+    const [filterValue, updateFilterValue] = useState("");
 
     const handleSearch = (e) => {
-        updateSearchItem(e.target.value);
-        dispatch({ type: 'update-search', search_phrase: searchItem });
+        dispatch({ type: 'update-search', search_phrase: e.target.value });
         // API.searchFor(searchItem, props.roomKey);
     }
 
     const handleSort = (e) => {
-        updateSortBy(e.target.innerText);
-        dispatch({ type: 'update-filter', filter_by: sortBy });
+        updateFilterValue(e.target.innerText);
+        dispatch({ type: 'update-filter', filter_by: e.target.innerText });
         // API.filter(sortBy, props.roomKey);
         // socket.emit("filter", { condition: sortBy, groupID: props.roomKey })
     }
@@ -52,7 +50,7 @@ function Searchbar(props) {
                 </InputGroup>
             </Col>
             <Col align="right">
-                <DropdownButton title="Sort By" id="basic-nav-dropdown">
+                <DropdownButton title={filterValue === '' ? "Sort By" : filterValue} id="basic-nav-dropdown">
                     <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
                     <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
                     <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>
