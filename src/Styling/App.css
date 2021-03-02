@@ -39,3 +39,18 @@
 .postTime {
   float: right;
 }
+
+.comment {
+  width: 100%;
+}
+
+.postCommentsRow {
+  margin-top: 20px;
+}
+
+.commentTextArea {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

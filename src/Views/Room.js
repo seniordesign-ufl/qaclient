@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { API, AppContext } from "../AppContext";
 
 //Components
@@ -8,7 +8,13 @@ import EnterDisplayName from "./EnterDisplayName";
 import RoomHomeScreen from "./RoomHomeScreen";
 
 function Room(props) {
-    const { state: contextState } = useContext(AppContext);
+    const { state: contextState, dispatch } = useContext(AppContext);
+
+    //Sets room key for users joining from link
+    useEffect(() => {
+        dispatch({ type: 'join-room', roomKey: props.match.params.roomID});
+    }, [])
+
     return (
         <div className="room-page">
             <Header roomKey={contextState.roomKey} />

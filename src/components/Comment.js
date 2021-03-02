@@ -9,9 +9,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import { BsChevronUp } from 'react-icons/bs'
-import { BsChatSquareDots } from 'react-icons/bs'
 
-function PostSummary(props) {
+function Comment(props) {
     const [canUpvote, setCanUpvote] = useState(true)
     const [show, setShow] = useState(false);
     const { state: contextState, dispatch } = useContext(AppContext);
@@ -21,69 +20,67 @@ function PostSummary(props) {
 
     function handleUpvote() {
         if (canUpvote) {
-            const postUpdate = {
-                title: props.post.title,
+            const commentUpdate = {
+                title: props.title,
+                commentID: props.comment.id,
                 upVote: 1,
             }
-            API.updatePost(postUpdate, contextState.roomKey);
+            API.updateComment(commentUpdate, contextState.roomKey);
             setCanUpvote(false);
         }
     }
 
     function handleRemove() {
-        API.removePost(props.post.title, contextState.roomKey);
+        const removeComment = {
+            title: props.title,
+            commentID: props.comment.id
+        }
+        API.removeComment(removeComment,  contextState.roomKey);
     }
 
     function calculateTime() {
-        let diff = (new Date()).getTime() - new Date(props.post.time).getTime();
+        let diff = (new Date()).getTime() - new Date(props.comment.time).getTime();
         return (Math.round(diff / 60000))
     }
 
-    function handleComment() {
-        props.select(contextState.posts.findIndex((element) => element.title === props.post.title));
-        props.display(true);
-    }
-
     return (
-        <div class='postSummary'>
+        <div class='comment'>
             <Card style={{ width: '100%' }}>
                 <Container>
                     <Row>
                         <Col sm='1'>
                             <Button variant='light' onClick={() => handleUpvote()} style={{ marginTop: '10px' }}><BsChevronUp /></Button>
                             <br />
-                            <a>{props.post.upVotes}</a>
-                            <br />
-                            <Button variant='light' onClick={() => handleComment()} style={{ marginTop: '10px' }}><BsChatSquareDots /></Button>
-                            <br />
-                            <a>{props.post.comments.length}</a>
+                            <a>{props.comment.upVotes}</a>
                         </Col>
                         <Col lg style={{ textAlign: 'left' }}>
                             <Row>
                                 <Col>
-                                    <Card.Title>{props.post.title}</Card.Title>
+                                    <Row>
+                                        <Card.Text>{props.comment.content}</Card.Text>
+                                    </Row>
+                                    <Row style={{marginTop: "10px"}}>
+                                        <blockquote>
+                                            <footer className="blockquote-footer">
+                                                {props.comment.isAnon ? 'Anonymous' : props.comment.author}
+                                            </footer>
+                                        </blockquote>
+                                    </Row>
                                 </Col>
-
                                 {/* Check if current display name matches name of post. If so allow them to remove it */
-                                contextState.displayName === props.post.author &&
+                                contextState.displayName === props.comment.author &&
                                 <Col sm={1}>
-                                    <Button onClick={handleShow} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
+                                    <Button onClick={() => handleShow()} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
                                 </Col> 
                                 }
                             </Row>
-                            <Card.Text>{props.post.content}</Card.Text>
-                            <blockquote>
-                                <Row>
-                                    <Col>
-                                        <footer className="blockquote-footer">
-                                            {props.post.isAnon ? 'Anonymous' : props.post.author}
-                                        </footer>
-                                    </Col>
-                                    <Col sm={2}>
-                                        <p class='postTime'>{calculateTime()} mins ago</p>
-                                    </Col>
-                                </Row>
-                            </blockquote>
+                            <Row>
+                                <Col>
+                                </Col>
+                                <Col sm={2}>
+                                    <p class='postTime'>{calculateTime()} mins ago</p>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>
@@ -91,7 +88,7 @@ function PostSummary(props) {
             {/* Confirmation for Removing Post */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Remove this post?</Modal.Title>
+                    <Modal.Title>Remove this comment?</Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
@@ -104,7 +101,6 @@ function PostSummary(props) {
             </Modal>
         </div>
     )
-
 }
 
-export default PostSummary;
+export default Comment;
