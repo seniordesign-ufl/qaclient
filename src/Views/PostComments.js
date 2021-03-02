@@ -62,8 +62,71 @@ function PostComments(props) {
     }
 
     function mapComments() {
-        return (props.post.comments.length !== 0 ? 
-                props.post.comments.map((comment, i) => <Comment title={props.post.title} comment={comment} key={i}/>) 
+        let comments_array = [];
+        if(contextState.search_phrase !== '')
+        {
+            for(let i = 0; i < props.post.comments.length; i++)
+            {
+                if(props.post.comments[i].content.includes(contextState.search_phrase) === true)
+                {
+                    comments_array.push(props.post.comments[i])
+                }
+            }
+            if(contextState.filter_by !== '')
+            {
+                if(contextState.filter_by === 'Popularity')
+                {
+                    comments_array.sort((a, b) => b.upVotes - a.upVotes);
+                }
+                else if(contextState.filter_by === 'Date')
+                {
+                    comments_array.sort((a, b) => b.time).reverse();
+                }
+                else if(contextState.filter_by === 'Solved')
+                {
+                    for(let i=0; i < comments_array.length; i++)
+                    {
+                        if(comments_array[i].solved === false)
+                        {
+                            comments_array.splice(i, 1);
+                        }
+                    }
+                }
+            }
+        }
+        else if(contextState.filter_by !== '')
+        {
+            for(let i = 0; i < props.post.comments.length; i++)
+            {
+                comments_array.push(props.post.comments[i]);
+            }
+            if(contextState.filter_by === 'Popularity')
+            {
+                comments_array.sort((a, b) => b.upVotes - a.upVotes);
+            }
+            else if(contextState.filter_by === 'Date')
+            {
+                comments_array.sort((a, b) => b.time).reverse();
+            }
+            else
+            {
+                for(let i=0; i < comments_array.length; i++)
+                {
+                    if(comments_array[i].solved === false)
+                    {
+                        comments_array.splice(i, 1);
+                    }
+                }
+            }
+        }
+        else
+        {
+            console.log(props.post.comments);
+            comments_array = props.post.comments;
+        }
+        
+        return (comments_array.length !== 0 ? 
+                comments_array.map((comment, i) => <Comment title={props.post.title} comment={comment} key={i}/>) 
                 : <p>No comments yet</p>);
     }
 

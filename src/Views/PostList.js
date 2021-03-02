@@ -23,26 +23,26 @@ export default function CommentList(props) {
         {
             for(let i = 0; i < contextState.posts.length; i++)
             {
-                if(contextState.posts[i].title.includes(contextState.search_phrase) == true)
+                if(contextState.posts[i].title.includes(contextState.search_phrase) === true)
                 {
                     posts_array.push(contextState.posts[i])
                 }
             }
             if(contextState.filter_by !== '')
             {
-                if(contextState.filter_by == 'Popularity')
+                if(contextState.filter_by === 'Popularity')
                 {
                     posts_array.sort((a, b) => b.upVotes - a.upVotes);
                 }
-                else if(contextState.filter_by == 'Date')
+                else if(contextState.filter_by === 'Date')
                 {
                     posts_array.sort((a, b) => b.time).reverse();
                 }
-                else if(contextState.filter_by == 'Solved')
+                else if(contextState.filter_by === 'Solved')
                 {
                     for(let i=0; i < posts_array.length; i++)
                     {
-                        if(posts_array[i].solved == false)
+                        if(posts_array[i].solved === false)
                         {
                             posts_array.splice(i, 1);
                         }
@@ -56,11 +56,11 @@ export default function CommentList(props) {
             {
                 posts_array.push(contextState.posts[i]);
             }
-            if(contextState.filter_by == 'Popularity')
+            if(contextState.filter_by === 'Popularity')
             {
                 posts_array.sort((a, b) => b.upVotes - a.upVotes);
             }
-            else if(contextState.filter_by == 'Date')
+            else if(contextState.filter_by === 'Date')
             {
                 posts_array.sort((a, b) => b.time).reverse();
             }
@@ -68,7 +68,7 @@ export default function CommentList(props) {
             {
                 for(let i=0; i < posts_array.length; i++)
                 {
-                    if(posts_array[i].solved == false)
+                    if(posts_array[i].solved === false)
                     {
                         posts_array.splice(i, 1);
                     }
