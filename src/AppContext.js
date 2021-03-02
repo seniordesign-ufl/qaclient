@@ -10,6 +10,8 @@ const INITIAL_STATE = {
     roomKey: null,
     posts: [],
     users: [],
+    search_phrase: '',
+    filter_by: '',
     admin: false
 };
 const reducer = produce((draft, action) => {
@@ -28,6 +30,12 @@ const reducer = produce((draft, action) => {
             break;
         case 'update-users':
             draft.users = action.users;
+            break;
+        case 'update-search':
+            draft.search_phrase = action.search_phrase;
+            break;
+        case 'update-filter':
+            draft.filter_by = action.filter_by;
             break;
         case 'admin-granted':
             draft.admin = true;

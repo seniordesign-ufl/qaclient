@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BsPerson } from 'react-icons/bs';
+import context from "react-bootstrap/esm/AccordionContext";
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext);
@@ -17,8 +18,83 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true);
 
     function mapPosts() {
-        return (contextState.posts.length !== 0 ? 
-                contextState.posts.map((post, i) => <PostSummary select={props.selectPost} display={props.displayComments} post={post} key={i} />) 
+        let posts_array = [];
+        // posts_array = contextState.posts;
+        console.log("Search Phrase");
+        console.log(contextState.search_phrase);
+        if(contextState.search_phrase !== '')
+        {
+            for(let i = 0; i < contextState.posts.length; i++)
+            {
+                if(contextState.posts[i].title.includes(contextState.search_phrase) == true)
+                {
+                    posts_array.push(contextState.posts[i])
+                }
+            }
+            if(contextState.filter_by !== '')
+            {
+                if(contextState.filter_by == 'Popularity')
+                {
+                    posts_array.sort((a, b) => b.upVotes - a.upVotes);
+                }
+                else if(contextState.filter_by == 'Date')
+                {
+                    posts_array.sort((a, b) => b.time - a.time);
+                }
+                else if(contextState.filter_by == 'Solved')
+                {
+                    for(let i=0; i < posts_array.length; i++)
+                    {
+                        if(posts_array[i].solved == false)
+                        {
+                            posts_array.splice(i, 1);
+                        }
+                    }
+                }
+            }
+        }
+        else if(contextState.filter_by !== '')
+        {
+            posts_array = contextState.posts;
+            if(contextState.filter_by == 'Popularity')
+            {
+                posts_array.sort((a, b) => b.upVotes - a.upVotes);
+            }
+            else if(contextState.filter_by == 'Date')
+            {
+                posts_array.sort((a, b) => b.time - a.time);
+            }
+            else
+            {
+                for(let i=0; i < posts_array.length; i++)
+                {
+                    if(posts_array[i].solved == false)
+                    {
+                        posts_array.splice(i, 1);
+                    }
+                }
+            }
+        }
+        else
+        {
+            posts_array = contextState.posts;
+        }
+
+        // if(contextState.filter_by != '')
+        // {
+        //     if(contextState.search_phrase == '')
+        //     {
+        //         posts_array = contextState.posts;
+        //     }
+
+
+        // }
+
+        console.log("Array To Test")
+        console.log(posts_array)
+
+        return (posts_array.length !== 0 ? 
+                posts_array.map((post, i) => <PostSummary select={props.selectPost} display={props.displayComments} post={post} key={i} />) 
                 : <p>No posts yet</p>);
     }
 
