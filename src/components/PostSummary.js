@@ -25,7 +25,6 @@ function PostSummary(props) {
                 title: props.post.title,
                 upVote: 1,
             }
-            console.log(postUpdate)
             API.updatePost(postUpdate, contextState.roomKey);
             setCanUpvote(false);
         }
@@ -42,7 +41,6 @@ function PostSummary(props) {
 
     function handleComment() {
         props.select(contextState.posts.findIndex((element) => element.title === props.post.title));
-        console.log("PostSummary:  ", props.post);
         props.display(true);
     }
 

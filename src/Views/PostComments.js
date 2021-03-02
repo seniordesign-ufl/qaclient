@@ -39,7 +39,6 @@ function PostComments(props) {
                 title: props.post.title,
                 upVote: 1,
             }
-            console.log(postUpdate)
             API.updatePost(postUpdate, contextState.roomKey);
             setCanUpvote(false);
         }

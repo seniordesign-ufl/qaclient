@@ -25,7 +25,6 @@ function Comment(props) {
                 commentID: props.comment.id,
                 upVote: 1,
             }
-            console.log(commentUpdate)
             API.updateComment(commentUpdate, contextState.roomKey);
             setCanUpvote(false);
         }
