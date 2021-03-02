@@ -89,7 +89,7 @@ function Comment(props) {
             {/* Confirmation for Removing Post */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Remove this post?</Modal.Title>
+                    <Modal.Title>Remove this comment?</Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
