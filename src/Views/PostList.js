@@ -8,8 +8,7 @@ import { Button, Modal } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { BsPerson } from 'react-icons/bs';
-import context from "react-bootstrap/esm/AccordionContext";
+import { BsPerson, BsConeStriped } from 'react-icons/bs';
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext);
@@ -18,66 +17,26 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true);
 
     function mapPosts() {
-        let posts_array = [];
-        if(contextState.search_phrase !== '')
+        let posts_array = contextState.search_phrase === '' ? contextState.posts : contextState.posts.filter(c => c.title.includes(contextState.search_phrase));
+
+        if(contextState.filter_by === 'Popularity')
         {
-            for(let i = 0; i < contextState.posts.length; i++)
-            {
-                if(contextState.posts[i].title.includes(contextState.search_phrase) === true)
-                {
-                    posts_array.push(contextState.posts[i])
-                }
-            }
-            if(contextState.filter_by !== '')
-            {
-                if(contextState.filter_by === 'Popularity')
-                {
-                    posts_array.sort((a, b) => b.upVotes - a.upVotes);
-                }
-                else if(contextState.filter_by === 'Date')
-                {
-                    posts_array.sort((a, b) => b.time).reverse();
-                }
-                else if(contextState.filter_by === 'Solved')
-                {
-                    for(let i=0; i < posts_array.length; i++)
-                    {
-                        if(posts_array[i].solved === false)
-                        {
-                            posts_array.splice(i, 1);
-                        }
-                    }
-                }
-            }
+            posts_array = posts_array.slice().sort((a, b) => b.upVotes - a.upVotes);
         }
-        else if(contextState.filter_by !== '')
+        else if(contextState.filter_by === 'Date')
         {
-            for(let i = 0; i < contextState.posts.length; i++)
-            {
-                posts_array.push(contextState.posts[i]);
-            }
-            if(contextState.filter_by === 'Popularity')
-            {
-                posts_array.sort((a, b) => b.upVotes - a.upVotes);
-            }
-            else if(contextState.filter_by === 'Date')
-            {
-                posts_array.sort((a, b) => b.time).reverse();
-            }
-            else
-            {
-                for(let i=0; i < posts_array.length; i++)
-                {
-                    if(posts_array[i].solved === false)
-                    {
-                        posts_array.splice(i, 1);
-                    }
-                }
-            }
+            posts_array = posts_array.slice().sort((a, b) => b.time).reverse();
         }
-        else
+        else if(contextState.filter_by === 'Solved')
         {
-            posts_array = contextState.posts;
+            let temp = []
+            posts_array.slice().forEach(element => {
+                if(element.solved===true)
+                {
+                    temp.append(element)
+                }
+            });
+            posts_array = temp;
         }
 
         return (posts_array.length !== 0 ? 

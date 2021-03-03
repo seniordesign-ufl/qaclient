@@ -62,69 +62,28 @@ function PostComments(props) {
     }
 
     function mapComments() {
-        let comments_array = [];
-        if(contextState.search_phrase !== '')
+        let comments_array = contextState.search_phrase === '' ? props.post.comments : props.post.comments.filter(c => c.content.includes(contextState.search_phrase));
+
+        if(contextState.filter_by === 'Popularity')
         {
-            for(let i = 0; i < props.post.comments.length; i++)
-            {
-                if(props.post.comments[i].content.includes(contextState.search_phrase) === true)
-                {
-                    comments_array.push(props.post.comments[i])
-                }
-            }
-            if(contextState.filter_by !== '')
-            {
-                if(contextState.filter_by === 'Popularity')
-                {
-                    comments_array.sort((a, b) => b.upVotes - a.upVotes);
-                }
-                else if(contextState.filter_by === 'Date')
-                {
-                    comments_array.sort((a, b) => b.time).reverse();
-                }
-                else if(contextState.filter_by === 'Solved')
-                {
-                    for(let i=0; i < comments_array.length; i++)
-                    {
-                        if(comments_array[i].solved === false)
-                        {
-                            comments_array.splice(i, 1);
-                        }
-                    }
-                }
-            }
+            comments_array = comments_array.slice().sort((a, b) => b.upVotes - a.upVotes);
         }
-        else if(contextState.filter_by !== '')
+        else if(contextState.filter_by === 'Date')
         {
-            for(let i = 0; i < props.post.comments.length; i++)
-            {
-                comments_array.push(props.post.comments[i]);
-            }
-            if(contextState.filter_by === 'Popularity')
-            {
-                comments_array.sort((a, b) => b.upVotes - a.upVotes);
-            }
-            else if(contextState.filter_by === 'Date')
-            {
-                comments_array.sort((a, b) => b.time).reverse();
-            }
-            else
-            {
-                for(let i=0; i < comments_array.length; i++)
-                {
-                    if(comments_array[i].solved === false)
-                    {
-                        comments_array.splice(i, 1);
-                    }
-                }
-            }
+            comments_array = comments_array.slice().sort((a, b) => b.time).reverse();
         }
-        else
+        else if(contextState.filter_by === 'Solved')
         {
-            console.log(props.post.comments);
-            comments_array = props.post.comments;
+            let temp = []
+            comments_array.slice().forEach(element => {
+                if(element.solved===true)
+                {
+                    temp.append(element)
+                }
+            });
+            comments_array = temp;
         }
-        
+
         return (comments_array.length !== 0 ? 
                 comments_array.map((comment, i) => <Comment title={props.post.title} comment={comment} key={i}/>) 
                 : <p>No comments yet</p>);
