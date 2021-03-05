@@ -62,8 +62,30 @@ function PostComments(props) {
     }
 
     function mapComments() {
-        return (props.post.comments.length !== 0 ? 
-                props.post.comments.map((comment, i) => <Comment title={props.post.title} comment={comment} key={i}/>) 
+        let comments_array = contextState.search_phrase === '' ? props.post.comments : props.post.comments.filter(c => c.content.includes(contextState.search_phrase));
+
+        if(contextState.filter_by === 'Popularity')
+        {
+            comments_array = comments_array.slice().sort((a, b) => b.upVotes - a.upVotes);
+        }
+        else if(contextState.filter_by === 'Date')
+        {
+            comments_array = comments_array.slice().sort((a, b) => b.time).reverse();
+        }
+        else if(contextState.filter_by === 'Solved')
+        {
+            let temp = []
+            comments_array.slice().forEach(element => {
+                if(element.solved===true)
+                {
+                    temp.append(element)
+                }
+            });
+            comments_array = temp;
+        }
+
+        return (comments_array.length !== 0 ? 
+                comments_array.map((comment, i) => <Comment title={props.post.title} comment={comment} key={i}/>) 
                 : <p>No comments yet</p>);
     }
 

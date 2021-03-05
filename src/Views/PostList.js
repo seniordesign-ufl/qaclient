@@ -8,7 +8,7 @@ import { Button, Modal } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { BsPerson } from 'react-icons/bs';
+import { BsPerson, BsConeStriped } from 'react-icons/bs';
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext);
@@ -17,8 +17,30 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true);
 
     function mapPosts() {
-        return (contextState.posts.length !== 0 ? 
-                contextState.posts.map((post, i) => <PostSummary select={props.selectPost} display={props.displayComments} post={post} key={i} />) 
+        let posts_array = contextState.search_phrase === '' ? contextState.posts : contextState.posts.filter(c => c.title.includes(contextState.search_phrase));
+
+        if(contextState.filter_by === 'Popularity')
+        {
+            posts_array = posts_array.slice().sort((a, b) => b.upVotes - a.upVotes);
+        }
+        else if(contextState.filter_by === 'Date')
+        {
+            posts_array = posts_array.slice().sort((a, b) => b.time).reverse();
+        }
+        else if(contextState.filter_by === 'Solved')
+        {
+            let temp = []
+            posts_array.slice().forEach(element => {
+                if(element.solved===true)
+                {
+                    temp.append(element)
+                }
+            });
+            posts_array = temp;
+        }
+
+        return (posts_array.length !== 0 ? 
+                posts_array.map((post, i) => <PostSummary select={props.selectPost} display={props.displayComments} post={post} key={i} />) 
                 : <p>No posts yet</p>);
     }
 
