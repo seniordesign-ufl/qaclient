@@ -1,5 +1,5 @@
 .header {
-    background-color: #f5f5f5;
+    background-color: white;
     padding: 1%;
 }
 
@@ -7,9 +7,29 @@
     color: #E98074;
 }
 
-/*.navbar-brand:hover {
-    background: #91c64b;
-}*/
+.navbar-brand:hover {
+    color:#E98074;
+}
+
+.search-container {
+    border: 2px solid;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+
+.search-input {
+    border: none !important;
+    padding: 0px 5px;
+}
+
+.search-button {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.search-icon {
+    color: black !important;
+}
 
 p {
     margin-top: 5px;

@@ -22,6 +22,7 @@ function Header(props) {
         socket.emit("filter", {condition: sortBy, groupID: props.roomKey})
     }
 
+<<<<<<< Updated upstream
     useEffect(() => {
         socket.on('update-posts', (r) => {
             const { names } = r;
@@ -75,6 +76,29 @@ function Header(props) {
                 </Container>
             </div>
         )
+=======
+    if (contextState.displayName != null) {
+        return <>
+            <Col xs={5} align="center" className="search-container">
+                <InputGroup>
+                    <FormControl placeholder="Search Discussions..." onChange={handleSearch} className="search-input" />
+                    <InputGroup.Append>
+                        <Button className="search-button"><BsSearch className="search-icon" /></Button>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Col>
+            <Col align="right">
+                <DropdownButton title={filterValue === '' ? "Sort By" : filterValue} id="basic-nav-dropdown">
+                    <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
+                    <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
+                    <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>
+                </DropdownButton>
+            </Col>
+        </>
+    }
+    else {
+        return <></>
+>>>>>>> Stashed changes
     }
 };
 
