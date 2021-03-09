@@ -40,11 +40,17 @@
   float: right;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.comment {
+  width: 100%;
+}
+
+.postCommentsRow {
+  margin-top: 20px;
+}
+
+.commentTextArea {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
