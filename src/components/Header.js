@@ -8,11 +8,11 @@ import { Route } from "react-router";
 
 function Header(props) {
     return (
-        <div class="header">
+        <div className="header">
             <Container fluid>
                 <Row>
                     <Col align="left">
-                        <a class="navbar-brand" href="/">SmallTalk</a>
+                        <a className="navbar-brand" href="/">SmallTalk</a>
                     </Col>
                     {/* Only show when URL matches a room url. */}
                     <Route exact path={"/room/:roomID/"} component={Searchbar} />
@@ -38,8 +38,7 @@ function Searchbar(props) {
         // socket.emit("filter", { condition: sortBy, groupID: props.roomKey })
     }
 
-    if (contextState.displayName != null)
-    {
+    if (contextState.displayName != null) {
         return <>
             <Col xs={5} align="center">
                 <InputGroup>
@@ -58,8 +57,7 @@ function Searchbar(props) {
             </Col>
         </>
     }
-    else
-    {
+    else {
         return <></>
     }
 

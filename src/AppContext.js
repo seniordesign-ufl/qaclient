@@ -44,7 +44,7 @@ const reducer = produce((draft, action) => {
 
 }, INITIAL_STATE)
 
-const socket = socketIOClient("http://localhost:3000");
+let socket = null;
 
 export const API = {
     join: (userName, groupID) => {
@@ -77,6 +77,7 @@ export const API = {
 }
 
 const socketEvents = (dispatch) => {
+    console.log("Socket events on")
     socket.on('room-code', (roomCode) => {
         dispatch({ type: "join-room", roomKey: roomCode });
         console.log("Socket event roomcode:", roomCode)
@@ -98,12 +99,14 @@ const socketEvents = (dispatch) => {
     });
 }
 export const initSockets = (dispatch) => {
+    console.log("init socket");
+    socket = socketIOClient("http://localhost:3000")
     socketEvents(dispatch);
 };
 
-export function ContextProvider({ children }) {
+export function ContextProvider({ init, children }) {
     const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE)
-    useEffect(() => initSockets(dispatch), [initSockets])
+    useEffect(() => init(dispatch), [init]);
     return (
         <AppContext.Provider value={{ state, dispatch }}>
             {children}
