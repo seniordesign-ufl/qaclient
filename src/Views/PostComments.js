@@ -10,12 +10,11 @@ import Col from 'react-bootstrap/Col';
 import { BsChevronUp, BsChatSquareDots, BsArrowLeft } from 'react-icons/bs'
 
 function PostComments(props) {
-    const { state: contextState } = useContext(AppContext);
+    const { state: contextState, dispatch } = useContext(AppContext);
     const [content, setContent] = useState("");
     const [time, setTime] = useState(new Date());
     const [anonymous, setAnonymous] = useState(false);
     const [displayForm, setDisplayForm] = useState(false);
-    const [canUpvote, setCanUpvote] = useState(true);
 
     //Handles submission of new Comment
     const handleSubmitForm = (e) => {
@@ -28,19 +27,19 @@ function PostComments(props) {
             isAnon: anonymous
         };
 
-        API.addComment(comment, props.post.title, contextState.roomKey);
+        API.addComment(comment, props.post.id, contextState.roomKey);
         setDisplayForm(false);
         setAnonymous(false);
     };
 
     function handleUpvote() {
-        if (canUpvote) {
+        if (!contextState.upVotes.includes(props.post.id)) {
             const postUpdate = {
-                title: props.post.title,
+                postID: props.post.id,
                 upVote: 1,
             }
             API.updatePost(postUpdate, contextState.roomKey);
-            setCanUpvote(false);
+            dispatch({type: 'update-upVotes', upVotes: contextState.upVotes.push([props.post.id])})
         }
     }
 
@@ -83,9 +82,8 @@ function PostComments(props) {
             });
             comments_array = temp;
         }
-
         return (comments_array.length !== 0 ? 
-                comments_array.map((comment, i) => <Comment title={props.post.title} comment={comment} key={i}/>) 
+                comments_array.map((comment, i) => <Comment postID={props.post.id} comment={comment} key={i}/>) 
                 : <p>No comments yet</p>);
     }
 
