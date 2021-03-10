@@ -20,18 +20,18 @@ function PostSummary(props) {
     const handleShow = () => setShow(true);
 
     function handleUpvote() {
-        if (canUpvote) {
+        if (!contextState.upVotes.includes(props.post.id)) {
             const postUpdate = {
-                title: props.post.title,
+                postID: props.post.id,
                 upVote: 1,
             }
             API.updatePost(postUpdate, contextState.roomKey);
-            setCanUpvote(false);
+            dispatch({type: 'update-upVotes', upVotes: contextState.upVotes.concat([props.post.id])})
         }
     }
 
     function handleRemove() {
-        API.removePost(props.post.title, contextState.roomKey);
+        API.removePost(props.post.id, contextState.roomKey);
     }
 
     function calculateTime() {

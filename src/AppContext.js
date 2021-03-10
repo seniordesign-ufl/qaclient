@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     roomKey: null,
     posts: [],
     users: [],
+    upVotes: [],
     search_phrase: '',
     filter_by: '',
     admin: false
@@ -40,6 +41,9 @@ const reducer = produce((draft, action) => {
         case 'admin-granted':
             draft.admin = true;
             break;
+        case 'update-upVotes':
+            draft.upVotes = action.upVotes;
+            break;
     }
 
 }, INITIAL_STATE)
@@ -62,11 +66,11 @@ export const API = {
     updatePost: (postUpdate, groupID) => {
         socket.emit('update-post', { postUpdate, groupID });
     },
-    removePost: (title, groupID) => {
-        socket.emit('remove-post', {title, groupID});
+    removePost: (postID, groupID) => {
+        socket.emit('remove-post', {postID, groupID});
     },
-    addComment: (comment, postTitle, groupID) => {
-        socket.emit('add-comment', {comment, postTitle, groupID});
+    addComment: (comment, postID, groupID) => {
+        socket.emit('add-comment', {comment, postID, groupID});
     },
     updateComment: (commentUpdate, groupID) => {
         socket.emit('update-comment', {commentUpdate, groupID});
