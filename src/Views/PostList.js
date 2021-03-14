@@ -10,6 +10,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BsPerson, BsConeStriped } from 'react-icons/bs';
 
+import '../Styling/PostList.css';
+
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext);
     const [show, setShow] = useState(false);
@@ -47,7 +49,7 @@ export default function CommentList(props) {
     return <div>
         <Container className="roomContainer">
             <Row>
-                <Col sm={2} style={{ textAlign: 'left' }}>
+                <Col sm={2} id="discussionHeader">
                     <h2>Discussion</h2>
                 </Col>
                 <Col sm={1}>
@@ -55,7 +57,7 @@ export default function CommentList(props) {
                     <p>{contextState.users.length}</p>
                 </Col>
                 <Col style={{ display: 'flex' }}>
-                    <Button style={{ marginLeft: 'auto', marginBottom: '15px' }} variant="dark" onClick={handleShow}>New Post</Button>
+                    <Button id="newDiscussion" onClick={handleShow}>+ Start New Discussion</Button>
                     {show ? <CreatePost show={show} onHide={handleClose} /> : null}
                 </Col>
             </Row>
