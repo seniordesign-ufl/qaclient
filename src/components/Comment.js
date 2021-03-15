@@ -11,7 +11,6 @@ import Modal from 'react-bootstrap/Modal';
 import { BsChevronUp } from 'react-icons/bs'
 
 function Comment(props) {
-    const [canUpvote, setCanUpvote] = useState(true)
     const [show, setShow] = useState(false);
     const { state: contextState, dispatch } = useContext(AppContext);
 
@@ -19,20 +18,21 @@ function Comment(props) {
     const handleShow = () => setShow(true);
 
     function handleUpvote() {
-        if (canUpvote) {
+        if (!contextState.upVotes.includes(props.comment.id)) {
             const commentUpdate = {
-                title: props.title,
+                postID: props.postID,
                 commentID: props.comment.id,
                 upVote: 1,
             }
+            console.log(commentUpdate)
             API.updateComment(commentUpdate, contextState.roomKey);
-            setCanUpvote(false);
+            dispatch({type: 'update-upVotes', upVotes: contextState.upVotes.concat([props.comment.id])});
         }
     }
 
     function handleRemove() {
         const removeComment = {
-            title: props.title,
+            postID: props.postID,
             commentID: props.comment.id
         }
         API.removeComment(removeComment,  contextState.roomKey);
