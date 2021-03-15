@@ -7,6 +7,7 @@ import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa';
 import Header from "../components/Header";
 
 import "../Styling/LandingPage.css";
+import "../Styling/index.css";
 import Slideout from "../components/Slideout";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';

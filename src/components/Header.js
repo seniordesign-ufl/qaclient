@@ -1,5 +1,6 @@
 import { React, useContext, useState } from "react";
 import { AppContext } from "../AppContext";
+import '../Styling/index.css';
 import '../Styling/Header.css';
 
 import { Container, Row, Col, FormControl, Dropdown, DropdownButton, Button, InputGroup } from "react-bootstrap";
@@ -42,14 +43,14 @@ function Searchbar(props) {
         return <>
             <Col xs={5} align="center" className="search-container">
                 <InputGroup>
-                    <FormControl placeholder="Search Discussions..." onChange={handleSearch} className="search-input" />
+                    <FormControl placeholder="Type any keyword..." onChange={handleSearch} className="search-input" />
                     <InputGroup.Append>
                         <Button className="search-button"><BsSearch className="search-icon" /></Button>
                     </InputGroup.Append>
                 </InputGroup>
             </Col>
             <Col align="right">
-                <DropdownButton title={filterValue === '' ? "Sort By" : filterValue} id="basic-nav-dropdown">
+                <DropdownButton title={filterValue === '' ? "Sort Discussions" : filterValue} id="basic-nav-dropdown">
                     <Dropdown.Item value="Popularity" onClick={handleSort}>Popularity</Dropdown.Item>
                     <Dropdown.Item value="Date" onClick={handleSort}>Date</Dropdown.Item>
                     <Dropdown.Item value="Solved" onClick={handleSort}>Solved</Dropdown.Item>

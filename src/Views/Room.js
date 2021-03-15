@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { API, AppContext } from "../AppContext";
+import '../Styling/index.css';
 
 //Components
 
@@ -12,7 +13,7 @@ function Room(props) {
 
     //Sets room key for users joining from link
     useEffect(() => {
-        dispatch({ type: 'join-room', roomKey: props.match.params.roomID});
+        dispatch({ type: 'join-room', roomKey: props.match.params.roomID });
     }, [])
 
     return (
