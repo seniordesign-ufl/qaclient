@@ -1,0 +1,14 @@
+.create-post-btn {
+    background-color: #E98074 !important;
+    border: none !important;
+}
+
+.cancel-btn {
+    background-color: transparent !important;
+    color: gray !important;
+    border: none !important;
+}
+
+.modal-content {
+    padding: 5%;
+}

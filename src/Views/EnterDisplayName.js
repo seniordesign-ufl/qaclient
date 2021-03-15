@@ -15,7 +15,7 @@ export default function EnterDisplayName(props) {
         <div className="create-page">
             <div className="create">
                 <h4 className="display-name">Display Name <span className="required">*</span></h4><br />
-                <input className="display-name-textbox" placeholder="Enter Display Name" onChange={(e) => setName(e.target.value)} required /> <br />
+                <input type="text" id="displayName" placeholder="Enter Display Name" class="form-control" onChange={(e) => setName(e.target.value)} required /> <br />
                 <button type="button" className="btn btn-primary btn-lg generate-btn" onClick={handleJoinClick}>Join Room</button>
             </div>
         </div>
