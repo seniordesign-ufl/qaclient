@@ -39,7 +39,7 @@ function PostComments(props) {
                 upVote: 1,
             }
             API.updatePost(postUpdate, contextState.roomKey);
-            dispatch({type: 'update-upVotes', upVotes: contextState.upVotes.push([props.post.id])})
+            dispatch({ type: 'update-upVotes', upVotes: contextState.upVotes.push([props.post.id]) })
         }
     }
 
@@ -63,28 +63,24 @@ function PostComments(props) {
     function mapComments() {
         let comments_array = contextState.search_phrase === '' ? props.post.comments : props.post.comments.filter(c => c.content.includes(contextState.search_phrase));
 
-        if(contextState.filter_by === 'Popularity')
-        {
+        if (contextState.filter_by === 'Popularity') {
             comments_array = comments_array.slice().sort((a, b) => b.upVotes - a.upVotes);
         }
-        else if(contextState.filter_by === 'Date')
-        {
+        else if (contextState.filter_by === 'Date') {
             comments_array = comments_array.slice().sort((a, b) => b.time).reverse();
         }
-        else if(contextState.filter_by === 'Solved')
-        {
+        else if (contextState.filter_by === 'Solved') {
             let temp = []
             comments_array.slice().forEach(element => {
-                if(element.solved===true)
-                {
+                if (element.solved === true) {
                     temp.append(element)
                 }
             });
             comments_array = temp;
         }
-        return (comments_array.length !== 0 ? 
-                comments_array.map((comment, i) => <Comment postID={props.post.id} comment={comment} key={i}/>) 
-                : <p>No comments yet</p>);
+        return (comments_array.length !== 0 ?
+            comments_array.map((comment, i) => <Comment postID={props.post.id} comment={comment} key={i} />)
+            : <p>No comments yet</p>);
     }
 
     function handleBack() {
@@ -129,7 +125,7 @@ function PostComments(props) {
                                             </Button>
                                         </Col>
                                         <Col sm={2}>
-                                            <p class='postTime'>{calculateTime()} mins ago</p>
+                                            <p className='postTime'>{calculateTime()} mins ago</p>
                                         </Col>
                                     </Row>
                                 </blockquote>
@@ -140,22 +136,22 @@ function PostComments(props) {
             </Row>
             <Row className="postCommentsRow">
                 {displayForm &&
-                <Card style={{width: "100%"}}>
-                    <Row style={{width: "100%", margin: "auto"}}>
-                        <Form style={{width: "100%", marginBottom: "20px"}}>
-                            <Form.Group style={{marginTop: "10px"}}controlId="comment.content">
-                                <Form.Label>Reply Message</Form.Label>
-                                <Form.Control className="commentTextArea" as="textarea" style={{width: "80%",}} rows={5} onChange={handleContentChange} />
-                            </Form.Group>
-                            <Form.Group controlId="comment.anonymous">
-                                <Form.Check type={"checkbox"} id={"default-checkbox"} label={"Reply Anonymously"} onClick={handleAnonymousCheck} />
-                            </Form.Group>
-                            <Button variant="secondary" onClick={() => handleCancelClick()}>Cancel</Button>
-                            {" "}
-                            <Button variant="secondary" onClick={() => handleSubmitForm()}>Add Reply</Button>
-                        </Form>
-                    </Row>
-                </Card>
+                    <Card style={{ width: "100%" }}>
+                        <Row style={{ width: "100%", margin: "auto" }}>
+                            <Form style={{ width: "100%", marginBottom: "20px" }}>
+                                <Form.Group style={{ marginTop: "10px" }} controlId="comment.content">
+                                    <Form.Label>Reply Message</Form.Label>
+                                    <Form.Control className="commentTextArea" as="textarea" style={{ width: "80%", }} rows={5} onChange={handleContentChange} />
+                                </Form.Group>
+                                <Form.Group controlId="comment.anonymous">
+                                    <Form.Check type={"checkbox"} id={"default-checkbox"} label={"Reply Anonymously"} onClick={handleAnonymousCheck} />
+                                </Form.Group>
+                                <Button variant="secondary" onClick={() => handleCancelClick()}>Cancel</Button>
+                                {" "}
+                                <Button variant="secondary" onClick={() => handleSubmitForm()}>Add Reply</Button>
+                            </Form>
+                        </Row>
+                    </Card>
                 }
             </Row>
             <Row className="postCommentsRow">

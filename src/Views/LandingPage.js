@@ -39,8 +39,8 @@ function Landing(props) {
 
                     <div className="create">
                         <h3>Create a Discussion Room</h3><br /><br />
-                        <input type="text" id="displayName" class="form-control" aria-describedby="passwordHelpBlock" input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
-                        <button type="button" class="btn btn-primary btn-lg generate-btn" onClick={handleGenerateClick}>Generate Room</button>
+                        <input type="text" id="displayName" className="form-control" aria-describedby="passwordHelpBlock" input placeholder="Enter Display Name" onChange={(e) => updateName(e.target.value)} /> <br />
+                        <button type="button" className="btn btn-primary btn-lg generate-btn" onClick={handleGenerateClick}>Generate Room</button>
                     </div>
                     <div className="link-box">
                         {showLink ? <Slideout>

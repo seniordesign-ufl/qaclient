@@ -48,7 +48,7 @@ const reducer = produce((draft, action) => {
 
 }, INITIAL_STATE)
 
-const socket = socketIOClient("http://localhost:3000");
+let socket = null;
 
 export const API = {
     join: (userName, groupID) => {
@@ -81,6 +81,29 @@ export const API = {
 }
 
 const socketEvents = (dispatch) => {
+    socket.on('client-id', (client_id) => {
+        const cid = localStorage.getItem('client-id');
+        if (cid) {
+            console.log("rejoin attempt", cid);
+            socket.emit('rejoin', cid);
+            socket.once('rejoin', (m) => {
+                console.log(m);
+                if (m.error) {
+                    localStorage.setItem('client-id', client_id);
+                } else {
+                    if (window.location.pathname == '') {
+                        window.location.replace(`/room/${m.groupID}`)
+                    }
+                    dispatch({ type: "update-name", displayName: m.username.name });
+                    dispatch({ type: "update-users", users: m.users });
+                    dispatch({ type: 'update-posts', posts: m.posts })
+                }
+            })
+        } else {
+            localStorage.setItem('client-id', client_id);
+        }
+    });
+
     socket.on('room-code', (roomCode) => {
         dispatch({ type: "join-room", roomKey: roomCode });
         console.log("Socket event roomcode:", roomCode)
@@ -100,14 +123,17 @@ const socketEvents = (dispatch) => {
         dispatch({ type: 'admin-granted' });
         console.log("Admin mode unlocked (ง •̀_•́)ง")
     });
+    socket.on('error', m => console.log(m));
 }
 export const initSockets = (dispatch) => {
+    console.log("init socket");
+    socket = socketIOClient("http://localhost:3000")
     socketEvents(dispatch);
 };
 
-export function ContextProvider({ children }) {
+export function ContextProvider({ init, children }) {
     const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE)
-    useEffect(() => initSockets(dispatch), [initSockets])
+    useEffect(() => init(dispatch), [init]);
     return (
         <AppContext.Provider value={{ state, dispatch }}>
             {children}

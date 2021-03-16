@@ -10,12 +10,12 @@ import Room from "./Views/Room";
 /* Styling */
 import "./Styling/App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ContextProvider } from "./AppContext";
+import { ContextProvider, initSockets } from "./AppContext";
 import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
-    <ContextProvider>
+    <ContextProvider init={initSockets}>
       <div className="App">
         <BrowserRouter>
           <Switch>

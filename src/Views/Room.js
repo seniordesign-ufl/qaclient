@@ -14,6 +14,9 @@ function Room(props) {
     //Sets room key for users joining from link
     useEffect(() => {
         dispatch({ type: 'join-room', roomKey: props.match.params.roomID });
+        if (contextState.displayName !== null) {
+            API.join(contextState.displayName, props.match.params.roomID);
+        }
     }, [])
 
     return (

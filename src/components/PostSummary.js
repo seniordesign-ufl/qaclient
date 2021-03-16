@@ -45,7 +45,7 @@ function PostSummary(props) {
     }
 
     return (
-        <div class='postSummary'>
+        <div className='postSummary'>
             <Card style={{ width: '100%' }}>
                 <Container>
                     <Row>
@@ -80,7 +80,7 @@ function PostSummary(props) {
                                         </footer>
                                     </Col>
                                     <Col sm={2}>
-                                        <p class='postTime'>{calculateTime()} mins ago</p>
+                                        <p className='postTime'>{calculateTime()} mins ago</p>
                                     </Col>
                                 </Row>
                             </blockquote>

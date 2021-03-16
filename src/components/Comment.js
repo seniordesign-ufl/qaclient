@@ -35,7 +35,7 @@ function Comment(props) {
             postID: props.postID,
             commentID: props.comment.id
         }
-        API.removeComment(removeComment,  contextState.roomKey);
+        API.removeComment(removeComment, contextState.roomKey);
     }
 
     function calculateTime() {
@@ -44,7 +44,7 @@ function Comment(props) {
     }
 
     return (
-        <div class='comment'>
+        <div className='comment'>
             <Card style={{ width: '100%' }}>
                 <Container>
                     <Row>
@@ -59,7 +59,7 @@ function Comment(props) {
                                     <Row>
                                         <Card.Text>{props.comment.content}</Card.Text>
                                     </Row>
-                                    <Row style={{marginTop: "10px"}}>
+                                    <Row style={{ marginTop: "10px" }}>
                                         <blockquote>
                                             <footer className="blockquote-footer">
                                                 {props.comment.isAnon ? 'Anonymous' : props.comment.author}
@@ -68,17 +68,17 @@ function Comment(props) {
                                     </Row>
                                 </Col>
                                 {/* Check if current display name matches name of post. If so allow them to remove it */
-                                contextState.displayName === props.comment.author &&
-                                <Col sm={1}>
-                                    <Button onClick={() => handleShow()} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
-                                </Col> 
+                                    contextState.displayName === props.comment.author &&
+                                    <Col sm={1}>
+                                        <Button onClick={() => handleShow()} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
+                                    </Col>
                                 }
                             </Row>
                             <Row>
                                 <Col>
                                 </Col>
                                 <Col sm={2}>
-                                    <p class='postTime'>{calculateTime()} mins ago</p>
+                                    <p className='postTime'>{calculateTime()} mins ago</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -94,7 +94,7 @@ function Comment(props) {
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={() => {handleRemove(); handleClose()}}>
+                    <Button variant="primary" onClick={() => { handleRemove(); handleClose() }}>
                         Remove
                     </Button>
                 </Modal.Footer>
