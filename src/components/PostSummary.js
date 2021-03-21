@@ -46,7 +46,7 @@ function PostSummary(props) {
         <div className="m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
-                    <button onClick={() => handleUpvote()} style={{ marginTop: '10px' }}>
+                    <button onClick={() => handleUpvote()} className="mt-2">
                         <BsChevronUp />
                     </button>
                     <br />
@@ -71,8 +71,8 @@ function PostSummary(props) {
 
                         {
                             /* Check if current display name matches name of post. If so allow them to remove it */
-                            // contextState.displayName === props.post.author &&
-                            <div className="flex-none pr-8">
+                            contextState.displayName === props.post.author &&
+                            <div className="flex-none pr-4">
                                 <button
                                     className="w-8 h-8 flex btn-color rounded-md"
                                     onClick={handleShow}

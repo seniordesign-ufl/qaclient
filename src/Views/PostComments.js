@@ -7,7 +7,7 @@ import { Button, Card, Form } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { BsChevronUp, BsChatSquareDots, BsArrowLeft } from 'react-icons/bs'
+import { BsChevronUp, BsChatSquareDots, BsArrowLeft, BsReply } from 'react-icons/bs'
 import PostSummary from '../components/PostSummary'
 import { Link } from 'react-router-dom'
 
@@ -73,7 +73,7 @@ function PostComments(props) {
                 {displayForm ? (
                     <ReplyBox contextState={contextState} setDisplayForm={setDisplayForm} post={post} />
                 ) : (
-                    <button onClick={() => setDisplayForm(true)}>Reply</button>
+                    <button className="flex btn-color font-bold rounded-md ml-8 p-2" onClick={() => setDisplayForm(true)}>Reply<BsReply className="inline self-center" /></button>
                 )}
             </Row>
             <Row className="postCommentsRow">{mapComments()}</Row>
