@@ -13,8 +13,9 @@ import { Link } from 'react-router-dom'
 
 function PostComments(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
-    const postID = props.match.params.postID;
-    const post = contextState.posts.find(p => p.id === postID);
+    const postID = props.match.params.postID
+    const post = contextState.posts.find((p) => p.id === postID)
+    const [displayForm, setDisplayForm] = useState(false)
 
     function mapComments() {
         let comments_array =
@@ -46,7 +47,16 @@ function PostComments(props) {
     }
 
     if (!post) {
-        return <p>Post not found.</p>
+        return (
+            <div>
+                Post not found.
+                <Link to=".">
+                    <Button variant="light" style={{ marginTop: '10px' }}>
+                        <BsArrowLeft />
+                    </Button>
+                </Link>
+            </div>
+        )
     }
 
     return (
@@ -59,8 +69,12 @@ function PostComments(props) {
                 </Link>
             </Row>
             <PostSummary post={post} disableLink />
-            <Row>
-                Reply:
+            <Row className="postCommentsRow">
+                {displayForm ? (
+                    <ReplyBox contextState={contextState} setDisplayForm={setDisplayForm} post={post} />
+                ) : (
+                    <button onClick={() => setDisplayForm(true)}>Reply</button>
+                )}
             </Row>
             <Row className="postCommentsRow">{mapComments()}</Row>
         </Container>
@@ -68,3 +82,71 @@ function PostComments(props) {
 }
 
 export default PostComments
+
+function ReplyBox(props) {
+    const contextState = props.contextState
+    const setDisplayForm = props.setDisplayForm
+    const [content, setContent] = useState('')
+    const [time, setTime] = useState(new Date())
+    const [anonymous, setAnonymous] = useState(false)
+
+    //Handles submission of new Comment
+    const handleSubmitForm = (e) => {
+        setTime(new Date())
+
+        const comment = {
+            content: content,
+            author: contextState.displayName,
+            time: time,
+            isAnon: anonymous,
+        }
+        console.log(props.post.id)
+
+        API.addComment(comment, props.post.id, contextState.roomKey)
+        setDisplayForm(false)
+        setAnonymous(false)
+    }
+    const handleContentChange = (e) => {
+        setContent(e.target.value)
+    }
+
+    const handleAnonymousCheck = (e) => {
+        setAnonymous(!anonymous)
+    }
+
+    function handleCancelClick() {
+        setDisplayForm(false)
+    }
+    return (
+        <Card style={{ width: '100%' }}>
+            <Row style={{ width: '100%', margin: 'auto' }}>
+                <Form style={{ width: '100%', marginBottom: '20px' }}>
+                    <Form.Group style={{ marginTop: '10px' }} controlId="comment.content">
+                        <Form.Label>Reply Message</Form.Label>
+                        <Form.Control
+                            className="commentTextArea"
+                            as="textarea"
+                            style={{ width: '80%' }}
+                            rows={5}
+                            onChange={handleContentChange}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="comment.anonymous">
+                        <Form.Check
+                            type={'checkbox'}
+                            id={'default-checkbox'}
+                            label={'Reply Anonymously'}
+                            onClick={handleAnonymousCheck}
+                        />
+                    </Form.Group>
+                    <Button variant="secondary" onClick={() => handleCancelClick()}>
+                        Cancel
+                    </Button>{' '}
+                    <Button variant="secondary" onClick={() => handleSubmitForm()}>
+                        Add Reply
+                    </Button>
+                </Form>
+            </Row>
+        </Card>
+    )
+}

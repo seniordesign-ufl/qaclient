@@ -10,7 +10,7 @@ import './Styling/App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
-    const { pathname } = useLocation();
+    const { pathname } = useLocation()
     return (
         <div className="App">
             <Switch>

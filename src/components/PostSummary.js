@@ -14,7 +14,7 @@ function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
-    const match = useRouteMatch();
+    const match = useRouteMatch()
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -52,7 +52,10 @@ function PostSummary(props) {
                     <br />
                     <a>{props.post.upVotes}</a>
                     <br />
-                    <Link style={{ pointerEvents: props.disableLink ? "none" : "" }} to={`${match.url}/${props.post.id}`}>
+                    <Link
+                        style={{ pointerEvents: props.disableLink ? 'none' : '' }}
+                        to={`${match.url}/${props.post.id}`}
+                    >
                         <button style={{ marginTop: '10px' }}>
                             <BiComment />
                         </button>
@@ -70,7 +73,11 @@ function PostSummary(props) {
                             /* Check if current display name matches name of post. If so allow them to remove it */
                             // contextState.displayName === props.post.author &&
                             <div className="flex-none pr-8">
-                                <button className="w-8 h-8 flex btn-color rounded-md" onClick={handleShow} variant="outline-danger">
+                                <button
+                                    className="w-8 h-8 flex btn-color rounded-md"
+                                    onClick={handleShow}
+                                    variant="outline-danger"
+                                >
                                     <IoClose className="flex-1 self-center" />
                                 </button>
                             </div>
