@@ -1,27 +1,34 @@
-import React from 'react'
-import { Route, Switch, Redirect, useLocation } from 'react-router-dom'
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 /* Views */
-import Landing from './Views/LandingPage'
-import Room from './Views/Room'
+import Posts from "./components/Post";
+import PostContent from "./components/PostContent"
+import Landing from "./Views/LandingPage";
+import Room from "./Views/Room";
 
 /* Styling */
-import './Styling/App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "./Styling/App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { ContextProvider, initSockets } from "./AppContext";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
-    const { pathname } = useLocation()
-    return (
-        <div className="App">
-            <Switch>
-                <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
-                <Route exact path={`/`} component={Landing} />
-                <Route path={`/room/:roomID/`} component={Room} />
-            </Switch>
-            {/* <Posts />
+  return (
+    <ContextProvider init={initSockets}>
+      <div className="App">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path={`/`}><Landing /></Route>
+            <Route exact path={`/room/:roomID/`} component={Room}></Route>
+          </Switch>
+        </BrowserRouter>
+        {/* <Posts />
       <PostContent /> */}
-        </div>
-    )
+        <ToastContainer />
+      </div>
+    </ContextProvider>
+  );
 }
 
-export default App
+export default App;

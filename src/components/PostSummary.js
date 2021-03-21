@@ -1,103 +1,93 @@
-import React, { useContext, useState } from 'react'
-import { API, AppContext } from '../AppContext'
+import React, { useContext, useState } from "react";
+import { API, AppContext } from "../AppContext";
 
 //Bootstrap
+import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
 import { BsChevronUp } from 'react-icons/bs'
-import { BiComment } from 'react-icons/bi'
-import { IoClose } from 'react-icons/io5'
-import moment from 'moment'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { BsChatSquareDots } from 'react-icons/bs'
 
 function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
-    const [show, setShow] = useState(false)
-    const { state: contextState, dispatch } = useContext(AppContext)
-    const match = useRouteMatch()
+    const [show, setShow] = useState(false);
+    const { state: contextState, dispatch } = useContext(AppContext);
 
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     function handleUpvote() {
-        if (!contextState.upVotes.includes(props.post.id)) {
+        if (canUpvote) {
             const postUpdate = {
-                postID: props.post.id,
+                title: props.post.title,
                 upVote: 1,
             }
-            API.updatePost(postUpdate, contextState.roomKey)
-            dispatch({
-                type: 'update-upVotes',
-                upVotes: contextState.upVotes.concat([props.post.id]),
-            })
+            API.updatePost(postUpdate, contextState.roomKey);
+            setCanUpvote(false);
         }
     }
 
     function handleRemove() {
-        API.removePost(props.post.id, contextState.roomKey)
+        API.removePost(props.post.title, contextState.roomKey);
+    }
+
+    function calculateTime() {
+        let diff = (new Date()).getTime() - new Date(props.post.time).getTime();
+        return (Math.round(diff / 60000))
     }
 
     function handleComment() {
-        props.select(contextState.posts.findIndex((element) => element.title === props.post.title))
-        props.display(true)
+        props.select(contextState.posts.findIndex((element) => element.title === props.post.title));
+        props.display(true);
     }
 
     return (
-        <div className="m-4 postSummary shadow-md rounded-md border border-light">
-            <div className="flex">
-                <div className="flex-none pl-8">
-                    <button onClick={() => handleUpvote()} className="mt-2">
-                        <BsChevronUp />
-                    </button>
-                    <br />
-                    <a>{props.post.upVotes}</a>
-                    <br />
-                    <Link
-                        style={{ pointerEvents: props.disableLink ? 'none' : '' }}
-                        to={`${match.url}/${props.post.id}`}
-                    >
-                        <button style={{ marginTop: '10px' }}>
-                            <BiComment />
-                        </button>
-                    </Link>
-                    <br />
-                    <a>{props.post.comments.length}</a>
-                </div>
-                <div className="pl-4 pt-2 flex-1 text-left">
-                    <div className="flex justify-between">
-                        <div className="flex-none">
-                            <p className="font-semibold">{props.post.title}</p>
-                        </div>
+        <div className='postSummary'>
+            <Card style={{ width: '100%' }}>
+                <Container>
+                    <Row>
+                        <Col sm='1'>
+                            <Button variant='light' onClick={() => handleUpvote()} style={{ marginTop: '10px' }}><BsChevronUp /></Button>
+                            <br />
+                            <a>{props.post.upVotes}</a>
+                            <br />
+                            <Button variant='light' onClick={() => handleComment()} style={{ marginTop: '10px' }}><BsChatSquareDots /></Button>
+                            <br />
+                            <a>{props.post.comments.length}</a>
+                        </Col>
+                        <Col lg style={{ textAlign: 'left' }}>
+                            <Row>
+                                <Col>
+                                    <Card.Title>{props.post.title}</Card.Title>
+                                </Col>
 
-                        {
-                            /* Check if current display name matches name of post. If so allow them to remove it */
-                            contextState.displayName === props.post.author &&
-                            <div className="flex-none pr-4">
-                                <button
-                                    className="w-8 h-8 flex btn-color rounded-md"
-                                    onClick={handleShow}
-                                    variant="outline-danger"
-                                >
-                                    <IoClose className="flex-1 self-center" />
-                                </button>
-                            </div>
-                        }
-                    </div>
-                    <div className="divide-y">
-                        <div className="pl-2 pb-4">{props.post.content}</div>
-                        <blockquote>
-                            <div className="pl-2 pt-2">
-                                <div>
-                                    <footer className="blockquote-footer">
-                                        {props.post.isAnon ? 'Anonymous' : props.post.author},{' '}
-                                        {moment(props.post.time).fromNow()}
-                                    </footer>
-                                </div>
-                            </div>
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
+                                {/* Check if current display name matches name of post. If so allow them to remove it */
+                                    contextState.displayName === props.post.author &&
+                                    <Col sm={1}>
+                                        <Button onClick={handleShow} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
+                                    </Col>
+                                }
+                            </Row>
+                            <Card.Text>{props.post.content}</Card.Text>
+                            <blockquote>
+                                <Row>
+                                    <Col>
+                                        <footer className="blockquote-footer">
+                                            {props.post.isAnon ? 'Anonymous' : props.post.author}
+                                        </footer>
+                                    </Col>
+                                    <Col sm={2}>
+                                        <p className='postTime'>{calculateTime()} mins ago</p>
+                                    </Col>
+                                </Row>
+                            </blockquote>
+                        </Col>
+                    </Row>
+                </Container>
+            </Card>
             {/* Confirmation for Removing Post */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -107,19 +97,14 @@ function PostSummary(props) {
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            handleRemove()
-                            handleClose()
-                        }}
-                    >
+                    <Button variant="primary" onClick={() => { handleRemove(); handleClose() }}>
                         Remove
                     </Button>
                 </Modal.Footer>
             </Modal>
         </div>
     )
+
 }
 
-export default PostSummary
+export default PostSummary;

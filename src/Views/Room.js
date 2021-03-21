@@ -1,30 +1,27 @@
-import React, { useContext, useEffect } from 'react'
-import { API, AppContext } from '../AppContext'
-import '../Styling/index.css'
+import React, { useContext, useEffect } from "react";
+import { API, AppContext } from "../AppContext";
 
 //Components
 
-import Header from '../components/Header'
-import EnterDisplayName from './EnterDisplayName'
-import RoomHomeScreen from './RoomHomeScreen'
+import Header from '../components/Header';
+import EnterDisplayName from "./EnterDisplayName";
+import RoomHomeScreen from "./RoomHomeScreen";
 
 function Room(props) {
-    const { state: contextState, dispatch } = useContext(AppContext)
+    const { state: contextState, dispatch } = useContext(AppContext);
 
     //Sets room key for users joining from link
     useEffect(() => {
-        dispatch({ type: 'join-room', roomKey: props.match.params.roomID })
-        if (contextState.displayName !== null) {
-            API.join(contextState.displayName, props.match.params.roomID)
-        }
+        dispatch({ type: 'join-room', roomKey: props.match.params.roomID});
     }, [])
 
     return (
         <div className="room-page">
             <Header roomKey={contextState.roomKey} />
-            {contextState.displayName !== null ? <RoomHomeScreen /> : <EnterDisplayName {...props} />}
+            {contextState.displayName !== null ?
+                <RoomHomeScreen /> : <EnterDisplayName {...props} />}
         </div>
-    )
+    );
 }
 
-export default Room
+export default Room;
