@@ -1,8 +1,8 @@
-.landing-page {
+.create-page {
     position: relative;
     border-radius: 6px;
     background: #fafafa;
-    min-height: 200px;
+    min-height: 500px;
     width: 50vw;
     margin: 50px auto;
 
@@ -11,13 +11,24 @@
         0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
-.landing-box {
+.create {
     padding: 50px;
     margin-top: 50px;
     margin-bottom: 2em;
 }
 
-.landing-page .generate-btn {
+.display-name {
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+.display-name-textbox {
+    width: 100%;
+    margin-bottom: 5%;
+    float: left;
+}
+
+.create-page .generate-btn {
     background: #e98074;
     color: white;
     border-radius: 6px;
@@ -25,16 +36,7 @@
     border: 0;
 }
 
-.landing-page .generate-btn:hover {
-    background: #f1a79f;
-}
-
-.link-box {
-    padding-top: 1em;
-    min-height: 3em;
-}
-
-.landing-page .copy-btn {
+.create-page .copy-btn {
     background: #e98074;
     color: white;
     width: 2em;
@@ -43,16 +45,18 @@
     border: 0;
     padding: 0;
     margin-left: 1em;
+    position: absolute;
 }
 
 .clicked {
     background: #f1a79f;
 }
 
-.landing-page .copy-btn > * {
+.create-page .copy-btn > * {
     text-align: center;
 }
 
-#displayName {
-    margin-bottom: 5%;
+.required {
+    font-weight: bold;
+    color: red;
 }
