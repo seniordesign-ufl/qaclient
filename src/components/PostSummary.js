@@ -6,12 +6,15 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { BsChevronUp } from 'react-icons/bs'
 import { BiComment } from 'react-icons/bi'
+import { IoClose } from 'react-icons/io5'
 import moment from 'moment'
+import { Link, useRouteMatch } from 'react-router-dom'
 
 function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
+    const match = useRouteMatch();
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -49,13 +52,15 @@ function PostSummary(props) {
                     <br />
                     <a>{props.post.upVotes}</a>
                     <br />
-                    <button onClick={() => handleComment()} style={{ marginTop: '10px' }}>
-                        <BiComment />
-                    </button>
+                    <Link style={{ pointerEvents: props.disableLink ? "none" : "" }} to={`${match.url}/${props.post.id}`}>
+                        <button style={{ marginTop: '10px' }}>
+                            <BiComment />
+                        </button>
+                    </Link>
                     <br />
                     <a>{props.post.comments.length}</a>
                 </div>
-                <div className="pl-4 flex-1 text-left">
+                <div className="pl-4 pt-2 flex-1 text-left">
                     <div className="flex justify-between">
                         <div className="flex-none">
                             <p className="font-semibold">{props.post.title}</p>
@@ -65,9 +70,9 @@ function PostSummary(props) {
                             /* Check if current display name matches name of post. If so allow them to remove it */
                             // contextState.displayName === props.post.author &&
                             <div className="flex-none pr-8">
-                                <Button onClick={handleShow} variant="outline-danger" style={{ marginTop: '10px' }}>
-                                    X
-                                </Button>
+                                <button className="w-8 h-8 flex btn-color rounded-md" onClick={handleShow} variant="outline-danger">
+                                    <IoClose className="flex-1 self-center" />
+                                </button>
                             </div>
                         }
                     </div>

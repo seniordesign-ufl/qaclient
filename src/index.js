@@ -4,10 +4,18 @@ import './Styling/index.css'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { ContextProvider, initSockets } from './AppContext'
+import { ToastContainer } from 'react-toastify'
+import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <ContextProvider init={initSockets}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+            <ToastContainer />
+        </ContextProvider>
     </React.StrictMode>,
     document.getElementById('root')
 )
