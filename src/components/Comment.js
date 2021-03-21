@@ -1,21 +1,21 @@
-import React, { useContext, useState } from "react";
-import { API, AppContext } from "../AppContext";
+import React, { useContext, useState } from 'react'
+import { API, AppContext } from '../AppContext'
 
 //Bootstrap
-import Card from 'react-bootstrap/Card';
+import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Modal from 'react-bootstrap/Modal';
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Modal from 'react-bootstrap/Modal'
 import { BsChevronUp } from 'react-icons/bs'
 
 function Comment(props) {
-    const [show, setShow] = useState(false);
-    const { state: contextState, dispatch } = useContext(AppContext);
+    const [show, setShow] = useState(false)
+    const { state: contextState, dispatch } = useContext(AppContext)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     function handleUpvote() {
         if (!contextState.upVotes.includes(props.comment.id)) {
@@ -25,31 +25,36 @@ function Comment(props) {
                 upVote: 1,
             }
             console.log(commentUpdate)
-            API.updateComment(commentUpdate, contextState.roomKey);
-            dispatch({type: 'update-upVotes', upVotes: contextState.upVotes.concat([props.comment.id])});
+            API.updateComment(commentUpdate, contextState.roomKey)
+            dispatch({
+                type: 'update-upVotes',
+                upVotes: contextState.upVotes.concat([props.comment.id]),
+            })
         }
     }
 
     function handleRemove() {
         const removeComment = {
             postID: props.postID,
-            commentID: props.comment.id
+            commentID: props.comment.id,
         }
-        API.removeComment(removeComment, contextState.roomKey);
+        API.removeComment(removeComment, contextState.roomKey)
     }
 
     function calculateTime() {
-        let diff = (new Date()).getTime() - new Date(props.comment.time).getTime();
-        return (Math.round(diff / 60000))
+        let diff = new Date().getTime() - new Date(props.comment.time).getTime()
+        return Math.round(diff / 60000)
     }
 
     return (
-        <div className='comment'>
+        <div className="comment">
             <Card style={{ width: '100%' }}>
                 <Container>
                     <Row>
-                        <Col sm='1'>
-                            <Button variant='light' onClick={() => handleUpvote()} style={{ marginTop: '10px' }}><BsChevronUp /></Button>
+                        <Col sm="1">
+                            <Button variant="light" onClick={() => handleUpvote()} style={{ marginTop: '10px' }}>
+                                <BsChevronUp />
+                            </Button>
                             <br />
                             <a>{props.comment.upVotes}</a>
                         </Col>
@@ -59,7 +64,7 @@ function Comment(props) {
                                     <Row>
                                         <Card.Text>{props.comment.content}</Card.Text>
                                     </Row>
-                                    <Row style={{ marginTop: "10px" }}>
+                                    <Row style={{ marginTop: '10px' }}>
                                         <blockquote>
                                             <footer className="blockquote-footer">
                                                 {props.comment.isAnon ? 'Anonymous' : props.comment.author}
@@ -67,18 +72,25 @@ function Comment(props) {
                                         </blockquote>
                                     </Row>
                                 </Col>
-                                {/* Check if current display name matches name of post. If so allow them to remove it */
-                                    contextState.displayName === props.comment.author &&
-                                    <Col sm={1}>
-                                        <Button onClick={() => handleShow()} variant="outline-danger" style={{ marginTop: '10px' }}>X</Button>
-                                    </Col>
+                                {
+                                    /* Check if current display name matches name of post. If so allow them to remove it */
+                                    contextState.displayName === props.comment.author && (
+                                        <Col sm={1}>
+                                            <Button
+                                                onClick={() => handleShow()}
+                                                variant="outline-danger"
+                                                style={{ marginTop: '10px' }}
+                                            >
+                                                X
+                                            </Button>
+                                        </Col>
+                                    )
                                 }
                             </Row>
                             <Row>
-                                <Col>
-                                </Col>
+                                <Col></Col>
                                 <Col sm={2}>
-                                    <p className='postTime'>{calculateTime()} mins ago</p>
+                                    <p className="postTime">{calculateTime()} mins ago</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -94,7 +106,13 @@ function Comment(props) {
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={() => { handleRemove(); handleClose() }}>
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            handleRemove()
+                            handleClose()
+                        }}
+                    >
                         Remove
                     </Button>
                 </Modal.Footer>
@@ -103,4 +121,4 @@ function Comment(props) {
     )
 }
 
-export default Comment;
+export default Comment

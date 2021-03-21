@@ -6,11 +6,11 @@
 }
 
 .navbar-brand {
-    color: #E98074;
+    color: #e98074;
 }
 
 .navbar-brand:hover {
-    color:#E98074;
+    color: #e98074;
 }
 
 .search-container {
@@ -23,7 +23,7 @@
 .search-input {
     border: none !important;
     border-radius: 6px;
-    background-color: #F4F4F4 !important;
+    background-color: #f4f4f4 !important;
 }
 
 .search-input:focus {
@@ -35,7 +35,7 @@
 }
 
 .search-button {
-    background-color: #F4F4F4 !important;
+    background-color: #f4f4f4 !important;
     border: none !important;
 }
 
@@ -47,7 +47,7 @@
 #basic-nav-dropdown {
     /*border: 2px solid gray;*/
     border-radius: 6px;
-    background-color: #F4F4F4;
+    background-color: #f4f4f4;
     color: gray;
     border: none !important;
     padding-left: 20px;
