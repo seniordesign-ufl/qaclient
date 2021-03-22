@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col'
 import { BsPerson, BsConeStriped } from 'react-icons/bs'
 
 import '../Styling/PostList.css'
+import context from 'react-bootstrap/esm/AccordionContext'
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext)
@@ -39,6 +40,22 @@ export default function CommentList(props) {
     }
     console.log(posts)
 
+    function displayPinnedPosts() {
+        let pinnedPost = [];
+        contextState.posts.forEach(function (element, index)
+            {
+            if(element.pinned === true)
+            {
+                pinnedPost.push(element)
+            }
+            }
+        );
+
+        return (pinnedPost && pinnedPost.map((p, i) => (
+            <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
+        )))
+    }
+
     return (
         <div className="container roomContainer">
             <div className="flex justify-between">
@@ -59,6 +76,11 @@ export default function CommentList(props) {
                 </div>
             </div>
             <Row>
+                <h5 style={{marginLeft: 25}}>Pinned Posts</h5>
+                {displayPinnedPosts()}
+            </Row>
+            <Row>
+                <h5 style={{marginLeft: 25}}>Discussion Posts</h5>
                 {(posts &&
                     posts.map((p, i) => (
                         <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
