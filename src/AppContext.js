@@ -65,8 +65,8 @@ export const API = {
     updatePost: (postUpdate, groupID) => {
         socket.emit('update-post', { postUpdate, groupID })
     },
-    removePost: (title, groupID) => {
-        socket.emit('remove-post', { title, groupID })
+    removePost: (postID, groupID) => {
+        socket.emit('remove-post', { postID, groupID })
     },
     addComment: (comment, postID, groupID) => {
         socket.emit('add-comment', { comment, postID, groupID })

@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col'
 import { BsPerson, BsConeStriped } from 'react-icons/bs'
 
 import '../Styling/PostList.css'
+import { animated, useTransition } from 'react-spring'
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext)
@@ -19,6 +20,12 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true)
 
     let posts = contextState.posts
+    console.log("!", posts);
+    const transitions = useTransition(posts, post => post.id, {
+        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+    })
 
     if (contextState.search_phrase !== '') {
         posts = posts.filter((c) => c.title.includes(contextState.search_phrase))
@@ -60,8 +67,8 @@ export default function CommentList(props) {
             </div>
             <Row>
                 {(posts.length &&
-                    posts.map((p, i) => (
-                        <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
+                    transitions.map(({ item, props, key }) => (
+                        <PostSummary animated={props} post={item} key={key} />
                     ))) || <p>No posts yet.</p>}
             </Row>
         </div>

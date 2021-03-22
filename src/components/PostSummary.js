@@ -9,6 +9,7 @@ import { BiComment } from 'react-icons/bi'
 import { IoClose } from 'react-icons/io5'
 import moment from 'moment'
 import { Link, useRouteMatch } from 'react-router-dom'
+import { animated } from 'react-spring'
 
 function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
@@ -43,7 +44,7 @@ function PostSummary(props) {
     }
 
     return (
-        <div className="m-4 postSummary shadow-md rounded-md border border-light">
+        <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
                     <button onClick={() => handleUpvote()} className="mt-2">
@@ -119,7 +120,7 @@ function PostSummary(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </animated.div>
     )
 }
 
