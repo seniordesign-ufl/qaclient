@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { animated } from 'react-spring'
 import { API, AppContext } from '../AppContext'
 
 //Bootstrap
@@ -39,13 +40,8 @@ function Comment(props) {
         API.removeComment(removeComment, contextState.roomKey)
     }
 
-    function calculateTime() {
-        let diff = new Date().getTime() - new Date(props.comment.time).getTime()
-        return Math.round(diff / 60000)
-    }
-
     return (
-        <div className="comment m-4 postSummary shadow-md rounded-md border border-light">
+        <animated.div style={props.animated} className="comment m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
                     <button className="mt-2" onClick={() => handleUpvote()}>
@@ -58,15 +54,13 @@ function Comment(props) {
                 <div className="flex-1 pl-4 pt-2 text-left">
                     {
                         /* Check if current display name matches name of post. If so allow them to remove it */
-                        contextState.displayName === props.comment.author &&
-                        <div className="float-right pt-2 pr-4">
-                            <button
-                                className="w-8 h-8 flex btn-color rounded-md"
-                                onClick={handleShow}
-                            >
-                                <IoClose className="flex-1 self-center" />
-                            </button>
-                        </div>
+                        contextState.displayName === props.comment.author && (
+                            <div className="float-right pt-2 pr-4">
+                                <button className="w-8 h-8 flex btn-color rounded-md" onClick={handleShow}>
+                                    <IoClose className="flex-1 self-center" />
+                                </button>
+                            </div>
+                        )
                     }
                     <div className="divide-y">
                         <div className="pt-4 pl-4 pb-12">{props.comment.content}</div>
@@ -103,7 +97,7 @@ function Comment(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div >
+        </animated.div>
     )
 }
 

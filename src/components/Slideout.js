@@ -7,7 +7,7 @@ export default function Slideout(props) {
         leave: { transform: 'translate3d(-50%,0,0)' },
     })
     const children = props.children
-    return transitions.map(({ item: Item, props, key }) => (
+    return transitions.map(({ props, key }) => (
         <div key={key} style={{ overflow: 'hidden' }}>
             <animated.div key={key} style={props}>
                 {children}
