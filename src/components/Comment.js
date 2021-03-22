@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { animated } from 'react-spring'
 import { API, AppContext } from '../AppContext'
 
 //Bootstrap
@@ -39,13 +40,8 @@ function Comment(props) {
         API.removeComment(removeComment, contextState.roomKey)
     }
 
-    function calculateTime() {
-        let diff = new Date().getTime() - new Date(props.comment.time).getTime()
-        return Math.round(diff / 60000)
-    }
-
     return (
-        <div className="comment m-4 postSummary shadow-md rounded-md border border-light">
+        <animated.div style={props.animated} className="comment m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
                     <button className="mt-2" onClick={() => handleUpvote()}>
@@ -101,7 +97,7 @@ function Comment(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </animated.div>
     )
 }
 

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useTransition } from 'react-spring'
 import { API, AppContext } from '../AppContext'
 import Comment from '../components/Comment'
 
@@ -15,6 +16,11 @@ function PostComments(props) {
     const postID = props.match.params.postID
     const post = contextState.posts.find((p) => p.id === postID)
     const [displayForm, setDisplayForm] = useState(false)
+    const transitions = useTransition(post.comments, post => post.id, {
+        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+    })
 
     if (!post) {
         return (
@@ -28,6 +34,7 @@ function PostComments(props) {
             </div>
         )
     }
+
 
     const comments = post.comments.filter((c) => c.content.includes(contextState.search_phrase))
 
@@ -73,9 +80,10 @@ function PostComments(props) {
             </Row>
             <Row className="postCommentsRow">
                 {(comments.length &&
-                    comments.map((comment, i) => <Comment postID={post.id} comment={comment} key={i} />)) || (
-                    <p>No comments yet</p>
-                )}
+                    transitions.map(({ item, props, key }) => <Comment animated={props} postID={post.id} comment={item} key={key} />))
+                    || (
+                        <p>No comments yet</p>
+                    )}
             </Row>
         </Container>
     )
