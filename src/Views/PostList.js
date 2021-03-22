@@ -59,7 +59,7 @@ export default function CommentList(props) {
                 </div>
             </div>
             <Row>
-                {(posts &&
+                {(posts.length &&
                     posts.map((p, i) => (
                         <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
                     ))) || <p>No posts yet.</p>}

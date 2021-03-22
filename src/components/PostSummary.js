@@ -71,16 +71,17 @@ function PostSummary(props) {
 
                         {
                             /* Check if current display name matches name of post. If so allow them to remove it */
-                            contextState.displayName === props.post.author &&
-                            <div className="flex-none pr-4">
-                                <button
-                                    className="w-8 h-8 flex btn-color rounded-md"
-                                    onClick={handleShow}
-                                    variant="outline-danger"
-                                >
-                                    <IoClose className="flex-1 self-center" />
-                                </button>
-                            </div>
+                            contextState.displayName === props.post.author && (
+                                <div className="flex-none pr-4">
+                                    <button
+                                        className="w-8 h-8 flex btn-color rounded-md"
+                                        onClick={handleShow}
+                                        variant="outline-danger"
+                                    >
+                                        <IoClose className="flex-1 self-center" />
+                                    </button>
+                                </div>
+                            )
                         }
                     </div>
                     <div className="divide-y">
