@@ -23,7 +23,7 @@ function PostSummary(props) {
         if (contextState.admin === true) {
             const postUpdate = {
                 postID: props.post.id,
-                pinned: !contextState.pinned,
+                pinned: !props.post.pinned,
                 type: "post"
             }
             API.updatePinned(postUpdate, contextState.roomKey)
