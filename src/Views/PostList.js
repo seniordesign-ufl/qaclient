@@ -19,7 +19,7 @@ export default function CommentList(props) {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    let posts = contextState.posts
+    let posts = Array.from(contextState.posts)
 
     if (contextState.search_phrase !== '') {
         posts = posts.filter((c) => c.title.includes(contextState.search_phrase))
@@ -41,19 +41,12 @@ export default function CommentList(props) {
     console.log(posts)
 
     function displayPinnedPosts() {
-        let pinnedPost = [];
-        contextState.posts.forEach(function (element, index)
-            {
-            if(element.pinned === true)
-            {
-                pinnedPost.push(element)
-            }
-            }
-        );
-
-        return (pinnedPost && pinnedPost.map((p, i) => (
+        let pinnedPost = posts.filter((c) => c.pinned === true);
+        return pinnedPost !== [] ? (pinnedPost.map((p, i) => (
             <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
-        )))
+        ))) : (
+        <p>No Pinned Posts!</p>
+        )
     }
 
     return (
