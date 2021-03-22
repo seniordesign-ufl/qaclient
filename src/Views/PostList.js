@@ -20,7 +20,6 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true)
 
     let posts = contextState.posts
-    console.log("!", posts);
     const transitions = useTransition(posts, post => post.id, {
         from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
         enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
@@ -44,7 +43,6 @@ export default function CommentList(props) {
         })
         posts = temp
     }
-    console.log(posts)
 
     return (
         <div className="container roomContainer">
