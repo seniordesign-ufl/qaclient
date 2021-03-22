@@ -12,6 +12,17 @@
     border: 0;
 }
 
+#download {
+    margin-left: auto;
+    margin-bottom: 15px;
+    background: #E98074;
+    color: white;
+    border-radius: 6px;
+    padding: 15px 20px;
+    border: 0;
+    float: right;
+}
+
 .clicked {
     background: #f1a79f;
 }

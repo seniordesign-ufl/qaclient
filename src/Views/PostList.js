@@ -1,7 +1,8 @@
-import PostSummary from '../components/PostSummary'
-import React, { useContext, useEffect, useState } from 'react'
-import { API, AppContext } from '../AppContext'
-import CreatePost from '../components/NewPost'
+import PostSummary from "../components/PostSummary"
+import React, { useContext, useEffect, useState } from "react";
+import { API, AppContext } from "../AppContext";
+import CreatePost from "../components/NewPost";
+import Download from "../components/Download"
 
 //Bootstrap
 import { Button, Modal } from 'react-bootstrap'
