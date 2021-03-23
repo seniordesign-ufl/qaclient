@@ -8,7 +8,6 @@ import Modal from 'react-bootstrap/Modal'
 import { IoClose } from 'react-icons/io5'
 import moment from 'moment'
 import { BsChevronUp } from 'react-icons/bs'
-import { BsChevronUp } from 'react-icons/bs';
 
 function Comment(props) {
     const [show, setShow] = useState(false)

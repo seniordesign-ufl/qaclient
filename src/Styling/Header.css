@@ -58,6 +58,17 @@
     background-color: white;
 }
 
+#download {
+    margin-left: auto;
+    margin-bottom: 15px;
+    background: #E98074;
+    color: white;
+    border-radius: 6px;
+    padding: 15px 20px;
+    border: 0;
+    float: right;
+}
+
 p {
     margin-top: 5px;
     margin-bottom: 5px;
