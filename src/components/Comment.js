@@ -8,6 +8,9 @@ import Modal from 'react-bootstrap/Modal'
 import { IoClose } from 'react-icons/io5'
 import moment from 'moment'
 import { BsChevronUp } from 'react-icons/bs'
+import { BiDotsHorizontal } from 'react-icons/bi'
+import { BsAwardFill } from 'react-icons/bs'
+import { DropdownButton, Dropdown } from 'react-bootstrap'
 
 function Comment(props) {
     const [show, setShow] = useState(false)
@@ -40,6 +43,37 @@ function Comment(props) {
         API.removeComment(removeComment, contextState.roomKey)
     }
 
+    // function displayOptions () {
+    //     if(contextState.admin === true){
+    //         return(
+    //             <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
+    //                 <Dropdown.Item value="delete-post" onClick={handleShow}>
+    //                     Delete Comment
+    //                 </Dropdown.Item>
+    //                 <Dropdown.Item value="pin-post" onClick={handleComment}>
+    //                     Pin Comment
+    //                 </Dropdown.Item>
+    //             </DropdownButton>
+    //         )
+    //     }
+    //     else if(contextState.displayName === props.post.author)
+    //     {
+    //         return(
+    //             /* Check if current display name matches name of comment. If so allow them to remove it */
+    //             <div className="flex-none pr-4">
+    //                 <button
+    //                     className="w-8 h-8 flex btn-color rounded-md"
+    //                     onClick={handleShow}
+    //                     variant="outline-danger"
+    //                 >
+    //                     <IoClose className="flex-1 self-center" />
+    //                 </button>
+    //             </div>
+    //         )
+
+    //     }
+    // }
+
     return (
         <animated.div style={props.animated} className="comment m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
@@ -50,7 +84,6 @@ function Comment(props) {
                     <br />
                     <a>{props.comment.upVotes}</a>
                 </div>
-
                 <div className="flex-1 pl-4 pt-2 text-left">
                     {
                         /* Check if current display name matches name of post. If so allow them to remove it */

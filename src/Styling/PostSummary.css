@@ -1,0 +1,18 @@
+#basic-nav-dropdown {
+    background: none;
+    font-size: 20px;
+}
+
+#basic-nav-dropdown:after {
+    content: none;
+}
+
+#post-title-div {
+    display: flex;
+    width: 80%;
+    padding-top: 10px;
+}
+
+#post-title {
+    width: 100%;
+}

@@ -65,6 +65,9 @@ export const API = {
     updatePost: (postUpdate, groupID) => {
         socket.emit('update-post', { postUpdate, groupID })
     },
+    updatePinned: (postUpdate, groupID) => {
+        socket.emit('update-post-pinned', { postUpdate, groupID })
+    },
     removePost: (postID, groupID) => {
         socket.emit('remove-post', { postID, groupID })
     },

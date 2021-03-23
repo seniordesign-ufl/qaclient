@@ -7,9 +7,14 @@ import Modal from 'react-bootstrap/Modal'
 import { BsChevronUp } from 'react-icons/bs'
 import { BiComment } from 'react-icons/bi'
 import { IoClose } from 'react-icons/io5'
+import { BiDotsHorizontal } from 'react-icons/bi'
+import { BsAwardFill } from 'react-icons/bs'
 import moment from 'moment'
+import { DropdownButton, Dropdown } from 'react-bootstrap'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { animated } from 'react-spring'
+
+import '../Styling/PostSummary.css'
 
 function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
@@ -19,6 +24,55 @@ function PostSummary(props) {
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
+
+    function handlePin() {
+        const postUpdate = {
+            postID: props.post.id,
+            pinned: !props.post.pinned,
+            type: "post"
+        }
+        API.updatePinned(postUpdate, contextState.roomKey)
+    }
+
+    function displayOptions () {
+        if(contextState.admin === true){
+            return(
+                <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
+                    <Dropdown.Item value="delete-post" onClick={handleShow}>
+                        Delete Post
+                    </Dropdown.Item>
+                    <Dropdown.Item value="pin-post" onClick={handlePin}>
+                        Pin Post
+                    </Dropdown.Item>
+                </DropdownButton>
+            )
+        }
+        else if(contextState.displayName === props.post.author)
+        {
+            return(
+                /* Check if current display name matches name of post. If so allow them to remove it */
+                <div className="flex-none pr-4">
+                    <button
+                        className="w-8 h-8 flex btn-color rounded-md"
+                        onClick={handleShow}
+                        variant="outline-danger"
+                    >
+                        <IoClose className="flex-1 self-center" />
+                    </button>
+                </div>
+            )
+
+        }
+    }
+
+    function displayPinned() {
+        if(props.post.pinned === true)
+        {
+            return (
+                <BsAwardFill size={25} />
+            )
+        }
+    }
 
     function handleUpvote() {
         if (!contextState.upVotes.includes(props.post.id)) {
@@ -66,24 +120,11 @@ function PostSummary(props) {
                 </div>
                 <div className="pl-4 pt-2 flex-1 text-left">
                     <div className="flex justify-between">
-                        <div className="flex-none">
-                            <p className="font-semibold">{props.post.title}</p>
+                        <div id="post-title-div" className="flex-none">
+                            {displayPinned()}
+                            <p id="post-title" className="font-semibold">{props.post.title}</p>
                         </div>
-
-                        {
-                            /* Check if current display name matches name of post. If so allow them to remove it */
-                            contextState.displayName === props.post.author && (
-                                <div className="flex-none pr-4">
-                                    <button
-                                        className="w-8 h-8 flex btn-color rounded-md"
-                                        onClick={handleShow}
-                                        variant="outline-danger"
-                                    >
-                                        <IoClose className="flex-1 self-center" />
-                                    </button>
-                                </div>
-                            )
-                        }
+                        {displayOptions()}
                     </div>
                     <div className="divide-y">
                         <div className="pl-2 pb-4">{props.post.content}</div>
