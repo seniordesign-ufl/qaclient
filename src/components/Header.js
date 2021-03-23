@@ -3,6 +3,8 @@ import { AppContext } from '../AppContext'
 import '../Styling/index.css'
 import '../Styling/Header.css'
 
+import Download from "./Download"
+
 import { Container, Row, Col, FormControl, Dropdown, DropdownButton, Button, InputGroup } from 'react-bootstrap'
 import { BsSearch } from 'react-icons/bs'
 import { Route } from 'react-router'
@@ -73,6 +75,9 @@ function Searchbar(props) {
                             Solved
                         </Dropdown.Item>
                     </DropdownButton>
+                </Col>
+                <Col xs={1}>
+                    <Download/>
                 </Col>
             </>
         )
