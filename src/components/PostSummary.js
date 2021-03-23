@@ -10,12 +10,16 @@ import { BiDotsHorizontal } from 'react-icons/bi'
 import { BsAwardFill } from 'react-icons/bs'
 import moment from 'moment'
 import { DropdownButton, Dropdown } from 'react-bootstrap'
+import { Link, useRouteMatch } from 'react-router-dom'
+import { animated } from 'react-spring'
+
 import '../Styling/PostSummary.css'
 
 function PostSummary(props) {
     const [canUpvote, setCanUpvote] = useState(true)
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
+    const match = useRouteMatch()
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -91,15 +95,20 @@ function PostSummary(props) {
         <div className="m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
-                    <button onClick={() => handleUpvote()} style={{ marginTop: '10px' }}>
+                    <button onClick={() => handleUpvote()} className="mt-2">
                         <BsChevronUp />
                     </button>
                     <br />
                     <a>{props.post.upVotes}</a>
                     <br />
-                    <button onClick={() => handleComment()} style={{ marginTop: '10px' }}>
-                        <BiComment />
-                    </button>
+                    <Link
+                        style={{ pointerEvents: props.disableLink ? 'none' : '' }}
+                        to={`${match.url}/${props.post.id}`}
+                    >
+                        <button style={{ marginTop: '10px' }}>
+                            <BiComment />
+                        </button>
+                    </Link>
                     <br />
                     <a>{props.post.comments.length}</a>
                 </div>
