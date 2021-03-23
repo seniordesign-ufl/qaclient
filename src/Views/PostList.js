@@ -48,12 +48,8 @@ export default function CommentList(props) {
     function displayPinnedPosts() {
         let pinnedPost = posts.filter((c) => c.pinned === true);
 
-        console.log("PINNED POSTS")
-        console.log(pinnedPost)
-
         if(pinnedPost.length > 0)
         {
-            console.log("I made it here!")
             return (
                 <Row>
                     <h5 style={{marginLeft: 25}}>Pinned Posts</h5>

@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal'
 import { BsChevronUp } from 'react-icons/bs'
 import { BiComment } from 'react-icons/bi'
 import { BiDotsHorizontal } from 'react-icons/bi'
+import { BsAwardFill } from 'react-icons/bs'
 import moment from 'moment'
 import { DropdownButton, Dropdown } from 'react-bootstrap'
 import '../Styling/PostSummary.css'
@@ -54,6 +55,15 @@ function PostSummary(props) {
         }
     }
 
+    function displayPinned() {
+        if(props.post.pinned === true)
+        {
+            return (
+                <BsAwardFill size={25} />
+            )
+        }
+    }
+
     function handleUpvote() {
         if (!contextState.upVotes.includes(props.post.id)) {
             const postUpdate = {
@@ -96,6 +106,7 @@ function PostSummary(props) {
                 <div className="pl-4 flex-1 text-left">
                     <div className="flex justify-between">
                         <div id="post-title-div" className="flex-none">
+                            {displayPinned()} 
                             <p id="post-title" className="font-semibold">{props.post.title}</p>
                         </div>
                         {
