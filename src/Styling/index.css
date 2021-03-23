@@ -4,3 +4,9 @@ body {
     margin: 0;
     font-family: 'DM Sans', sans-serif !important;
 }
+
+.btn-color {
+    background: #e98074;
+    color: white;
+    border-color: #e98074;
+}

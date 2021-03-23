@@ -11,7 +11,7 @@ import Col from 'react-bootstrap/Col'
 import { BsPerson, BsConeStriped } from 'react-icons/bs'
 
 import '../Styling/PostList.css'
-import context from 'react-bootstrap/esm/AccordionContext'
+import { animated, useTransition } from 'react-spring'
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext)
@@ -20,6 +20,11 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true)
 
     let posts = Array.from(contextState.posts)
+    const transitions = useTransition(posts, post => post.id, {
+        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+    })
 
     if (contextState.search_phrase !== '') {
         posts = posts.filter((c) => c.title.includes(contextState.search_phrase))
@@ -42,11 +47,21 @@ export default function CommentList(props) {
 
     function displayPinnedPosts() {
         let pinnedPost = posts.filter((c) => c.pinned === true);
-        return pinnedPost !== [] ? (pinnedPost.map((p, i) => (
-            <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
-        ))) : (
-        <p>No Pinned Posts!</p>
-        )
+
+        console.log("PINNED POSTS")
+        console.log(pinnedPost)
+
+        if(pinnedPost.length > 0)
+        {
+            console.log("I made it here!")
+            return (
+                <Row>
+                    <h5 style={{marginLeft: 25}}>Pinned Posts</h5>
+                    {pinnedPost.map((p, i) => (<PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />))}
+                </Row>
+            )
+        }
+
     }
 
     return (
@@ -68,10 +83,7 @@ export default function CommentList(props) {
                     {show ? <CreatePost show={show} onHide={handleClose} /> : null}
                 </div>
             </div>
-            <Row>
-                <h5 style={{marginLeft: 25}}>Pinned Posts</h5>
-                {displayPinnedPosts()}
-            </Row>
+            {displayPinnedPosts()}
             <Row>
                 <h5 style={{marginLeft: 25}}>Discussion Posts</h5>
                 {(posts &&

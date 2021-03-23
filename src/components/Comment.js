@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react'
+import { animated } from 'react-spring'
 import { API, AppContext } from '../AppContext'
 
 //Bootstrap
-import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Modal from 'react-bootstrap/Modal'
+import { IoClose } from 'react-icons/io5'
+import moment from 'moment'
 import { BsChevronUp } from 'react-icons/bs'
 
 function Comment(props) {
@@ -41,62 +40,43 @@ function Comment(props) {
         API.removeComment(removeComment, contextState.roomKey)
     }
 
-    function calculateTime() {
-        let diff = new Date().getTime() - new Date(props.comment.time).getTime()
-        return Math.round(diff / 60000)
-    }
-
     return (
-        <div className="comment">
-            <Card style={{ width: '100%' }}>
-                <Container>
-                    <Row>
-                        <Col sm="1">
-                            <Button variant="light" onClick={() => handleUpvote()} style={{ marginTop: '10px' }}>
-                                <BsChevronUp />
-                            </Button>
-                            <br />
-                            <a>{props.comment.upVotes}</a>
-                        </Col>
-                        <Col lg style={{ textAlign: 'left' }}>
-                            <Row>
-                                <Col>
-                                    <Row>
-                                        <Card.Text>{props.comment.content}</Card.Text>
-                                    </Row>
-                                    <Row style={{ marginTop: '10px' }}>
-                                        <blockquote>
-                                            <footer className="blockquote-footer">
-                                                {props.comment.isAnon ? 'Anonymous' : props.comment.author}
-                                            </footer>
-                                        </blockquote>
-                                    </Row>
-                                </Col>
-                                {
-                                    /* Check if current display name matches name of post. If so allow them to remove it */
-                                    contextState.displayName === props.comment.author && (
-                                        <Col sm={1}>
-                                            <Button
-                                                onClick={() => handleShow()}
-                                                variant="outline-danger"
-                                                style={{ marginTop: '10px' }}
-                                            >
-                                                X
-                                            </Button>
-                                        </Col>
-                                    )
-                                }
-                            </Row>
-                            <Row>
-                                <Col></Col>
-                                <Col sm={2}>
-                                    <p className="postTime">{calculateTime()} mins ago</p>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                </Container>
-            </Card>
+        <animated.div style={props.animated} className="comment m-4 postSummary shadow-md rounded-md border border-light">
+            <div className="flex">
+                <div className="flex-none pl-8">
+                    <button className="mt-2" onClick={() => handleUpvote()}>
+                        <BsChevronUp />
+                    </button>
+                    <br />
+                    <a>{props.comment.upVotes}</a>
+                </div>
+
+                <div className="flex-1 pl-4 pt-2 text-left">
+                    {
+                        /* Check if current display name matches name of post. If so allow them to remove it */
+                        contextState.displayName === props.comment.author && (
+                            <div className="float-right pt-2 pr-4">
+                                <button className="w-8 h-8 flex btn-color rounded-md" onClick={handleShow}>
+                                    <IoClose className="flex-1 self-center" />
+                                </button>
+                            </div>
+                        )
+                    }
+                    <div className="divide-y">
+                        <div className="pt-4 pl-4 pb-12">{props.comment.content}</div>
+                        <blockquote>
+                            <div className="pl-2 pt-2">
+                                <div>
+                                    <footer className="blockquote-footer">
+                                        {props.comment.isAnon ? 'Anonymous' : props.comment.author},{' '}
+                                        {moment(props.comment.time).fromNow()}
+                                    </footer>
+                                </div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
             {/* Confirmation for Removing Post */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -117,7 +97,7 @@ function Comment(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </animated.div>
     )
 }
 

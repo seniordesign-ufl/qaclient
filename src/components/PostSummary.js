@@ -20,13 +20,37 @@ function PostSummary(props) {
     const handleShow = () => setShow(true)
 
     function handlePin() {
-        if (contextState.admin === true) {
-            const postUpdate = {
-                postID: props.post.id,
-                pinned: !props.post.pinned,
-                type: "post"
-            }
-            API.updatePinned(postUpdate, contextState.roomKey)
+        const postUpdate = {
+            postID: props.post.id,
+            pinned: !props.post.pinned,
+            type: "post"
+        }
+        API.updatePinned(postUpdate, contextState.roomKey)
+    }
+
+    function displayOptions () {
+        if(contextState.admin === true){
+            return(
+                <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
+                    <Dropdown.Item value="delete-post" onClick={handleShow}>
+                        Delete Post
+                    </Dropdown.Item>
+                    <Dropdown.Item value="pin-post" onClick={handlePin}>
+                        Pin Post
+                    </Dropdown.Item>
+                </DropdownButton>
+            )
+        }
+        else
+        {
+            return(
+                <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
+                    <Dropdown.Item value="delete-post" onClick={handleShow}>
+                        Delete Post
+                    </Dropdown.Item>
+                </DropdownButton>
+            )
+
         }
     }
 
@@ -78,17 +102,7 @@ function PostSummary(props) {
                             /* Check if current display name matches name of post. If so allow them to remove it */
                             // contextState.displayName === props.post.author &&
                             <div className="flex-none pr-8 mt-2" style={{ fontSize: 25 }}>
-                                <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-                                    <Dropdown.Item value="delete-post" onClick={handleShow}>
-                                        Delete Post
-                                    </Dropdown.Item>
-                                    <Dropdown.Item value="pin-post" onClick={handlePin}>
-                                        Pin Post
-                                    </Dropdown.Item>
-                                </DropdownButton>
-                                {/* <Button onClick={handleShow} variant="outline-danger" style={{ marginTop: '10px' }}>
-                                    X
-                                </Button> */}
+                                {displayOptions()}
                             </div>
                         }
                     </div>

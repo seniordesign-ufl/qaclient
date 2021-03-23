@@ -1,7 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { useHistory } from 'react-router'
+import React, { useContext, useState } from 'react'
 import { API, AppContext } from '../AppContext'
-import axios from 'axios'
 import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
 
 import Header from '../components/Header'
@@ -27,9 +25,14 @@ function Landing(props) {
     The Code and Display Name Will Be Sent Over To The Generate Component
     */
     function handleGenerateClick(e) {
-        dispatch({ type: 'update-name', displayName: name })
-        API.requestRoom()
-        updateShowLink(true)
+        e.preventDefault()
+        if (name) {
+            dispatch({ type: 'update-name', displayName: name })
+            API.requestRoom()
+            updateShowLink(true)
+        } else {
+            toast.error('Please input a name')
+        }
     }
     return (
         <div>
@@ -40,23 +43,26 @@ function Landing(props) {
                         <h3>Create a Discussion Room</h3>
                         <br />
                         <br />
-                        <input
-                            type="text"
-                            id="displayName"
-                            className="form-control"
-                            aria-describedby="passwordHelpBlock"
-                            input
-                            placeholder="Enter Display Name"
-                            onChange={(e) => updateName(e.target.value)}
-                        />{' '}
-                        <br />
-                        <button
-                            type="button"
-                            className="btn btn-primary btn-lg generate-btn"
-                            onClick={handleGenerateClick}
-                        >
-                            Generate Room
-                        </button>
+                        <form onSubmit={handleGenerateClick}>
+                            <input
+                                type="text"
+                                id="displayName"
+                                className="form-control"
+                                aria-describedby="passwordHelpBlock"
+                                input
+                                placeholder="Enter Display Name"
+                                onChange={(e) => updateName(e.target.value)}
+                            />{' '}
+                            <br />
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-lg generate-btn"
+                                disabled={showLink}
+                                onClick={handleGenerateClick}
+                            >
+                                Generate Room
+                            </button>
+                        </form>
                     </div>
                     <div className="link-box">
                         {showLink ? (
@@ -92,8 +98,12 @@ function Copy(props) {
     }
     return (
         <>
-            <button onClick={doCopy} disabled={clicked} className={`copy-btn ${clicked && 'clicked'}`}>
-                {clicked ? <FaClipboardCheck></FaClipboardCheck> : <FaRegClipboard></FaRegClipboard>}
+            <button onClick={doCopy} disabled={clicked} className={`copy-btn inline-flex ${clicked && 'clicked'}`}>
+                {clicked ? (
+                    <FaClipboardCheck className="flex-1 self-center" />
+                ) : (
+                    <FaRegClipboard className="flex-1 self-center" />
+                )}
             </button>
         </>
     )

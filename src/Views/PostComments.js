@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useTransition } from 'react-spring'
 import { API, AppContext } from '../AppContext'
 import Comment from '../components/Comment'
 
@@ -6,15 +7,96 @@ import Comment from '../components/Comment'
 import { Button, Card, Form } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import { BsChevronUp, BsChatSquareDots, BsArrowLeft } from 'react-icons/bs'
+import { BsChevronUp, BsChatSquareDots, BsArrowLeft, BsReply } from 'react-icons/bs'
+import PostSummary from '../components/PostSummary'
+import { Link } from 'react-router-dom'
 
 function PostComments(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
+    const postID = props.match.params.postID
+    const post = contextState.posts.find((p) => p.id === postID)
+    const [displayForm, setDisplayForm] = useState(false)
+    const transitions = useTransition(post.comments, post => post.id, {
+        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+    })
+
+    if (!post) {
+        return (
+            <div>
+                Post not found.
+                <Link to=".">
+                    <Button variant="light" style={{ marginTop: '10px' }}>
+                        <BsArrowLeft />
+                    </Button>
+                </Link>
+            </div>
+        )
+    }
+
+
+    const comments = post.comments.filter((c) => c.content.includes(contextState.search_phrase))
+
+    if (contextState.filter_by === 'Popularity') {
+        comments = comments.slice().sort((a, b) => b.upVotes - a.upVotes)
+    } else if (contextState.filter_by === 'Date') {
+        comments = comments
+            .slice()
+            .sort((a, b) => b.time)
+            .reverse()
+    } else if (contextState.filter_by === 'Solved') {
+        let temp = []
+        comments.slice().forEach((element) => {
+            if (element.solved === true) {
+                temp.append(element)
+            }
+        })
+        comments = temp
+    }
+
+    return (
+        <Container>
+            <Row>
+                <Link to=".">
+                    <Button variant="light" style={{ marginTop: '10px' }}>
+                        <BsArrowLeft />
+                    </Button>
+                </Link>
+            </Row>
+            <PostSummary post={post} disableLink />
+            <Row className="postCommentsRow">
+                {displayForm ? (
+                    <ReplyBox contextState={contextState} setDisplayForm={setDisplayForm} post={post} />
+                ) : (
+                    <button
+                        className="flex btn-color font-bold rounded-md ml-8 p-2"
+                        onClick={() => setDisplayForm(true)}
+                    >
+                        Reply
+                        <BsReply className="inline self-center" />
+                    </button>
+                )}
+            </Row>
+            <Row className="postCommentsRow">
+                {(comments.length &&
+                    transitions.map(({ item, props, key }) => <Comment animated={props} postID={post.id} comment={item} key={key} />))
+                    || (
+                        <p>No comments yet</p>
+                    )}
+            </Row>
+        </Container>
+    )
+}
+
+export default PostComments
+
+function ReplyBox(props) {
+    const contextState = props.contextState
+    const setDisplayForm = props.setDisplayForm
     const [content, setContent] = useState('')
     const [time, setTime] = useState(new Date())
     const [anonymous, setAnonymous] = useState(false)
-    const [displayForm, setDisplayForm] = useState(false)
 
     //Handles submission of new Comment
     const handleSubmitForm = (e) => {
@@ -26,31 +108,12 @@ function PostComments(props) {
             time: time,
             isAnon: anonymous,
         }
+        console.log(props.post.id)
 
         API.addComment(comment, props.post.id, contextState.roomKey)
         setDisplayForm(false)
         setAnonymous(false)
     }
-
-    function handleUpvote() {
-        if (!contextState.upVotes.includes(props.post.id)) {
-            const postUpdate = {
-                postID: props.post.id,
-                upVote: 1,
-            }
-            API.updatePost(postUpdate, contextState.roomKey)
-            dispatch({
-                type: 'update-upVotes',
-                upVotes: contextState.upVotes.push([props.post.id]),
-            })
-        }
-    }
-
-    function calculateTime() {
-        let diff = new Date().getTime() - new Date(props.post.time).getTime()
-        return Math.round(diff / 60000)
-    }
-
     const handleContentChange = (e) => {
         setContent(e.target.value)
     }
@@ -62,128 +125,36 @@ function PostComments(props) {
     function handleCancelClick() {
         setDisplayForm(false)
     }
-
-    function mapComments() {
-        let comments_array =
-            contextState.search_phrase === ''
-                ? props.post.comments
-                : props.post.comments.filter((c) => c.content.includes(contextState.search_phrase))
-
-        if (contextState.filter_by === 'Popularity') {
-            comments_array = comments_array.slice().sort((a, b) => b.upVotes - a.upVotes)
-        } else if (contextState.filter_by === 'Date') {
-            comments_array = comments_array
-                .slice()
-                .sort((a, b) => b.time)
-                .reverse()
-        } else if (contextState.filter_by === 'Solved') {
-            let temp = []
-            comments_array.slice().forEach((element) => {
-                if (element.solved === true) {
-                    temp.append(element)
-                }
-            })
-            comments_array = temp
-        }
-        return comments_array.length !== 0 ? (
-            comments_array.map((comment, i) => <Comment postID={props.post.id} comment={comment} key={i} />)
-        ) : (
-            <p>No comments yet</p>
-        )
-    }
-
-    function handleBack() {
-        props.display(false)
-    }
-
     return (
-        <Container>
-            <Row>
-                <Button variant="light" onClick={() => handleBack()} style={{ marginTop: '10px' }}>
-                    <BsArrowLeft />
-                </Button>
+        <Card style={{ width: '100%' }}>
+            <Row style={{ width: '100%', margin: 'auto' }}>
+                <Form style={{ width: '100%', marginBottom: '20px' }}>
+                    <Form.Group style={{ marginTop: '10px' }} controlId="comment.content">
+                        <Form.Label>Reply Message</Form.Label>
+                        <Form.Control
+                            className="commentTextArea"
+                            as="textarea"
+                            style={{ width: '80%' }}
+                            rows={5}
+                            onChange={handleContentChange}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="comment.anonymous">
+                        <Form.Check
+                            type={'checkbox'}
+                            id={'default-checkbox'}
+                            label={'Reply Anonymously'}
+                            onClick={handleAnonymousCheck}
+                        />
+                    </Form.Group>
+                    <Button variant="secondary" onClick={() => handleCancelClick()}>
+                        Cancel
+                    </Button>{' '}
+                    <Button variant="secondary" onClick={() => handleSubmitForm()}>
+                        Add Reply
+                    </Button>
+                </Form>
             </Row>
-            <Row className="postCommentsRow">
-                <Card style={{ width: '100%' }}>
-                    <Container>
-                        <Row>
-                            <Col sm="1">
-                                <Button variant="light" onClick={() => handleUpvote()} style={{ marginTop: '10px' }}>
-                                    <BsChevronUp />
-                                </Button>
-                                <br />
-                                <a>{props.post.upVotes}</a>
-                                <br />
-                                <BsChatSquareDots />
-                                <br />
-                                <a>{props.post.comments.length}</a>
-                            </Col>
-                            <Col lg style={{ textAlign: 'left' }}>
-                                <Row>
-                                    <Col>
-                                        <Card.Title>{props.post.title}</Card.Title>
-                                    </Col>
-                                </Row>
-                                <Card.Text>{props.post.content}</Card.Text>
-                                <blockquote>
-                                    <Row>
-                                        <Col>
-                                            <footer className="blockquote-footer">
-                                                {props.post.isAnon ? 'Anonymous' : props.post.author}
-                                            </footer>
-                                        </Col>
-                                        <Col>
-                                            <Button variant="outline-secondary" onClick={() => setDisplayForm(true)}>
-                                                Reply
-                                            </Button>
-                                        </Col>
-                                        <Col sm={2}>
-                                            <p className="postTime">{calculateTime()} mins ago</p>
-                                        </Col>
-                                    </Row>
-                                </blockquote>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Card>
-            </Row>
-            <Row className="postCommentsRow">
-                {displayForm && (
-                    <Card style={{ width: '100%' }}>
-                        <Row style={{ width: '100%', margin: 'auto' }}>
-                            <Form style={{ width: '100%', marginBottom: '20px' }}>
-                                <Form.Group style={{ marginTop: '10px' }} controlId="comment.content">
-                                    <Form.Label>Reply Message</Form.Label>
-                                    <Form.Control
-                                        className="commentTextArea"
-                                        as="textarea"
-                                        style={{ width: '80%' }}
-                                        rows={5}
-                                        onChange={handleContentChange}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="comment.anonymous">
-                                    <Form.Check
-                                        type={'checkbox'}
-                                        id={'default-checkbox'}
-                                        label={'Reply Anonymously'}
-                                        onClick={handleAnonymousCheck}
-                                    />
-                                </Form.Group>
-                                <Button variant="secondary" onClick={() => handleCancelClick()}>
-                                    Cancel
-                                </Button>{' '}
-                                <Button variant="secondary" onClick={() => handleSubmitForm()}>
-                                    Add Reply
-                                </Button>
-                            </Form>
-                        </Row>
-                    </Card>
-                )}
-            </Row>
-            <Row className="postCommentsRow">{mapComments()}</Row>
-        </Container>
+        </Card>
     )
 }
-
-export default PostComments
