@@ -32,8 +32,6 @@ function PostSummary(props) {
         }
     }
 
-
-
     return (
         <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">

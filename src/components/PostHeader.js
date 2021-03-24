@@ -45,7 +45,6 @@ function DisplaySolved(props) {
 }
 
 function DisplayOptions(props) {
-
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
     const handleClose = () => setShow(false)
@@ -92,7 +91,7 @@ function DisplayOptions(props) {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Cancel
-                    </Button>
+                        </Button>
                         <Button
                             variant="primary"
                             onClick={() => {
@@ -101,7 +100,7 @@ function DisplayOptions(props) {
                             }}
                         >
                             Remove
-                    </Button>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </>
@@ -120,7 +119,7 @@ function DisplayOptions(props) {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Cancel
-                    </Button>
+                        </Button>
                         <Button
                             variant="primary"
                             onClick={() => {
@@ -129,7 +128,7 @@ function DisplayOptions(props) {
                             }}
                         >
                             Remove
-                    </Button>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </div>
@@ -138,7 +137,6 @@ function DisplayOptions(props) {
 }
 
 export default function PostHeader(props) {
-
     return (
         <div className="flex justify-between">
             <div className="flex-initial flex">
