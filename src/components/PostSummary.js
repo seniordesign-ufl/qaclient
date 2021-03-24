@@ -5,6 +5,7 @@ import { API, AppContext } from '../AppContext'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { BsChevronUp } from 'react-icons/bs'
+import { FaChevronUp } from 'react-icons/fa'
 import { BiComment } from 'react-icons/bi'
 import { IoClose } from 'react-icons/io5'
 import { BiDotsHorizontal } from 'react-icons/bi'
@@ -17,7 +18,7 @@ import { animated } from 'react-spring'
 import '../Styling/PostSummary.css'
 
 function PostSummary(props) {
-    const [canUpvote, setCanUpvote] = useState(true)
+    const [hasUpvote, setHasUpvote] = useState(false)
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
     const match = useRouteMatch()
@@ -34,9 +35,10 @@ function PostSummary(props) {
         API.updatePinned(postUpdate, contextState.roomKey)
     }
 
-    function displayOptions () {
-        if(contextState.admin === true){
-            return(
+
+    function displayOptions() {
+        if (contextState.admin === true) {
+            return (
                 <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
                     <Dropdown.Item value="delete-post" onClick={handleShow}>
                         Delete Post
@@ -47,9 +49,8 @@ function PostSummary(props) {
                 </DropdownButton>
             )
         }
-        else if(contextState.displayName === props.post.author)
-        {
-            return(
+        else if (contextState.displayName === props.post.author) {
+            return (
                 /* Check if current display name matches name of post. If so allow them to remove it */
                 <div className="flex-none pr-4">
                     <button
@@ -66,8 +67,7 @@ function PostSummary(props) {
     }
 
     function displayPinned() {
-        if(props.post.pinned === true)
-        {
+        if (props.post.pinned === true) {
             return (
                 <BsAwardFill size={25} />
             )
@@ -85,6 +85,7 @@ function PostSummary(props) {
                 type: 'update-upVotes',
                 upVotes: contextState.upVotes.concat([props.post.id]),
             })
+            setHasUpvote(true)
         }
     }
 
@@ -92,17 +93,12 @@ function PostSummary(props) {
         API.removePost(props.post.id, contextState.roomKey)
     }
 
-    function handleComment() {
-        props.select(contextState.posts.findIndex((element) => element.title === props.post.title))
-        props.display(true)
-    }
-
     return (
         <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
-                    <button onClick={() => handleUpvote()} className="mt-2">
-                        <BsChevronUp />
+                    <button disabled={hasUpvote} onClick={() => handleUpvote()} className="mt-2">
+                        <FaChevronUp style={{ color: hasUpvote ? "#007bff" : "" }} />
                     </button>
                     <br />
                     <a>{props.post.upVotes}</a>

@@ -89,7 +89,7 @@ const socketEvents = (dispatch) => {
         const cid = localStorage.getItem('client-id')
         if (cid) {
             console.log('rejoin attempt', cid)
-            socket.emit('rejoin', cid)
+            socket.emit('rejoin', { client_id: cid, pathname: window.location.pathname })
             socket.once('rejoin', (m) => {
                 console.log(m)
                 if (m.error) {
