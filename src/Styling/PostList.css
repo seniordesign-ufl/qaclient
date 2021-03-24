@@ -12,6 +12,10 @@
     border: 0;
 }
 
+.roomContainer #newDiscussion:hover {
+    background: #f1a79f;
+}
+
 .clicked {
     background: #f1a79f;
 }
