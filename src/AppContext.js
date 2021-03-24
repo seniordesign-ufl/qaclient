@@ -44,6 +44,8 @@ const reducer = produce((draft, action) => {
         case 'update-upVotes':
             draft.upVotes = action.upVotes
             break
+        default:
+            console.log('Unknown case? (', action.type, ')')
     }
 }, INITIAL_STATE)
 
@@ -93,7 +95,7 @@ const socketEvents = (dispatch) => {
                 if (m.error) {
                     localStorage.setItem('client-id', client_id)
                 } else {
-                    if (window.location.pathname == '') {
+                    if (window.location.pathname === '') {
                         window.location.replace(`/room/${m.groupID}`)
                     }
                     dispatch({

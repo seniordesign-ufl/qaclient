@@ -28,7 +28,6 @@ function Header(props) {
 }
 function Searchbar(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
-    const [displayWholeHeader, updateWholeDisplayHeader] = useState(true)
     const [filterValue, updateFilterValue] = useState('')
 
     const handleSearch = (e) => {

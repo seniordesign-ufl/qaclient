@@ -4,14 +4,12 @@ import { API, AppContext } from "../AppContext";
 import CreatePost from "../components/NewPost";
 
 //Bootstrap
-import { Button, Modal } from 'react-bootstrap'
-import Container from 'react-bootstrap/Container'
+import { Button } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import { BsPerson, BsConeStriped } from 'react-icons/bs'
+import { BsPerson } from 'react-icons/bs'
 
 import '../Styling/PostList.css'
-import { animated, useTransition } from 'react-spring'
+import { useTransition } from 'react-spring'
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext)
@@ -47,11 +45,10 @@ export default function CommentList(props) {
     function displayPinnedPosts() {
         let pinnedPost = posts.filter((c) => c.pinned === true);
 
-        if(pinnedPost.length > 0)
-        {
+        if (pinnedPost.length > 0) {
             return (
                 <Row>
-                    <h5 style={{marginLeft: 25}}>Pinned Posts</h5>
+                    <h5 style={{ marginLeft: 25 }}>Pinned Posts</h5>
                     {pinnedPost.map((p, i) => (<PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />))}
                 </Row>
             )
@@ -60,11 +57,10 @@ export default function CommentList(props) {
     }
 
     function displayAllPosts() {
-        if(contextState.posts.length > 0)
-        {
+        if (contextState.posts.length > 0) {
             return (
                 <Row>
-                    <h5 style={{marginLeft: 25}}>Discussion Posts</h5>
+                    <h5 style={{ marginLeft: 25 }}>Discussion Posts</h5>
                     {(posts.length &&
                         transitions.map(({ item, props, key }) => (
                             <PostSummary animated={props} post={item} key={key} />
@@ -72,8 +68,7 @@ export default function CommentList(props) {
                 </Row>
             )
         }
-        else
-        {
+        else {
             return (
                 <p>No Posts Available!</p>
             )

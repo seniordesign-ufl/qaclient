@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { API, AppContext } from '../AppContext'
+import React from 'react'
 import PostList from './PostList'
 import { Route, Switch } from 'react-router'
 import PostComments from './PostComments'

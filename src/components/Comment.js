@@ -75,7 +75,10 @@ function Comment(props) {
     // }
 
     return (
-        <animated.div style={props.animated} className="comment m-4 postSummary shadow-md rounded-md border border-light">
+        <animated.div
+            style={props.animated}
+            className="comment m-4 postSummary shadow-md rounded-md border border-light"
+        >
             <div className="flex">
                 <div className="flex-none pl-8">
                     <button className="mt-2" onClick={() => handleUpvote()}>
