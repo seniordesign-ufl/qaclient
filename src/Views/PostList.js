@@ -1,7 +1,7 @@
-import PostSummary from '../components/PostSummary'
-import React, { useContext, useEffect, useState } from 'react'
-import { API, AppContext } from '../AppContext'
-import CreatePost from '../components/NewPost'
+import PostSummary from "../components/PostSummary"
+import React, { useContext, useEffect, useState } from "react";
+import { API, AppContext } from "../AppContext";
+import CreatePost from "../components/NewPost";
 
 //Bootstrap
 import { Button, Modal } from 'react-bootstrap'
@@ -43,7 +43,6 @@ export default function CommentList(props) {
         })
         posts = temp
     }
-    console.log(posts)
 
     function displayPinnedPosts() {
         let pinnedPost = posts.filter((c) => c.pinned === true);
@@ -55,6 +54,28 @@ export default function CommentList(props) {
                     <h5 style={{marginLeft: 25}}>Pinned Posts</h5>
                     {pinnedPost.map((p, i) => (<PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />))}
                 </Row>
+            )
+        }
+
+    }
+
+    function displayAllPosts() {
+        if(contextState.posts.length > 0)
+        {
+            return (
+                <Row>
+                    <h5 style={{marginLeft: 25}}>Discussion Posts</h5>
+                    {(posts.length &&
+                        transitions.map(({ item, props, key }) => (
+                            <PostSummary animated={props} post={item} key={key} />
+                        )))}
+                </Row>
+            )
+        }
+        else
+        {
+            return (
+                <p>No Posts Available!</p>
             )
         }
 
@@ -80,13 +101,7 @@ export default function CommentList(props) {
                 </div>
             </div>
             {displayPinnedPosts()}
-            <Row>
-                <h5 style={{marginLeft: 25}}>Discussion Posts</h5>
-                {(posts &&
-                    posts.map((p, i) => (
-                        <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
-                    ))) || <p>No posts yet.</p>}
-            </Row>
+            {displayAllPosts()}
         </div>
     )
 }

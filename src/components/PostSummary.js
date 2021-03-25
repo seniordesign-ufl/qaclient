@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { BsChevronUp } from 'react-icons/bs'
 import { BiComment } from 'react-icons/bi'
+import { IoClose } from 'react-icons/io5'
 import { BiDotsHorizontal } from 'react-icons/bi'
 import { BsAwardFill } from 'react-icons/bs'
 import moment from 'moment'
@@ -46,14 +47,19 @@ function PostSummary(props) {
                 </DropdownButton>
             )
         }
-        else
+        else if(contextState.displayName === props.post.author)
         {
             return(
-                <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-                    <Dropdown.Item value="delete-post" onClick={handleShow}>
-                        Delete Post
-                    </Dropdown.Item>
-                </DropdownButton>
+                /* Check if current display name matches name of post. If so allow them to remove it */
+                <div className="flex-none pr-4">
+                    <button
+                        className="w-8 h-8 flex btn-color rounded-md"
+                        onClick={handleShow}
+                        variant="outline-danger"
+                    >
+                        <IoClose className="flex-1 self-center" />
+                    </button>
+                </div>
             )
 
         }
@@ -92,7 +98,7 @@ function PostSummary(props) {
     }
 
     return (
-        <div className="m-4 postSummary shadow-md rounded-md border border-light">
+        <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
                     <button onClick={() => handleUpvote()} className="mt-2">
@@ -112,19 +118,13 @@ function PostSummary(props) {
                     <br />
                     <a>{props.post.comments.length}</a>
                 </div>
-                <div className="pl-4 flex-1 text-left">
+                <div className="pl-4 pt-2 flex-1 text-left">
                     <div className="flex justify-between">
                         <div id="post-title-div" className="flex-none">
-                            {displayPinned()} 
+                            {displayPinned()}
                             <p id="post-title" className="font-semibold">{props.post.title}</p>
                         </div>
-                        {
-                            /* Check if current display name matches name of post. If so allow them to remove it */
-                            // contextState.displayName === props.post.author &&
-                            <div className="flex-none pr-8 mt-2" style={{ fontSize: 25 }}>
-                                {displayOptions()}
-                            </div>
-                        }
+                        {displayOptions()}
                     </div>
                     <div className="divide-y">
                         <div className="pl-2 pb-4">{props.post.content}</div>
@@ -161,7 +161,7 @@ function PostSummary(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </animated.div>
     )
 }
 
