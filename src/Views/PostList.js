@@ -69,7 +69,10 @@ export default function CommentList(props) {
                         ))}
                 </Row>
             )
-        } else {
+        } else if(contextState.posts.length > 0) {
+            return null
+        }
+        else {
             return <p>No Posts Available!</p>
         }
     }
