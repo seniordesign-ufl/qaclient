@@ -44,6 +44,8 @@ const reducer = produce((draft, action) => {
         case 'update-upVotes':
             draft.upVotes = action.upVotes
             break
+        default:
+            console.log('Unknown case? (', action.type, ')')
     }
 }, INITIAL_STATE)
 
@@ -87,13 +89,13 @@ const socketEvents = (dispatch) => {
         const cid = localStorage.getItem('client-id')
         if (cid) {
             console.log('rejoin attempt', cid)
-            socket.emit('rejoin', cid)
+            socket.emit('rejoin', { client_id: cid, pathname: window.location.pathname })
             socket.once('rejoin', (m) => {
                 console.log(m)
                 if (m.error) {
                     localStorage.setItem('client-id', client_id)
                 } else {
-                    if (window.location.pathname == '') {
+                    if (window.location.pathname === '') {
                         window.location.replace(`/room/${m.groupID}`)
                     }
                     dispatch({

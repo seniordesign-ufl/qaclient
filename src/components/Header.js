@@ -3,7 +3,7 @@ import { AppContext } from '../AppContext'
 import '../Styling/index.css'
 import '../Styling/Header.css'
 
-import Download from "./Download"
+import Download from './Download'
 
 import { Container, Row, Col, FormControl, Dropdown, DropdownButton, Button, InputGroup } from 'react-bootstrap'
 import { BsSearch } from 'react-icons/bs'
@@ -28,7 +28,6 @@ function Header(props) {
 }
 function Searchbar(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
-    const [displayWholeHeader, updateWholeDisplayHeader] = useState(true)
     const [filterValue, updateFilterValue] = useState('')
 
     const handleSearch = (e) => {
@@ -77,7 +76,7 @@ function Searchbar(props) {
                     </DropdownButton>
                 </Col>
                 <Col xs={1}>
-                    <Download/>
+                    <Download />
                 </Col>
             </>
         )
