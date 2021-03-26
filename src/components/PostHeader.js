@@ -133,6 +133,8 @@ function DisplayOptions(props) {
                 </Modal>
             </div>
         )
+    } else {
+        return null
     }
 }
 
