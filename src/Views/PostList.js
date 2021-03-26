@@ -58,17 +58,21 @@ export default function CommentList(props) {
     }
 
     function displayAllPosts() {
-        if (contextState.posts.length > 0) {
+        let nonPinnedPosts = transitions.filter((c) => c.item.pinned === false)
+        if (nonPinnedPosts.length > 0) {
             return (
                 <Row>
                     <h5 className="font-bold ml-3 text-gray-500">DISCUSSION</h5>
                     {posts.length &&
-                        transitions.map(({ item, props, key }) => (
+                        nonPinnedPosts.map(({ item, props, key }) => (
                             <PostSummary animated={props} post={item} key={key} />
                         ))}
                 </Row>
             )
-        } else {
+        } else if(contextState.posts.length > 0) {
+            return null
+        }
+        else {
             return <p>No Posts Available!</p>
         }
     }

@@ -13,7 +13,7 @@ function DisplayPinned(props) {
         from: { opacity: 0 },
         to: { opacity: 1 },
     })
-    if (props.post.pinned === true) {
+    if (props.post.pinned) {
         return (
             <animated.div style={styleProps}>
                 <BsAwardFill title="Pinned" size={25} style={{ color: '#e98074' }} />
@@ -29,6 +29,7 @@ function DisplaySolved(props) {
         from: { opacity: 0 },
         to: { opacity: 1 },
     })
+
     if (props.solved) {
         return (
             <animated.div
@@ -59,8 +60,11 @@ function DisplayOptions(props) {
     }
 
     function handleSolved() {
-        //API call here, remove this when added.
-        props.setHasSolved(true)
+        const postUpdate = {
+            postID: props.post.id,
+            solved: !props.post.solved
+        }
+        API.updateSolved(postUpdate, contextState.roomKey)
     }
 
     function handleRemove() {
@@ -140,7 +144,7 @@ export default function PostHeader(props) {
             <div className="flex-initial flex">
                 <DisplayPinned post={props.post} />
                 <div className="flex-initial font-semibold break-all">{props.post.title}</div>
-                {props.solved && <DisplaySolved solved={props.solved} />}
+                {props.post.solved && <DisplaySolved solved={props.post.solved} />}
             </div>
             <DisplayOptions setHasSolved={props.setHasSolved} post={props.post} />
         </div>
