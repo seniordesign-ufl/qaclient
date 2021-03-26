@@ -144,9 +144,9 @@ export default function PostHeader(props) {
             <div className="flex-initial flex">
                 <DisplayPinned post={props.post} />
                 <div className="flex-initial font-semibold break-all">{props.post.title}</div>
-                {props.post.solved && <DisplaySolved solved={props.post.solved} />}
+                <DisplaySolved solved={props.post.solved} />
             </div>
-            <DisplayOptions setHasSolved={props.setHasSolved} post={props.post} />
+            <DisplayOptions post={props.post} />
         </div>
     )
 }
