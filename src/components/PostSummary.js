@@ -4,6 +4,11 @@ import PostHeader from './PostHeader'
 
 //Bootstrap
 import { FaChevronUp } from 'react-icons/fa'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import Badge from 'react-bootstrap/Badge'
+import { BsChevronUp } from 'react-icons/bs'
+import {IoClose} from 'react-icons/io5'
 import { BiComment } from 'react-icons/bi'
 import moment from 'moment'
 import { Link, useRouteMatch } from 'react-router-dom'
@@ -32,7 +37,28 @@ function PostSummary(props) {
         }
     }
 
+    function mapTags() {
+        return (
+            <div className="inline-flex w-full justify-end mr-3 text-lg font-extralight">
+                  {props.post.tags.map((tag, i) => 
+                    <div className="mr-2" key={i}>
+                        <Badge pill className="px-2 py-1.5" variant="secondary">
+                            {tag}
+                        </Badge>
+                    </div>
+                    )}     
+            </div>
+        )
+    }
 
+    function handleRemove() {
+        API.removePost(props.post.id, contextState.roomKey);
+    }
+
+    function handleComment() {
+        props.select(contextState.posts.findIndex((element) => element.title === props.post.title));
+        props.display(true);
+    }
 
     return (
         <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
@@ -58,6 +84,25 @@ function PostSummary(props) {
                 </div>
                 <div className="ml-4 mt-2 flex-1 text-left">
                     <PostHeader post={props.post} setHasSolved={setHasSolved} solved={hasSolved} />
+                </div>
+                <div className="pl-4 pt-2 flex-1 text-left">
+                    <div className="flex justify-between">
+                        {props.post.tags.length > 0 ? mapTags() : null}
+                        {
+                            /* Check if current display name matches name of post. If so allow them to remove it */
+                            contextState.displayName === props.post.author && (
+                                <div className="flex-none pr-4">
+                                    <button
+                                        className="w-8 h-8 flex btn-color rounded-md"
+                                        onClick={handleRemove}
+                                        variant="outline-danger"
+                                    >
+                                        <IoClose className="flex-1 self-center" />
+                                    </button>
+                                </div>
+                            )
+                        }
+                    </div>
                     <div className="divide-y">
                         <div className="mx-4 my-2 break-all">{props.post.content}</div>
                         <blockquote>
