@@ -18,14 +18,10 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true)
 
     let posts = Array.from(contextState.posts)
-    const transitions = useTransition(posts, (post) => post.id, {
-        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
-        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
-        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
-    })
 
     if (contextState.search_phrase !== '') {
-        posts = posts.filter((c) => c.title.includes(contextState.search_phrase))
+        posts = posts.filter((c) => c.title.includes(contextState.search_phrase) || 
+                                    c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined)
     }
 
     if (contextState.filter_by === 'Popularity') {
@@ -41,6 +37,12 @@ export default function CommentList(props) {
         })
         posts = temp
     }
+
+    const transitions = useTransition(posts, (post) => post.id, {
+        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+    })
 
     function displayPinnedPosts() {
         let pinnedPost = posts.filter((c) => c.pinned === true)

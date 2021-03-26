@@ -136,6 +136,9 @@ function DisplayOptions(props) {
             </div>
         )
     }
+    else {
+        return(null)
+    }
 }
 
 export default function PostHeader(props) {
