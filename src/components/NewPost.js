@@ -17,7 +17,6 @@ function NewPost(props) {
     const [tagList, updateTagList] = useState([])
 
     const handleSubmitForm = (e) => {
-        console.log("We'll submit here.")
         updateTime(new Date())
 
         const post = {
@@ -29,11 +28,6 @@ function NewPost(props) {
             tags: tagList,
         }
 
-        console.log(post.title)
-        console.log(post.content)
-        console.log(post.author)
-        console.log(post.time)
-        console.log(contextState.roomKey)
         API.createPost(post, contextState.roomKey)
         props.onHide()
     }
@@ -42,7 +36,6 @@ function NewPost(props) {
         if (tag !== "" && tagList.length < 5) {
             let newList = [...tagList];
             newList.push(tag);
-            console.log(newList);
             updateTagList(newList);
             updateTag("");
         }
@@ -70,7 +63,6 @@ function NewPost(props) {
     }
 
     const handleAttachment = (e) => {
-        console.log(e)
         updateAttachment(e.target.value);
     }
 
@@ -82,7 +74,7 @@ function NewPost(props) {
         return (
             <div className="inline-flex w-full text-lg font-extralight content-center mb-2">
                   {tagList.map((tag, i) => 
-                    <div className="mr-1 content-center" key={i}>
+                    <div className="mr-2 content-center" key={i}>
                         <Badge pill className="p-1.5" variant="secondary">
                             {tag}
                             <button className="w-4 h-5 ml-1" onClick={() => removeTag(i)}>X</button>
