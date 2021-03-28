@@ -1,16 +1,15 @@
-import React, { useContext, useState } from "react";
-import { API, AppContext } from "../AppContext";
-import  { PDFDownloadLink, Page, Text, View, Document, StyleSheet, pdf, Image} from '@react-pdf/renderer';
-import { saveAs } from 'file-saver';
+import React, { useContext, useState } from 'react'
+import { API, AppContext } from '../AppContext'
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet, pdf, Image } from '@react-pdf/renderer'
+import { saveAs } from 'file-saver'
 
 import Button from 'react-bootstrap/Button'
 import { BsDownload } from 'react-icons/bs'
 
-import '../Styling/PostList.css';
+import '../Styling/PostList.css'
 
-function Download(props)
-{
-    const { state: contextState } = useContext(AppContext);
+function Download(props) {
+    const { state: contextState } = useContext(AppContext)
     const image = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACx
                    jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG+SURBVFhH7VavT8NAFK7DLIF2JBgSJBKJgoldN4khwa3Z3ZJJJBLB/4BEIp
                    HI4SaRyElk5Sy87/radbfeeiNtCaFf8pK+d+/dvV/3el6LFn8eQageu6H6AgVifMfiZtC5HO3rg0M5C4R6IWeWkPFy/fDF5DyJ
@@ -29,7 +28,7 @@ function Download(props)
             margin: 10,
             marginLeft: 25,
             marginBottom: 10,
-            fontSize: 16
+            fontSize: 16,
         },
         post: {
             marginLeft: 30,
@@ -37,41 +36,41 @@ function Download(props)
             marginBottom: 10,
             paddingTop: 10,
             borderTopWidth: 1,
-            borderTopColor: "black",
-            borderTopStyle: "solid"
+            borderTopColor: 'black',
+            borderTopStyle: 'solid',
         },
         postHeader: {
-            maxWidth: "80%",
+            maxWidth: '80%',
             fontSize: 12,
         },
         postContent: {
-            maxWidth: "80%",
+            maxWidth: '80%',
             fontSize: 10,
             marginTop: 4,
         },
         postAuthor: {
-            maxWidth: "80%",
+            maxWidth: '80%',
             fontSize: 9,
             marginTop: 3,
         },
         comment: {
             marginLeft: 20,
-            marginTop: 7
+            marginTop: 7,
         },
         commentContent: {
-            maxWidth: "80%",
+            maxWidth: '80%',
             fontSize: 10,
-            marginTop: 2
+            marginTop: 2,
         },
         commentAuthor: {
-            maxWidth: "80%",
+            maxWidth: '80%',
             fontSize: 9,
             marginTop: 3,
         },
-    });
+    })
 
     const MyDocument = () => (
-            <Document>
+        <Document>
             <Page wrap={false} size="A4" style={styles.page}>
                 <View>
                     <View style={styles.header}>
@@ -83,20 +82,20 @@ function Download(props)
                             <View key={i} style={styles.post}>
                                 {console.log(post)}
                                 <Text style={styles.postHeader}>{post.title}</Text>
-                                <Text style={styles.postContent}>{"Description: " + post.content}</Text>
+                                <Text style={styles.postContent}>{'Description: ' + post.content}</Text>
                                 <Text style={styles.postAuthor}>
-                                    {"-" + (post.isAnon ? "Anonymous" : post.author) + "    "}
+                                    {'-' + (post.isAnon ? 'Anonymous' : post.author) + '    '}
                                     <Image src={image}></Image>
-                                    {" " + post.upVotes}
+                                    {' ' + post.upVotes}
                                 </Text>
                                 <View>
                                     {post.comments.map((comment, i) => (
                                         <View key={i} style={styles.comment}>
                                             <Text style={styles.commentContent}>{comment.content}</Text>
                                             <Text style={styles.commentAuthor}>
-                                                {"-" + (comment.isAnon ? "Anonymous" : comment.author) + "    "}
+                                                {'-' + (comment.isAnon ? 'Anonymous' : comment.author) + '    '}
                                                 <Image src={image}></Image>
-                                                {" " + comment.upVotes}
+                                                {' ' + comment.upVotes}
                                             </Text>
                                         </View>
                                     ))}
@@ -106,15 +105,13 @@ function Download(props)
                     </View>
                 </View>
             </Page>
-            </Document>
+        </Document>
     )
 
     const generatePdfDocument = async () => {
-        const blob = await pdf((
-            <MyDocument />
-        )).toBlob();
-        saveAs(blob, "Discussion.pdf");
-};
+        const blob = await pdf(<MyDocument />).toBlob()
+        saveAs(blob, 'Discussion.pdf')
+    }
 
     return (
         <div>
@@ -125,4 +122,4 @@ function Download(props)
     )
 }
 
-export default Download;
+export default Download

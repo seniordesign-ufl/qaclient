@@ -1,24 +1,24 @@
-import React from 'react';
+import React from 'react'
 
-import Header from '../components/Header';
+import Header from '../components/Header'
 
 export default {
-  title: 'Header',
-  component: Header,
-};
+    title: 'Header',
+    component: Header,
+}
 
-const Template = (args) => <Header {...args} />;
+const Template = (args) => <Header {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
-  state: {
-    userId: null,
-    displayName: null,
-    roomKey: null,
-    posts: [],
-    users: [],
-    search_phrase: '',
-    filter_by: '',
-    admin: false
-  }
-};
+    state: {
+        userId: null,
+        displayName: null,
+        roomKey: null,
+        posts: [],
+        users: [],
+        search_phrase: '',
+        filter_by: '',
+        admin: false,
+    },
+}

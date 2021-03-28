@@ -1,17 +1,15 @@
-import PostSummary from "../components/PostSummary"
-import React, { useContext, useEffect, useState } from "react";
-import { API, AppContext } from "../AppContext";
-import CreatePost from "../components/NewPost";
+import PostSummary from '../components/PostSummary'
+import React, { useContext, useEffect, useState } from 'react'
+import { API, AppContext } from '../AppContext'
+import CreatePost from '../components/NewPost'
 
 //Bootstrap
-import { Button, Modal } from 'react-bootstrap'
-import Container from 'react-bootstrap/Container'
+import { Button } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import { BsPerson, BsConeStriped } from 'react-icons/bs'
+import { BsPerson } from 'react-icons/bs'
 
 import '../Styling/PostList.css'
-import { animated, useTransition } from 'react-spring'
+import { useTransition } from 'react-spring'
 
 export default function CommentList(props) {
     const { state: contextState } = useContext(AppContext)
@@ -20,7 +18,7 @@ export default function CommentList(props) {
     const handleShow = () => setShow(true)
 
     let posts = Array.from(contextState.posts)
-    const transitions = useTransition(posts, post => post.id, {
+    const transitions = useTransition(posts, (post) => post.id, {
         from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
         enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
         leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
@@ -45,40 +43,38 @@ export default function CommentList(props) {
     }
 
     function displayPinnedPosts() {
-        let pinnedPost = posts.filter((c) => c.pinned === true);
+        let pinnedPost = posts.filter((c) => c.pinned === true)
 
-        if(pinnedPost.length > 0)
-        {
+        if (pinnedPost.length > 0) {
             return (
                 <Row>
-                    <h5 style={{marginLeft: 25}}>Pinned Posts</h5>
-                    {pinnedPost.map((p, i) => (<PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />))}
+                    <h5 className="font-bold ml-3 text-gray-500">PINNED</h5>
+                    {pinnedPost.map((p, i) => (
+                        <PostSummary select={props.selectPost} display={props.displayComments} post={p} key={i} />
+                    ))}
                 </Row>
             )
         }
-
     }
 
     function displayAllPosts() {
-        if(contextState.posts.length > 0)
-        {
+        let nonPinnedPosts = transitions.filter((c) => c.item.pinned === false)
+        if (nonPinnedPosts.length > 0) {
             return (
                 <Row>
-                    <h5 style={{marginLeft: 25}}>Discussion Posts</h5>
-                    {(posts.length &&
-                        transitions.map(({ item, props, key }) => (
+                    <h5 className="font-bold ml-3 text-gray-500">DISCUSSION</h5>
+                    {posts.length &&
+                        nonPinnedPosts.map(({ item, props, key }) => (
                             <PostSummary animated={props} post={item} key={key} />
-                        )))}
+                        ))}
                 </Row>
             )
+        } else if(contextState.posts.length > 0) {
+            return null
         }
-        else
-        {
-            return (
-                <p>No Posts Available!</p>
-            )
+        else {
+            return <p>No Posts Available!</p>
         }
-
     }
 
     return (
