@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     roomKey: null,
     posts: [],
     users: [],
+    admins: [],
     upVotes: [],
     search_phrase: '',
     filter_by: '',
@@ -31,6 +32,9 @@ const reducer = produce((draft, action) => {
             break
         case 'update-users':
             draft.users = action.users
+            break
+        case 'update-admins':
+            draft.admins = action.admins
             break
         case 'update-search':
             draft.search_phrase = action.search_phrase
@@ -85,6 +89,9 @@ export const API = {
     removeComment: (removeComment, groupID) => {
         socket.emit('remove-comment', { removeComment, groupID })
     },
+    updateAdmin: (user, groupID) => {
+        socket.emit('make-admin', { user, groupID })
+    }
 }
 
 const socketEvents = (dispatch) => {
@@ -107,6 +114,7 @@ const socketEvents = (dispatch) => {
                     })
                     dispatch({ type: 'update-users', users: m.users })
                     dispatch({ type: 'update-posts', posts: m.posts })
+                    dispatch({ type: 'update-user-id', userId: m.userId })
                 }
             })
         } else {
@@ -128,6 +136,10 @@ const socketEvents = (dispatch) => {
         // if (groupID === contextState.roomKey)
         //     handleClose();
         // console.log(contextState.posts)
+    })
+    socket.on('get-admins', ({ groupID, admins }) => {
+        dispatch({ type: 'update-admins', admins: admins })
+        console.log("Socket event update-admins: ", admins)
     })
     socket.on('admin', () => {
         dispatch({ type: 'admin-granted' })
