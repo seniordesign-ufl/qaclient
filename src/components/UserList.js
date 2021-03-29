@@ -8,31 +8,40 @@ import context from 'react-bootstrap/esm/AccordionContext'
 
 function UserList(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
-    const [ showUsers, setShowUsers ] = useState(false)
+
+    function promoteAdmin(id) {
+        API.updateAdmin(id, contextState.roomKey);
+    }
+
+    function kickUser(id) {
+        //TODO
+    }
 
     function displayAllUsers() {
         console.log("CONTEXT")
         console.log(contextState);
 
         console.log("ADMINs")
-    
-        API.updateAdmin(contextState.userId, contextState.roomKey)
+
+        // API.updateAdmin(contextState.userId, contextState.roomKey)
         // dispatch({ type: 'update-admins', admins: contextState.admins })
 
         return (
-            <div className="flex-initial">
-                {contextState.users.map(element => 
-                <div>
-                    {element.name} - {element.id}
-                    <DropdownButton className="flex-none" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-                        <Dropdown.Item value="promote-admin">
-                            Promote to Admin
+            <div>
+                {contextState.users.map(element =>
+                    <div className="flex">
+                        <div className="flex-1">
+                            {element.name} - {element.id}
+                        </div>
+                        <DropdownButton className="flex-none justify-end" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
+                            <Dropdown.Item value="promote-admin" onClick={() => promoteAdmin(element.id)}>
+                                Promote to Admin
                         </Dropdown.Item>
-                        <Dropdown.Item value="kick-user">
-                            Kick User
+                            <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id)}>
+                                Kick User
                         </Dropdown.Item>
-                    </DropdownButton>
-                </div>
+                        </DropdownButton>
+                    </div>
                 )}
             </div>
         );
@@ -51,13 +60,13 @@ function UserList(props) {
             <Modal.Body>
                 <Container>
                     <Row>
-                        <h4>Administrative Users</h4>
+                        <h5>Administrative Users</h5>
                     </Row>
                     <Row>
                         {displayAdministrativeUsers()}
                     </Row>
                     <Row>
-                        <h4>All Users</h4>
+                        <h5>All Users</h5>
                     </Row>
                     <Row>
                         {displayAllUsers()}
