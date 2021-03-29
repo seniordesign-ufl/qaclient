@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import { DropdownButton, Dropdown } from 'react-bootstrap'
 import { IoClose } from 'react-icons/io5'
+import Badge from 'react-bootstrap/Badge'
 import { BiDotsHorizontal } from 'react-icons/bi'
 import { BsAwardFill } from 'react-icons/bs'
 import { animated, useSpring } from 'react-spring'
@@ -136,17 +137,37 @@ function DisplayOptions(props) {
     } else {
         return null
     }
+    else {
+        return(null)
+    }
 }
 
 export default function PostHeader(props) {
+    function mapTags() {
+        return (
+            <div className="inline-flex w-full justify-end mr-3 text-lg font-extralight">
+                  {props.post.tags.map((tag, i) => 
+                    <div className="mr-2" key={i}>
+                        <Badge pill className="px-2 py-1.5" variant="secondary">
+                            {tag}
+                        </Badge>
+                    </div>
+                    )}     
+            </div>
+        )
+    }
+
     return (
-        <div className="flex justify-between">
+        <div className="flex w-full">
             <div className="flex-initial flex">
                 <DisplayPinned post={props.post} />
                 <div className="flex-initial font-semibold break-all">{props.post.title}</div>
                 <DisplaySolved solved={props.post.solved} />
             </div>
-            <DisplayOptions post={props.post} />
+            <div className="inline-flex justify-end w-full">
+                {props.post.tags.length > 0 ? mapTags() : null}
+                <DisplayOptions setHasSolved={props.setHasSolved} post={props.post} />
+            </div>
         </div>
     )
 }

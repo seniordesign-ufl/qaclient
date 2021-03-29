@@ -4,6 +4,11 @@ import PostHeader from './PostHeader'
 
 //Bootstrap
 import { FaChevronUp } from 'react-icons/fa'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import Badge from 'react-bootstrap/Badge'
+import { BsChevronUp } from 'react-icons/bs'
+import {IoClose} from 'react-icons/io5'
 import { BiComment } from 'react-icons/bi'
 import moment from 'moment'
 import { Link, useRouteMatch } from 'react-router-dom'
@@ -53,8 +58,10 @@ function PostSummary(props) {
                     <br />
                     <span>{props.post.comments.length}</span>
                 </div>
-                <div className="ml-4 mt-2 flex-1 text-left">
-                    <PostHeader post={props.post} />
+                <div className="pl-4 pt-2 flex-1 text-left">
+                    <div className="flex">
+                        <PostHeader post={props.post} setHasSolved={setHasSolved} solved={hasSolved} />
+                    </div>
                     <div className="divide-y">
                         <div className="mx-4 my-2 break-all">{props.post.content}</div>
                         <blockquote>

@@ -3,7 +3,7 @@ import { API, AppContext } from '../AppContext'
 import '../Styling/Header.css'
 import '../Styling/NewPost.css'
 
-import { Form, Modal, Button } from 'react-bootstrap'
+import { Form, Modal, Button, Badge } from 'react-bootstrap'
 
 function NewPost(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
@@ -12,9 +12,11 @@ function NewPost(props) {
     const [time, updateTime] = useState(new Date())
     const [anonymous, updateAnonymous] = useState(false)
     const [attachment, updateAttachment] = useState()
+    const [tag, updateTag] = useState("")
+    const [displayError, updateDisplayError] = useState(false)
+    const [tagList, updateTagList] = useState([])
 
     const handleSubmitForm = (e) => {
-        console.log("We'll submit here.")
         updateTime(new Date())
 
         const post = {
@@ -23,31 +25,64 @@ function NewPost(props) {
             author: contextState.displayName,
             time: time,
             isAnon: anonymous,
+            tags: tagList,
         }
 
-        console.log(post.title)
-        console.log(post.content)
-        console.log(post.author)
-        console.log(post.time)
-        console.log(contextState.roomKey)
         API.createPost(post, contextState.roomKey)
         props.onHide()
     }
 
+    function addTag() {
+        if (tag !== "" && tagList.length < 5) {
+            let newList = [...tagList];
+            newList.push(tag);
+            updateTagList(newList);
+            updateTag("");
+        }
+        else if(tagList.length >= 5)
+        {
+            updateDisplayError(true);
+        }
+    }
+
+    function removeTag(index) {
+        let newList = [...tagList];
+        newList.splice(index,1);
+        updateTagList(newList);
+        updateDisplayError(false)
+    }
+
     const handleTitleChange = (e) => {
-        updateTitle(e.target.value)
+        updateTitle(e.target.value);
     }
     const handleBodyChange = (e) => {
-        updateBody(e.target.value)
+        updateBody(e.target.value);
+    }
+    const handleTagChange = (e) => {
+        updateTag(e.target.value);
     }
 
     const handleAttachment = (e) => {
-        console.log(e)
-        updateAttachment(e.target.value)
+        updateAttachment(e.target.value);
     }
 
     const handleAnonymousCheck = (e) => {
-        updateAnonymous(!anonymous)
+        updateAnonymous(!anonymous);
+    }
+
+    function mapTags() {
+        return (
+            <div className="inline-flex w-full text-lg font-extralight content-center mb-2">
+                  {tagList.map((tag, i) => 
+                    <div className="mr-2 content-center" key={i}>
+                        <Badge pill className="p-1.5" variant="secondary">
+                            {tag}
+                            <button className="w-4 h-5 ml-1" onClick={() => removeTag(i)}>X</button>
+                        </Badge>
+                    </div>
+                    )}          
+            </div>
+        )
     }
 
     return (
@@ -78,6 +113,23 @@ function NewPost(props) {
                             rows={5}
                             onChange={handleBodyChange}
                         />
+                    </Form.Group>
+                    <Form.Group controlId="post.body">
+                        <Form.Label>
+                            <b>TAGS</b>
+                        </Form.Label>
+                        <br />
+                        <div className="inline-flex w-full mb-2.5">
+                            <Form.Control
+                                type="text"
+                                value={tag}
+                                placeholder="Words that summarize this post"
+                                onChange={handleTagChange}
+                            />
+                            <Button style={{backgroundColor: "#e98074", border: "none"}} onClick={() => addTag()}>+</Button>
+                        </div>
+                        {displayError ? <p className="text-red-600">{"A post can only have a maximum of 5 tags"}</p> : null}
+                        {tagList.length > 0 ? mapTags() : null}
                     </Form.Group>
                     <Form.Group controlId="post.attachments">
                         <Form.File id="formAttachments" onChange={handleAttachment} />
