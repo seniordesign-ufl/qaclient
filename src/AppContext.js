@@ -13,7 +13,7 @@ const INITIAL_STATE = {
     upVotes: [],
     search_phrase: '',
     filter_by: '',
-    admin: false,
+    admin: false
 }
 const reducer = produce((draft, action) => {
     switch (action.type) {
@@ -76,8 +76,8 @@ export const API = {
     removePost: (postID, groupID) => {
         socket.emit('remove-post', { postID, groupID })
     },
-    addComment: (comment, postID, groupID) => {
-        socket.emit('add-comment', { comment, postID, groupID })
+    addComment: (comment, postTitle, groupID) => {
+        socket.emit('add-comment', { comment, postTitle, groupID })
     },
     updateComment: (commentUpdate, groupID) => {
         socket.emit('update-comment', { commentUpdate, groupID })

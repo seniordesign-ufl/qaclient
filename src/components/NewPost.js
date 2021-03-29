@@ -39,15 +39,14 @@ function NewPost(props) {
             updateTagList(newList);
             updateTag("");
         }
-        else if(tagList.length >= 5)
-        {
+        else if (tagList.length >= 5) {
             updateDisplayError(true);
         }
     }
 
     function removeTag(index) {
         let newList = [...tagList];
-        newList.splice(index,1);
+        newList.splice(index, 1);
         updateTagList(newList);
         updateDisplayError(false)
     }
@@ -73,14 +72,14 @@ function NewPost(props) {
     function mapTags() {
         return (
             <div className="inline-flex w-full text-lg font-extralight content-center mb-2">
-                  {tagList.map((tag, i) => 
+                {tagList.map((tag, i) =>
                     <div className="mr-2 content-center" key={i}>
                         <Badge pill className="p-1.5" variant="secondary">
                             {tag}
                             <button className="w-4 h-5 ml-1" onClick={() => removeTag(i)}>X</button>
                         </Badge>
                     </div>
-                    )}          
+                )}
             </div>
         )
     }
@@ -119,14 +118,15 @@ function NewPost(props) {
                             <b>TAGS</b>
                         </Form.Label>
                         <br />
-                        <div className="inline-flex w-full mb-2.5">
+                        <div className="flex mb-2.5">
                             <Form.Control
                                 type="text"
                                 value={tag}
                                 placeholder="Words that summarize this post"
                                 onChange={handleTagChange}
+                                className="flex-1"
                             />
-                            <Button style={{backgroundColor: "#e98074", border: "none"}} onClick={() => addTag()}>+</Button>
+                            <Button className="flex-none" style={{ backgroundColor: "#e98074", border: "none" }} onClick={() => addTag()}>+</Button>
                         </div>
                         {displayError ? <p className="text-red-600">{"A post can only have a maximum of 5 tags"}</p> : null}
                         {tagList.length > 0 ? mapTags() : null}
