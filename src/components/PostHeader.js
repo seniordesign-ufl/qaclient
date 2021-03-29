@@ -45,7 +45,6 @@ function DisplaySolved(props) {
 }
 
 function DisplayOptions(props) {
-
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
     const handleClose = () => setShow(false)
@@ -92,7 +91,7 @@ function DisplayOptions(props) {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Cancel
-                    </Button>
+                        </Button>
                         <Button
                             variant="primary"
                             onClick={() => {
@@ -101,7 +100,7 @@ function DisplayOptions(props) {
                             }}
                         >
                             Remove
-                    </Button>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </>
@@ -120,7 +119,7 @@ function DisplayOptions(props) {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Cancel
-                    </Button>
+                        </Button>
                         <Button
                             variant="primary"
                             onClick={() => {
@@ -129,24 +128,25 @@ function DisplayOptions(props) {
                             }}
                         >
                             Remove
-                    </Button>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </div>
         )
+    } else {
+        return null
     }
 }
 
 export default function PostHeader(props) {
-
     return (
         <div className="flex justify-between">
             <div className="flex-initial flex">
                 <DisplayPinned post={props.post} />
                 <div className="flex-initial font-semibold break-all">{props.post.title}</div>
-                {props.post.solved && <DisplaySolved solved={props.post.solved} />}
+                <DisplaySolved solved={props.post.solved} />
             </div>
-            <DisplayOptions setHasSolved={props.setHasSolved} post={props.post} />
+            <DisplayOptions post={props.post} />
         </div>
     )
 }

@@ -7,13 +7,12 @@ import { FaChevronUp } from 'react-icons/fa'
 import { BiComment } from 'react-icons/bi'
 import moment from 'moment'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { animated, useSpring } from 'react-spring'
+import { animated } from 'react-spring'
 
 import '../Styling/PostSummary.css'
 
 function PostSummary(props) {
     const [hasUpvote, setHasUpvote] = useState(false)
-    const [hasSolved, setHasSolved] = useState(false)
     const match = useRouteMatch()
     const { state: contextState, dispatch } = useContext(AppContext)
 
@@ -31,8 +30,6 @@ function PostSummary(props) {
             setHasUpvote(true)
         }
     }
-
-
 
     return (
         <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
@@ -57,7 +54,7 @@ function PostSummary(props) {
                     <span>{props.post.comments.length}</span>
                 </div>
                 <div className="ml-4 mt-2 flex-1 text-left">
-                    <PostHeader post={props.post} setHasSolved={setHasSolved} solved={hasSolved} />
+                    <PostHeader post={props.post} />
                     <div className="divide-y">
                         <div className="mx-4 my-2 break-all">{props.post.content}</div>
                         <blockquote>
@@ -73,7 +70,6 @@ function PostSummary(props) {
                     </div>
                 </div>
             </div>
-            {/* Confirmation for Removing Post */}
         </animated.div>
     )
 }
