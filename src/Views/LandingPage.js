@@ -37,17 +37,17 @@ function Landing(props) {
     return (
         <div>
             <Header roomKey={contextState.roomKey} />
-            <div className="landing-page">
-                <div className="landing-box">
-                    <div className="create">
-                        <h3>Create a Discussion Room</h3>
+            <div className="landing-page md:w-1/2 p-10">
+                <div className="">
+                    <div>
+                        <h3 className="font-bold text-3xl ">Create a Discussion Room</h3>
                         <br />
                         <br />
                         <form onSubmit={handleGenerateClick}>
                             <input
                                 type="text"
                                 id="displayName"
-                                className="form-control"
+                                className="form-control w-full"
                                 aria-describedby="passwordHelpBlock"
                                 input
                                 placeholder="Enter Display Name"

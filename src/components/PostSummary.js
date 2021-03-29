@@ -12,13 +12,12 @@ import {IoClose} from 'react-icons/io5'
 import { BiComment } from 'react-icons/bi'
 import moment from 'moment'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { animated, useSpring } from 'react-spring'
+import { animated } from 'react-spring'
 
 import '../Styling/PostSummary.css'
 
 function PostSummary(props) {
     const [hasUpvote, setHasUpvote] = useState(false)
-    const [hasSolved, setHasSolved] = useState(false)
     const match = useRouteMatch()
     const { state: contextState, dispatch } = useContext(AppContext)
 
@@ -35,15 +34,6 @@ function PostSummary(props) {
             })
             setHasUpvote(true)
         }
-    }
-
-    function handleRemove() {
-        API.removePost(props.post.id, contextState.roomKey);
-    }
-
-    function handleComment() {
-        props.select(contextState.posts.findIndex((element) => element.title === props.post.title));
-        props.display(true);
     }
 
     return (
@@ -87,7 +77,6 @@ function PostSummary(props) {
                     </div>
                 </div>
             </div>
-            {/* Confirmation for Removing Post */}
         </animated.div>
     )
 }

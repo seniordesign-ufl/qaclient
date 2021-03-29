@@ -65,13 +65,13 @@ export default function CommentList(props) {
             return (
                 <Row>
                     <h5 className="font-bold ml-3 text-gray-500">DISCUSSION</h5>
-                    {posts.length &&
+                    {posts.length !== 0 ?
                         nonPinnedPosts.map(({ item, props, key }) => (
                             <PostSummary animated={props} post={item} key={key} />
-                        ))}
+                        )) : null}
                 </Row>
             )
-        } else if(contextState.posts.length > 0) {
+        } else if (contextState.posts.length > 0) {
             return null
         }
         else {
@@ -81,7 +81,7 @@ export default function CommentList(props) {
 
     return (
         <div className="container roomContainer">
-            <div className="flex justify-between">
+            <div className="flex justify-between flex-col md:flex-row">
                 <div id="discussionHeader">
                     <h2 className="pr-4">
                         Discussion{' '}
@@ -91,7 +91,7 @@ export default function CommentList(props) {
                         </div>
                     </h2>
                 </div>
-                <div className="flex">
+                <div>
                     <Button id="newDiscussion" onClick={handleShow}>
                         + Start New Discussion
                     </Button>
