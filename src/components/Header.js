@@ -5,23 +5,22 @@ import '../Styling/Header.css'
 
 import Download from './Download'
 
-import { Container, Row, Col, FormControl, Dropdown, DropdownButton, Button, InputGroup } from 'react-bootstrap'
-import { BsSearch } from 'react-icons/bs'
+import { Container, FormControl, Dropdown, DropdownButton, Button, InputGroup } from 'react-bootstrap'
 import { Route } from 'react-router'
 
 function Header(props) {
     return (
         <div className="header">
             <Container fluid>
-                <Row>
-                    <Col align="left">
+                <div className="md:flex">
+                    <div className="flex-initial">
                         <a className="navbar-brand" href="/">
                             SmallTalk
                         </a>
-                    </Col>
+                    </div>
                     {/* Only show when URL matches a room url. */}
-                    <Route exact path={'/room/:roomID/'} component={Searchbar} />
-                </Row>
+                    <Route path={'/room/:roomID/'} component={Searchbar} />
+                </div>
             </Container>
         </div>
     )
@@ -32,52 +31,47 @@ function Searchbar(props) {
 
     const handleSearch = (e) => {
         dispatch({ type: 'update-search', search_phrase: e.target.value })
-        // API.searchFor(searchItem, props.roomKey);
     }
 
     const handleSort = (e) => {
         updateFilterValue(e.target.innerText)
         dispatch({ type: 'update-filter', filter_by: e.target.innerText })
-        // API.filter(sortBy, props.roomKey);
-        // socket.emit("filter", { condition: sortBy, groupID: props.roomKey })
     }
 
     if (contextState.displayName != null) {
         return (
             <>
-                <Col xs={5} align="center" className="search-container">
-                    <InputGroup>
-                        <FormControl
-                            placeholder="Type any keyword..."
-                            onChange={handleSearch}
-                            className="search-input"
-                        />
-                        <InputGroup.Append>
-                            <Button className="search-button">
-                                <BsSearch className="search-icon" />
-                            </Button>
-                        </InputGroup.Append>
-                    </InputGroup>
-                </Col>
-                <Col align="right">
-                    <DropdownButton
-                        title={filterValue === '' ? 'Sort Discussions' : filterValue}
-                        id="basic-nav-dropdown"
-                    >
-                        <Dropdown.Item value="Popularity" onClick={handleSort}>
-                            Popularity
+                <div className="flex flex-1 flex-col md:flex-row">
+                    <div className="flex-1 md:pl-40 md:pr-40">
+                        <InputGroup>
+                            <FormControl
+                                placeholder="Type any keyword..."
+                                onChange={handleSearch}
+                                className="search-input text-center"
+                            />
+                        </InputGroup>
+                    </div>
+                    <div className="flex-initial">
+                        <DropdownButton
+                            title={filterValue === '' ? 'Sort Discussions' : filterValue}
+                            id="basic-nav-dropdown"
+                        >
+                            <Dropdown.Item value="Popularity" onClick={handleSort}>
+                                Popularity
                         </Dropdown.Item>
-                        <Dropdown.Item value="Date" onClick={handleSort}>
-                            Date
+                            <Dropdown.Item value="Date" onClick={handleSort}>
+                                Date
                         </Dropdown.Item>
-                        <Dropdown.Item value="Solved" onClick={handleSort}>
-                            Solved
+                            <Dropdown.Item value="Solved" onClick={handleSort}>
+                                Solved
                         </Dropdown.Item>
-                    </DropdownButton>
-                </Col>
-                <Col xs={1}>
-                    <Download />
-                </Col>
+                        </DropdownButton>
+                    </div>
+                    <div className="flex-initial self-center">
+                        <Download />
+                    </div>
+
+                </div>
             </>
         )
     } else {
