@@ -63,26 +63,32 @@ function PostComments(props) {
                     </Button>
                 </Link>
             </Row>
-            <PostSummary post={post} disableLink />
-            <Row className="postCommentsRow">
-                {displayForm ? (
-                    <ReplyBox contextState={contextState} setDisplayForm={setDisplayForm} post={post} />
-                ) : (
-                    <button
-                        className="flex btn-color font-bold rounded-md ml-8 p-2"
-                        onClick={() => setDisplayForm(true)}
-                    >
-                        Reply
-                        <BsReply className="inline self-center" />
-                    </button>
-                )}
-            </Row>
-            <Row className="postCommentsRow">
-                {(comments.length &&
-                    transitions.map(({ item, props, key }) => (
-                        <Comment animated={props} postID={post.id} comment={item} key={key} />
-                    ))) || <p>No comments yet</p>}
-            </Row>
+            <div className="flex">
+                <div className="flex-1">
+                    <PostSummary post={post} disableLink />
+                    <Row className="postCommentsRow">
+                        {displayForm ? (
+                            <ReplyBox contextState={contextState} setDisplayForm={setDisplayForm} post={post} />
+                        ) : (
+                            <button
+                                className="flex btn-color font-bold rounded-md ml-8 p-2"
+                                onClick={() => setDisplayForm(true)}
+                            >
+                                Reply
+                                <BsReply className="inline self-center" />
+                            </button>
+                        )}
+                    </Row>
+                </div>
+                <div className="flex-1 overflow-y-auto">
+                    <div className="pl-4 mt-4 mx-4" style={{ height: "80vh" }}>
+                        {(comments.length &&
+                            transitions.map(({ item, props, key }) => (
+                                <Comment animated={props} postID={post.id} comment={item} key={key} />
+                            ))) || <p>No comments yet</p>}
+                    </div>
+                </div>
+            </div>
         </Container>
     )
 }
