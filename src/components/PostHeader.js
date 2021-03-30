@@ -8,6 +8,7 @@ import { BsAwardFill } from 'react-icons/bs'
 import { animated, useSpring } from 'react-spring'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
+import { useHistory, useRouteMatch } from 'react-router'
 
 function DisplayPinned(props) {
     const styleProps = useSpring({
@@ -48,6 +49,8 @@ function DisplaySolved(props) {
 function DisplayOptions(props) {
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
+    const match = useRouteMatch();
+    const history = useHistory();
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
     function handlePin() {
@@ -68,6 +71,9 @@ function DisplayOptions(props) {
     }
 
     function handleRemove() {
+        if (match.url.endsWith(props.post.id)) {
+            history.goBack()
+        }
         API.removePost(props.post.id, contextState.roomKey)
     }
 

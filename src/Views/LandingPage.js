@@ -3,6 +3,7 @@ import { API, AppContext } from '../AppContext'
 import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
 
 import Header from '../components/Header'
+import RoomIllustration from '../static/room_illustration.svg'
 
 import '../Styling/LandingPage.css'
 import '../Styling/index.css'
@@ -40,9 +41,8 @@ function Landing(props) {
             <div className="landing-page md:w-1/2 p-10">
                 <div className="">
                     <div>
-                        <h3 className="font-bold text-3xl ">Create a Discussion Room</h3>
-                        <br />
-                        <br />
+                        <h3 className="font-bold text-3xl mb-10">Create a Discussion Room</h3>
+                        <img className="mx-auto mb-4" src={RoomIllustration} />
                         <form onSubmit={handleGenerateClick}>
                             <input
                                 type="text"
