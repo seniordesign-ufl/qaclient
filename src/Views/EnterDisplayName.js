@@ -9,7 +9,7 @@ export default function EnterDisplayName(props) {
     console.log(props)
     function handleJoinClick(e) {
         e.preventDefault()
-        API.join(contextState.displayName, props.match.params.roomID)
+        API.join(name, props.match.params.roomID)
         dispatch({ type: 'update-name', displayName: name })
     }
     return (
