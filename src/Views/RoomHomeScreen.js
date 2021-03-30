@@ -1,5 +1,6 @@
 import React from 'react'
 import PostList from './PostList'
+import PostComments from './PostComments'
 import { Route, Switch } from 'react-router'
 
 export default function RoomHomeScreen(props) {
