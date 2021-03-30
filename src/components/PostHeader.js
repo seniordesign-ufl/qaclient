@@ -137,34 +137,31 @@ function DisplayOptions(props) {
     } else {
         return null
     }
-    else {
-        return(null)
-    }
 }
 
 export default function PostHeader(props) {
     function mapTags() {
         return (
             <div className="inline-flex w-full justify-end mr-3 text-lg font-extralight">
-                  {props.post.tags.map((tag, i) => 
+                {props.post.tags.map((tag, i) =>
                     <div className="mr-2" key={i}>
                         <Badge pill className="px-2 py-1.5" variant="secondary">
                             {tag}
                         </Badge>
                     </div>
-                    )}     
+                )}
             </div>
         )
     }
 
     return (
-        <div className="flex w-full">
-            <div className="flex-initial flex">
+        <div className="flex flex-1">
+            <div className="flex-1 flex">
                 <DisplayPinned post={props.post} />
                 <div className="flex-initial font-semibold break-all">{props.post.title}</div>
                 <DisplaySolved solved={props.post.solved} />
             </div>
-            <div className="inline-flex justify-end w-full">
+            <div className="flex justify-end">
                 {props.post.tags.length > 0 ? mapTags() : null}
                 <DisplayOptions setHasSolved={props.setHasSolved} post={props.post} />
             </div>
