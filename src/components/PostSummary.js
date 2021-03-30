@@ -60,7 +60,7 @@ function PostSummary(props) {
                 </div>
                 <div className="pl-4 pt-2 flex-1 text-left">
                     <div className="flex">
-                        <PostHeader post={props.post} />
+                        <PostHeader post={props.post}/>
                     </div>
                     <div className="divide-y">
                         <div className="mx-4 my-2 break-all">{props.post.content}</div>
