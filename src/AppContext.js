@@ -125,6 +125,7 @@ const socketEvents = (dispatch) => {
                     dispatch({ type: 'update-admins', admins: m.admins })
                 }
             })
+            dispatch({ type: 'update-user-id', userId: client_id })
         } else {
             localStorage.setItem('client-id', client_id)
             dispatch({ type: 'update-user-id', userId: client_id })

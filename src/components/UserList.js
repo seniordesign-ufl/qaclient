@@ -18,10 +18,6 @@ function UserList(props) {
     }
 
     function displayAllUsers() {
-        console.log("CONTEXT")
-        console.log(contextState);
-
-        console.log("ADMINs")
 
         // API.updateAdmin(contextState.userId, contextState.roomKey)
         // dispatch({ type: 'update-admins', admins: contextState.admins })
@@ -48,8 +44,7 @@ function UserList(props) {
     }
 
     function displayAdministrativeUsers() {
-        console.log("ADMINS")
-        console.log(contextState)
+        return null;
     }
 
     return (
