@@ -137,9 +137,6 @@ function DisplayOptions(props) {
     } else {
         return null
     }
-    else {
-        return(null)
-    }
 }
 
 export default function PostHeader(props) {

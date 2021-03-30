@@ -14,6 +14,7 @@ const INITIAL_STATE = {
     search_phrase: '',
     filter_by: '',
     admin: false,
+    joinSuccess: false,
 }
 const reducer = produce((draft, action) => {
     switch (action.type) {
@@ -43,6 +44,9 @@ const reducer = produce((draft, action) => {
             break
         case 'update-upVotes':
             draft.upVotes = action.upVotes
+            break
+        case 'join-successful':
+            draft.joinSuccess = action.joinSuccess
             break
         default:
             console.log('Unknown case? (', action.type, ')')
@@ -114,6 +118,9 @@ const socketEvents = (dispatch) => {
         }
     })
 
+    socket.on('join-successful', () => {
+        dispatch({type: 'join-successful', joinSuccess: true})
+    })
     socket.on('room-code', (roomCode) => {
         dispatch({ type: 'join-room', roomKey: roomCode })
         console.log('Socket event roomcode:', roomCode)
