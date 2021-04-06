@@ -132,7 +132,7 @@ const socketEvents = (dispatch) => {
     })
 
     socket.on('join-successful', () => {
-        dispatch({type: 'join-successful', joinSuccess: true})
+        dispatch({ type: 'join-successful', joinSuccess: true })
     })
     socket.on('room-code', (roomCode) => {
         dispatch({ type: 'join-room', roomKey: roomCode })
@@ -163,6 +163,14 @@ export const initSockets = (dispatch) => {
     console.log('init socket', process.env)
     socket = socketIOClient(process.env.REACT_APP_SIGNAL_URL)
     socketEvents(dispatch)
+}
+
+export function useAppState() {
+    const context = React.useContext(AppContext)
+    if (context === undefined) {
+        throw new Error("useAppState must be used within a AppContext Provider")
+    }
+    return context;
 }
 
 export function ContextProvider({ init, children }) {
