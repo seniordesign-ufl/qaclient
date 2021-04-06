@@ -97,6 +97,9 @@ export const API = {
     },
     updateAdmin: (user, groupID) => {
         socket.emit('make-admin', { user, groupID })
+    },
+    demoteAdmin: (user, groupID) => {
+        socket.emit('demote-admin', {user, groupID})
     }
 }
 
