@@ -156,7 +156,7 @@ function UserList(props) {
             <Modal.Footer>
                 <Button className="bg-gray-200">
                     <CSVLink className="max-h-full" onClick={() => downloadUsers()} headers={headers} data={data} filename="users.csv">
-                        <BiImport />
+                        <BiImport size={24} />
                     </CSVLink>
                 </Button>
             </Modal.Footer>
