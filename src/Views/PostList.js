@@ -32,6 +32,20 @@ export default function CommentList(props) {
     let temp = []
     posts.forEach((element) => {
       if (element.solved === true) {
+        temp.push(element)
+      }
+    })
+    posts = temp
+  }
+
+  if (contextState.filter_by === 'Popularity') {
+    posts.sort((a, b) => b.upVotes - a.upVotes)
+  } else if (contextState.filter_by === 'Date') {
+    posts.sort((a, b) => b.time).reverse()
+  } else if (contextState.filter_by === 'Solved') {
+    let temp = []
+    posts.forEach((element) => {
+      if (element.solved === true) {
         temp.append(element)
       }
     })
