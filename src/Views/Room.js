@@ -21,8 +21,8 @@ function Room(props) {
 
     return (
         <div className="room-page">
-            {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
-            {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} />}
+            <Header roomKey={contextState.roomKey} />
+            {contextState.displayName !== null ? <RoomHomeScreen /> : <EnterDisplayName {...props} />}
         </div>
     )
 }
