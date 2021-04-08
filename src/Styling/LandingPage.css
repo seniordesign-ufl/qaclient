@@ -10,8 +10,18 @@
         0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
+.landing-welcome {
+    position: relative;
+    margin: 50px auto;
+}
+
+.landing-welcome img {
+    display: flex;
+    margin: auto;
+}
+
 .landing-page .generate-btn {
-    background: #e98074;
+    background: #F56F60;
     color: white;
     border-radius: 6px;
     padding: 5px 20px;
@@ -28,7 +38,7 @@
 }
 
 .landing-page .copy-btn {
-    background: #e98074;
+    background: #F56F60;
     color: white;
     width: 2em;
     height: 2em;

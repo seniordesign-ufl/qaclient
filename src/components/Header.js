@@ -2,6 +2,7 @@ import { React, useContext, useState } from 'react'
 import { AppContext } from '../AppContext'
 import '../Styling/index.css'
 import '../Styling/Header.css'
+import SmallTalk_Logo from '../resources/smalltalk_logo.svg'
 
 import Download from './Download'
 import UsersPage from '../Views/UsersPage'
@@ -16,7 +17,7 @@ function Header(props) {
                 <div className="md:flex">
                     <div className="flex-initial">
                         <a className="navbar-brand" href="/">
-                            SmallTalk
+                            <img src={SmallTalk_Logo} />
                         </a>
                     </div>
                     {/* Only show when URL matches a room url. */}
