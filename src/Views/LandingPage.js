@@ -38,15 +38,15 @@ function Landing(props) {
     return (
         <div>
             <Header roomKey={contextState.roomKey} />
-            <div className="grid grid-cols-2">
-                <div className="landing-welcome p-10">
+            <div className="grid grid-cols-2 m-3">
+                <div className="landing-welcome mr-8 p-10">
                     <h3 className="font-bold text-6xl">Let's get talkin'!</h3>
                     <br />
                     <p className="font-medium text-lg">Introducing a new way to have live lecture discussion.</p>
                     <img src={RoomIllustration} />
                 </div>
 
-                <div className="landing-page p-10">
+                <div className="landing-page ml-8 p-10">
                     <div className="">
                         <div>
                             <p className="font-medium">Try creating a discussion room!</p>
