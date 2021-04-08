@@ -114,11 +114,9 @@ function Download(props) {
     }
 
     return (
-        <div>
-            <Button id="download" onClick={generatePdfDocument}>
-                <BsDownload />
-            </Button>
-        </div>
+        <button className="lg-button" id="download" onClick={generatePdfDocument}>
+            <BsDownload />
+        </button>
     )
 }
 

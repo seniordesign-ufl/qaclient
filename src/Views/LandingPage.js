@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
+import { CgLink } from 'react-icons/cg'
 
 import Header from '../components/Header'
+import RoomIllustration from '../static/room_illustration.svg'
 
 import '../Styling/LandingPage.css'
 import '../Styling/index.css'
@@ -40,9 +42,8 @@ function Landing(props) {
             <div className="landing-page md:w-1/2 p-10">
                 <div className="">
                     <div>
-                        <h3 className="font-bold text-3xl ">Create a Discussion Room</h3>
-                        <br />
-                        <br />
+                        <h3 className="font-bold text-3xl mb-10">Create a Discussion Room</h3>
+                        <img className="mx-auto mb-4" src={RoomIllustration} />
                         <form onSubmit={handleGenerateClick}>
                             <input
                                 type="text"
@@ -67,12 +68,12 @@ function Landing(props) {
                     <div className="link-box">
                         {showLink ? (
                             <Slideout>
-                                <div>
-                                    Link:{' '}
+                                <div className="flex justify-center items-center">
                                     <Link to={`/room/${contextState.roomKey}`}>
-                                        {'https://localhost:3001/room/' + contextState.roomKey}
+                                        <CgLink size={24} className="inline-block" />
+                                        {window.location.href + contextState.roomKey}
                                     </Link>
-                                    <Copy link={`https://localhost:3001/room/${contextState.roomKey}`} />
+                                    <Copy link={window.location.href + contextState.roomKey} />
                                 </div>
                             </Slideout>
                         ) : (
@@ -81,7 +82,7 @@ function Landing(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
@@ -98,7 +99,7 @@ function Copy(props) {
     }
     return (
         <>
-            <button onClick={doCopy} disabled={clicked} className={`copy-btn inline-flex ${clicked && 'clicked'}`}>
+            <button onClick={doCopy} disabled={clicked} className={`p-2 ml-2 rounded-md copy-btn inline-flex ${clicked && 'clicked'}`}>
                 {clicked ? (
                     <FaClipboardCheck className="flex-1 self-center" />
                 ) : (
