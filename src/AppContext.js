@@ -97,9 +97,6 @@ export const API = {
     },
     updateAdmin: (user, groupID) => {
         socket.emit('make-admin', { user, groupID })
-    },
-    demoteAdmin: (user, groupID) => {
-        socket.emit('demote-admin', {user, groupID})
     }
 }
 
@@ -128,7 +125,6 @@ const socketEvents = (dispatch) => {
                     dispatch({ type: 'update-admins', admins: m.admins })
                 }
             })
-            dispatch({ type: 'update-user-id', userId: client_id })
         } else {
             localStorage.setItem('client-id', client_id)
             dispatch({ type: 'update-user-id', userId: client_id })
