@@ -43,37 +43,6 @@ function Comment(props) {
         API.removeComment(removeComment, contextState.roomKey)
     }
 
-    // function displayOptions () {
-    //     if(contextState.admin === true){
-    //         return(
-    //             <DropdownButton title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-    //                 <Dropdown.Item value="delete-post" onClick={handleShow}>
-    //                     Delete Comment
-    //                 </Dropdown.Item>
-    //                 <Dropdown.Item value="pin-post" onClick={handleComment}>
-    //                     Pin Comment
-    //                 </Dropdown.Item>
-    //             </DropdownButton>
-    //         )
-    //     }
-    //     else if(contextState.displayName === props.post.author)
-    //     {
-    //         return(
-    //             /* Check if current display name matches name of comment. If so allow them to remove it */
-    //             <div className="flex-none pr-4">
-    //                 <button
-    //                     className="w-8 h-8 flex btn-color rounded-md"
-    //                     onClick={handleShow}
-    //                     variant="outline-danger"
-    //                 >
-    //                     <IoClose className="flex-1 self-center" />
-    //                 </button>
-    //             </div>
-    //         )
-
-    //     }
-    // }
-
     return (
         <animated.div
             style={props.animated}
