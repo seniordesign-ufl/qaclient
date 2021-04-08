@@ -127,7 +127,7 @@ function Download(props) {
 
     const generatePdfDocument = async () => {
         const blob = await pdf(<MyDocument />).toBlob()
-        saveAs(blob, contextState.discussionName + '.pdf')
+        saveAs(blob, (contextState.discussionName !== '' ? contextState.discussionName : "Discussion") + '.pdf')
     }
 
     return (
