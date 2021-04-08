@@ -33,7 +33,7 @@ function Landing(props) {
             email: email
         }
         if (name) {
-            dispatch({ type: 'update-name', name})
+            dispatch({ type: 'update-name', displayName: name})
             updateShowLink(true)
             API.requestRoom(emailInfo)
         } else {
