@@ -170,7 +170,15 @@ export function useAppState() {
     if (context === undefined) {
         throw new Error("useAppState must be used within a AppContext Provider")
     }
-    return context;
+    return context.state;
+}
+
+export function useDispatch() {
+    const context = React.useContext(AppContext)
+    if (context === undefined) {
+        throw new Error("useDispatch must be used within a AppContext Provider")
+    }
+    return context.dispatch;
 }
 
 export function ContextProvider({ init, children }) {

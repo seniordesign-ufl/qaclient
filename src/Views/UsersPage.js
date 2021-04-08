@@ -15,12 +15,12 @@ function UsersPage(props) {
 
     if (contextState.admin === true) {
         return (
-            <div>
-                <Button id="userlist" onClick={handleShow}>
+            <>
+                <button className="lg-button" onClick={handleShow}>
                     <BsPeopleFill />
-                </Button>
+                </button>
                 <UserList show={showUsers} onHide={handleClose} />
-            </div>
+            </>
         )
     }
     else {
