@@ -10,14 +10,12 @@ const INITIAL_STATE = {
     roomKey: null,
     posts: [],
     users: [],
-    admins: [],
     upVotes: [],
     search_phrase: '',
     filter_by: '',
-    admin: false
+    admin: false,
 }
 const reducer = produce((draft, action) => {
-    console.log(action);
     switch (action.type) {
         case 'join-room':
             draft.roomKey = action.roomKey
@@ -33,10 +31,6 @@ const reducer = produce((draft, action) => {
             break
         case 'update-users':
             draft.users = action.users
-            break
-        case 'update-admins':
-            draft.admins = action.admins
-            draft.admin = draft.admins.includes(draft.userId);
             break
         case 'update-search':
             draft.search_phrase = action.search_phrase
@@ -91,9 +85,6 @@ export const API = {
     removeComment: (removeComment, groupID) => {
         socket.emit('remove-comment', { removeComment, groupID })
     },
-    updateAdmin: (user, groupID) => {
-        socket.emit('make-admin', { user, groupID })
-    }
 }
 
 const socketEvents = (dispatch) => {
@@ -106,7 +97,6 @@ const socketEvents = (dispatch) => {
                 console.log(m)
                 if (m.error) {
                     localStorage.setItem('client-id', client_id)
-                    dispatch({ type: 'update-user-id', userId: client_id })
                 } else {
                     if (window.location.pathname === '') {
                         window.location.replace(`/room/${m.groupID}`)
@@ -115,15 +105,12 @@ const socketEvents = (dispatch) => {
                         type: 'update-name',
                         displayName: m.username.name,
                     })
-                    dispatch({ type: 'update-user-id', userId: m.username.id })
                     dispatch({ type: 'update-users', users: m.users })
                     dispatch({ type: 'update-posts', posts: m.posts })
-                    dispatch({ type: 'update-admins', admins: m.admins })
                 }
             })
         } else {
             localStorage.setItem('client-id', client_id)
-            dispatch({ type: 'update-user-id', userId: client_id })
         }
     })
 
@@ -141,10 +128,6 @@ const socketEvents = (dispatch) => {
         // if (groupID === contextState.roomKey)
         //     handleClose();
         // console.log(contextState.posts)
-    })
-    socket.on('get-admins', ({ groupID, admins }) => {
-        dispatch({ type: 'update-admins', admins: admins })
-        console.log("Socket event update-admins: ", admins)
     })
     socket.on('admin', () => {
         dispatch({ type: 'admin-granted' })

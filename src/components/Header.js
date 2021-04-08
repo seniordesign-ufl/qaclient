@@ -4,7 +4,6 @@ import '../Styling/index.css'
 import '../Styling/Header.css'
 
 import Download from './Download'
-import UsersPage from '../Views/UsersPage'
 
 import { Container, FormControl, Dropdown, DropdownButton, Button, InputGroup } from 'react-bootstrap'
 import { Route } from 'react-router'
@@ -71,9 +70,7 @@ function Searchbar(props) {
                     <div className="flex-initial self-center">
                         <Download />
                     </div>
-                    <div className="flex-initial self-center">
-                        <UsersPage />
-                    </div>
+
                 </div>
             </>
         )

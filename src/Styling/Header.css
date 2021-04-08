@@ -52,18 +52,7 @@
 }
 
 #download {
-    margin-left: 15px;
-    margin-bottom: 15px;
-    background: #e98074;
-    color: white;
-    border-radius: 6px;
-    padding: 15px 20px;
-    border: 0;
-    float: right;
-}
-
-#userlist {
-    margin-left: 15px;
+    margin-left: auto;
     margin-bottom: 15px;
     background: #e98074;
     color: white;
