@@ -16,7 +16,31 @@ function PostComments(props) {
     const postID = props.match.params.postID
     const post = contextState.posts.find((p) => p.id === postID)
     const [displayForm, setDisplayForm] = useState(false)
-    const transitions = useTransition(post.comments, (post) => post.id, {
+
+    let comments = Array.from(post.comments)
+
+    if (contextState.search_phrase !== '') {
+        comments = comments.filter((c) => c.content.includes(contextState.search_phrase))
+    }
+
+    if (contextState.filter_by === 'Popularity') {
+        comments = comments.slice().sort((a, b) => b.upVotes - a.upVotes)
+    } else if (contextState.filter_by === 'Date') {
+        comments = comments
+            .slice()
+            .sort((a, b) => b.time)
+            .reverse()
+    } else if (contextState.filter_by === 'Solved') {
+        let temp = []
+        comments.slice().forEach((element) => {
+            if (element.solved === true) {
+                temp.push(element)
+            }
+        })
+        comments = temp
+    }
+
+    const transitions = useTransition(comments, (post) => post.id, {
         from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
         enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
         leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
@@ -33,25 +57,6 @@ function PostComments(props) {
                 </Link>
             </div>
         )
-    }
-
-    const comments = post.comments.filter((c) => c.content.includes(contextState.search_phrase))
-
-    if (contextState.filter_by === 'Popularity') {
-        comments = comments.slice().sort((a, b) => b.upVotes - a.upVotes)
-    } else if (contextState.filter_by === 'Date') {
-        comments = comments
-            .slice()
-            .sort((a, b) => b.time)
-            .reverse()
-    } else if (contextState.filter_by === 'Solved') {
-        let temp = []
-        comments.slice().forEach((element) => {
-            if (element.solved === true) {
-                temp.append(element)
-            }
-        })
-        comments = temp
     }
 
     return (
