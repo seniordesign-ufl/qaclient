@@ -35,6 +35,7 @@ function Header(props) {
 }
 
 function Options(props) {
+    const state = useAppState();
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
 
@@ -77,9 +78,14 @@ function Options(props) {
             <IoSettingsSharp size={18} />
         </button>
         <div className={(!open ? "hidden " : "") + "absolute origin-top-right right-0"}>
-            <div className="grid grid-cols-2 gap-4 h-full bg-gray-100 rounded-md p-4 shadow-lg border-gray-200 border-2" style={{ width: "60rem" }}>
-                <Item item={Download} title="Download" desc="Download a transcript of the current discussion." />
-                <Item item={UsersPage} title="Users" desc="View the current users in the room." />
+            <div className="flex flex-col h-full bg-gray-100 rounded-md p-4 shadow-lg border-gray-200 border-2" style={{ width: "60rem" }}>
+                <div className="pl-3 self-start">
+                    Welcome, <span className="font-semibold">{state.displayName}</span>!
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <Item item={Download} title="Download" desc="Download a transcript of the current discussion." />
+                    <Item item={UsersPage} title="Users" desc="View the current users in the room." />
+                </div>
             </div>
         </div>
     </div>
