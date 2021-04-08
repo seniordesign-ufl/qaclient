@@ -32,7 +32,7 @@ export default function CommentList(props) {
         let temp = []
         posts.forEach((element) => {
             if (element.solved === true) {
-                temp.append(element)
+                temp.push(element)
             }
         })
         posts = temp

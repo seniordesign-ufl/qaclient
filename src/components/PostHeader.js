@@ -85,10 +85,10 @@ function DisplayOptions(props) {
                         Delete Post
                     </Dropdown.Item>
                     <Dropdown.Item value="pin-post" onClick={handlePin}>
-                        Pin Post
+                        {(props.post.pinned === true) ? "Unpin Post" : "Pin Post"}
                     </Dropdown.Item>
                     <Dropdown.Item value="solve-post" onClick={handleSolved}>
-                        Mark as Solved
+                        {(props.post.solved === true) ? "Mark as Unsolved" : "Mark as Solved"}
                     </Dropdown.Item>
                 </DropdownButton>
                 <Modal show={show} onHide={handleClose}>
