@@ -19,6 +19,8 @@ function Landing(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
     const [showLink, updateShowLink] = useState(false)
     const [name, updateName] = useState('')
+    const [discussionName, updateDiscussionName] = useState('')
+    const [email, updateEmail] = useState('')
     /* 
     Function That Executes When Generate Room Button Is Clicked
     Updates The Room Code, Display Name, and Sets The Show Link Boolean to True
@@ -26,10 +28,14 @@ function Landing(props) {
     */
     function handleGenerateClick(e) {
         e.preventDefault()
+        let emailInfo = {
+            discussionName: discussionName,
+            email: email
+        }
         if (name) {
-            dispatch({ type: 'update-name', displayName: name })
-            API.requestRoom()
+            dispatch({ type: 'update-name', name})
             updateShowLink(true)
+            API.requestRoom(emailInfo)
         } else {
             toast.error('Please input a name')
         }
@@ -52,6 +58,26 @@ function Landing(props) {
                                 input
                                 placeholder="Enter Display Name"
                                 onChange={(e) => updateName(e.target.value)}
+                            />
+                            <br />
+                            <input
+                                type="text"
+                                id="discussionName"
+                                className="form-control w-full"
+                                aria-describedby="passwordHelpBlock"
+                                input
+                                placeholder="Enter Discussion Name"
+                                onChange={(e) => updateDiscussionName(e.target.value)}
+                            />{' '}
+                            <br />
+                            <input
+                                type="text"
+                                id="email"
+                                className="form-control w-full"
+                                aria-describedby="passwordHelpBlock"
+                                input
+                                placeholder="Enter Email"
+                                onChange={(e) => updateEmail(e.target.value)}
                             />{' '}
                             <br />
                             <button

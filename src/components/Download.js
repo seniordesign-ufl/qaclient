@@ -43,10 +43,15 @@ function Download(props) {
             maxWidth: '80%',
             fontSize: 12,
         },
+        tags: {
+            maxWidth: '80%',
+            fontSize: 10,
+            marginTop: 5,
+        },
         postContent: {
             maxWidth: '80%',
             fontSize: 10,
-            marginTop: 4,
+            marginTop: 5,
         },
         postAuthor: {
             maxWidth: '80%',
@@ -69,12 +74,23 @@ function Download(props) {
         },
     })
 
+    function tagsToString(index) {
+        let tagString = '';
+        let tags = contextState.posts[index].tags;
+        tagString += tags[0];
+        for (let i = 1; i < tags.length; i++)
+        {
+            tagString += ', ' + tags[i];
+        }
+        return tagString;
+    }
+
     const MyDocument = () => (
         <Document>
-            <Page wrap={false} size="A4" style={styles.page}>
+            <Page size="A4" style={styles.page}>
                 <View>
                     <View style={styles.header}>
-                        <Text>Discussion</Text>
+                        <Text>{contextState.discussionName !== '' ? contextState.discussionName : "Discussion"}</Text>
                     </View>
                     <View>
                         {console.log(contextState.posts)}
@@ -82,6 +98,7 @@ function Download(props) {
                             <View key={i} style={styles.post}>
                                 {console.log(post)}
                                 <Text style={styles.postHeader}>{post.title}</Text>
+                                {post.tags.length > 0 ? <Text style={styles.tags}>{'Tags: ' + tagsToString(i)}</Text> : null}
                                 <Text style={styles.postContent}>{'Description: ' + post.content}</Text>
                                 <Text style={styles.postAuthor}>
                                     {'-' + (post.isAnon ? 'Anonymous' : post.author) + '    '}
@@ -110,7 +127,7 @@ function Download(props) {
 
     const generatePdfDocument = async () => {
         const blob = await pdf(<MyDocument />).toBlob()
-        saveAs(blob, 'Discussion.pdf')
+        saveAs(blob, contextState.discussionName + '.pdf')
     }
 
     return (

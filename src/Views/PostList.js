@@ -84,7 +84,7 @@ export default function CommentList(props) {
             <div className="flex justify-between flex-col md:flex-row">
                 <div id="discussionHeader">
                     <h2 className="pr-4">
-                        Discussion{' '}
+                        {contextState.discussionName !== '' ? contextState.discussionName : "Discussion"}{' '}
                         <div className="pl-2 inline">
                             <BsPerson className="text-base inline" />{' '}
                             <div className="text-base inline align-middle">{contextState.users.length}</div>
