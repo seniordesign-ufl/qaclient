@@ -18,10 +18,14 @@ export default function CommentList(props) {
   const handleShow = () => setShow(true)
 
   let posts = Array.from(contextState.posts)
+  const transitions = useTransition(posts, (post) => post.id, {
+    from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+    enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+    leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+  })
 
   if (contextState.search_phrase !== '') {
-    posts = posts.filter((c) => c.title.includes(contextState.search_phrase) ||
-      c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined)
+    posts = posts.filter((c) => c.title.includes(contextState.search_phrase))
   }
 
   if (contextState.filter_by === 'Popularity') {
@@ -37,12 +41,6 @@ export default function CommentList(props) {
     })
     posts = temp
   }
-
-  const transitions = useTransition(posts, (post) => post.id, {
-    from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
-    enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
-    leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
-  })
 
   function displayPinnedPosts() {
     let pinnedPost = posts.filter((c) => c.pinned === true)
@@ -65,10 +63,10 @@ export default function CommentList(props) {
       return (
         <Row>
           <h5 className="font-bold ml-3 text-gray-500">DISCUSSION</h5>
-          {posts.length !== 0 ?
+          {posts.length &&
             nonPinnedPosts.map(({ item, props, key }) => (
               <PostSummary animated={props} post={item} key={key} />
-            )) : null}
+            ))}
         </Row>
       )
     } else if (contextState.posts.length > 0) {
@@ -81,7 +79,7 @@ export default function CommentList(props) {
 
   return (
     <div className="container roomContainer">
-      <div className="flex justify-between flex-col md:flex-row">
+      <div className="flex justify-between">
         <div id="discussionHeader">
           <h2 className="pr-4">
             Discussion{' '}
@@ -91,7 +89,7 @@ export default function CommentList(props) {
             </div>
           </h2>
         </div>
-        <div>
+        <div className="flex">
           <Button id="newDiscussion" onClick={handleShow}>
             + Start New Discussion
                     </Button>

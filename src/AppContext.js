@@ -136,8 +136,8 @@ const socketEvents = (dispatch) => {
     socket.on('error', (m) => console.log(m))
 }
 export const initSockets = (dispatch) => {
-    console.log('init socket', process.env)
-    socket = socketIOClient(process.env.REACT_APP_SIGNAL_URL)
+    console.log('init socket')
+    socket = socketIOClient('http://localhost:3000')
     socketEvents(dispatch)
 }
 

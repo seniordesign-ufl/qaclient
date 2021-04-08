@@ -14,7 +14,7 @@ export default function EnterDisplayName(props) {
     }
     return (
         <div className="create-page">
-            <div className="p-4 m-4">
+            <div className="create">
                 <h4 className="display-name">
                     Display Name <span className="required">*</span>
                 </h4>

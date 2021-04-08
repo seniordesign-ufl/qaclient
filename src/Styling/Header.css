@@ -13,6 +13,13 @@
     color: #e98074;
 }
 
+.search-container {
+    /*border: 2px solid gray;*/
+    border-radius: 6px;
+    vertical-align: middle;
+    /*background-color: #F4F4F4;*/
+}
+
 .search-input {
     border: none !important;
     border-radius: 6px;

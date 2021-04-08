@@ -1,23 +1,21 @@
 import React, { useContext, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import PostHeader from './PostHeader'
+import PostComments from '../components/PostComments'
 
 //Bootstrap
 import { FaChevronUp } from 'react-icons/fa'
-import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
-import Badge from 'react-bootstrap/Badge'
-import { BsChevronUp } from 'react-icons/bs'
-import { IoClose } from 'react-icons/io5'
 import { BiComment } from 'react-icons/bi'
 import moment from 'moment'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { animated } from 'react-spring'
+import { animated, useSpring } from 'react-spring'
+import { comments } from '../components/PostComments'
 
 import '../Styling/PostSummary.css'
 
 function PostSummary(props) {
     const [hasUpvote, setHasUpvote] = useState(false)
+    const [hasSolved, setHasSolved] = useState(false)
     const match = useRouteMatch()
     const { state: contextState, dispatch } = useContext(AppContext)
 
@@ -33,7 +31,12 @@ function PostSummary(props) {
                 upVotes: contextState.upVotes.concat([props.post.id]),
             })
             setHasUpvote(true)
+            showComment(false)
         }
+    }
+
+    function showComment() {
+        comments();
     }
 
     return (
@@ -46,22 +49,14 @@ function PostSummary(props) {
                     <br />
                     <span>{props.post.upVotes}</span>
                     <br />
-                    <Link
-                        style={{ pointerEvents: props.disableLink ? 'none' : '' }}
-                        to={`${match.url}/${props.post.id}`}
-                        className="text-gray-900"
-                    >
-                        <button style={{ marginTop: '10px' }}>
-                            <BiComment />
-                        </button>
-                    </Link>
+                    <button style={{ marginTop: '10px' }} onClick={() => showComment()}>
+                        <BiComment />
+                    </button>
                     <br />
                     <span>{props.post.comments.length}</span>
                 </div>
-                <div className="pl-4 pt-2 flex-1 text-left">
-                    <div className="flex">
-                        <PostHeader post={props.post} setHasSolved={setHasSolved} solved={hasSolved} />
-                    </div>
+                <div className="ml-4 mt-2 flex-1 text-left">
+                    <PostHeader post={props.post} setHasSolved={setHasSolved} solved={hasSolved} />
                     <div className="divide-y">
                         <div className="mx-4 my-2 break-all">{props.post.content}</div>
                         <blockquote>
@@ -77,6 +72,7 @@ function PostSummary(props) {
                     </div>
                 </div>
             </div>
+            {/* Confirmation for Removing Post */}
         </animated.div>
     )
 }
