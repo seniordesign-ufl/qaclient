@@ -85,7 +85,7 @@ function NewPost(props) {
     }
 
     return (
-        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show}>
+        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.onHide}>
             <Modal.Header closeButton onClick={props.onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">Create New Post</Modal.Title>
             </Modal.Header>

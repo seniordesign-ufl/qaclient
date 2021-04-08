@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { API, AppContext } from '../AppContext'
-import '../Styling/Header.css'
+import { API, AppContext } from '../../AppContext'
+import '../../Styling/Header.css'
 
 import { Form, Modal, Button, Container, Row, Dropdown, DropdownButton } from 'react-bootstrap'
 import { BiDotsHorizontal } from 'react-icons/bi'
@@ -53,7 +53,7 @@ function UserList(props) {
     }
 
     return (
-        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show}>
+        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.onHide}>
             <Modal.Header closeButton onClick={props.onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">Users</Modal.Title>
             </Modal.Header>
