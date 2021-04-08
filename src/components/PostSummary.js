@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import PostHeader from './PostHeader'
-import PostComments from '../components/PostComments'
 
 //Bootstrap
 import { FaChevronUp } from 'react-icons/fa'
@@ -9,7 +8,6 @@ import { BiComment } from 'react-icons/bi'
 import moment from 'moment'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { animated, useSpring } from 'react-spring'
-import { comments } from '../components/PostComments'
 
 import '../Styling/PostSummary.css'
 
@@ -31,13 +29,10 @@ function PostSummary(props) {
                 upVotes: contextState.upVotes.concat([props.post.id]),
             })
             setHasUpvote(true)
-            showComment(false)
         }
     }
 
-    function showComment() {
-        comments();
-    }
+
 
     return (
         <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
@@ -49,9 +44,15 @@ function PostSummary(props) {
                     <br />
                     <span>{props.post.upVotes}</span>
                     <br />
-                    <button style={{ marginTop: '10px' }} onClick={() => showComment()}>
-                        <BiComment />
-                    </button>
+                    <Link
+                        style={{ pointerEvents: props.disableLink ? 'none' : '' }}
+                        to={`${match.url}/${props.post.id}`}
+                        className="text-gray-900"
+                    >
+                        <button style={{ marginTop: '10px' }}>
+                            <BiComment />
+                        </button>
+                    </Link>
                     <br />
                     <span>{props.post.comments.length}</span>
                 </div>

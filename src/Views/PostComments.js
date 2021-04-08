@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom'
 
 function PostComments(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
-    const postID = props.post.postID
+    const postID = props.match.params.postID
     const post = contextState.posts.find((p) => p.id === postID)
     const [displayForm, setDisplayForm] = useState(false)
     const transitions = useTransition(post.comments, (post) => post.id, {
@@ -56,12 +56,14 @@ function PostComments(props) {
 
     return (
         <Container>
-            <Row className="postCommentsRow">
-                {(comments.length &&
-                    transitions.map(({ item, props, key }) => (
-                        <Comment animated={props} postID={post.id} comment={item} key={key} />
-                    ))) || <p>No comments yet</p>}
+            <Row>
+                <Link to=".">
+                    <Button variant="light" style={{ marginTop: '10px' }}>
+                        <BsArrowLeft />
+                    </Button>
+                </Link>
             </Row>
+            <PostSummary post={post} disableLink />
             <Row className="postCommentsRow">
                 {displayForm ? (
                     <ReplyBox contextState={contextState} setDisplayForm={setDisplayForm} post={post} />
@@ -74,6 +76,12 @@ function PostComments(props) {
                         <BsReply className="inline self-center" />
                     </button>
                 )}
+            </Row>
+            <Row className="postCommentsRow">
+                {(comments.length &&
+                    transitions.map(({ item, props, key }) => (
+                        <Comment animated={props} postID={post.id} comment={item} key={key} />
+                    ))) || <p>No comments yet</p>}
             </Row>
         </Container>
     )
