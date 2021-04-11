@@ -14,16 +14,6 @@
     color: #F56F60;
 }
 
-.landing-welcome {
-    position: relative;
-    margin: 50px auto;
-}
-
-.landing-welcome img {
-    display: flex;
-    margin: auto;
-}
-
 .landing-page .generate-btn {
     background: #F56F60;
     color: white;
