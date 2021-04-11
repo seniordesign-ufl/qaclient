@@ -1,15 +1,6 @@
-import React, { useContext, useState } from 'react'
-import { API, AppContext } from '../AppContext'
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet, pdf, Image } from '@react-pdf/renderer'
 import { saveAs } from 'file-saver'
-
-import Button from 'react-bootstrap/Button'
-import { BsDownload } from 'react-icons/bs'
-
-import '../Styling/PostList.css'
-
-function Download(props) {
-    const { state: contextState } = useContext(AppContext)
+export default function DownloadTranscript(contextState) {
     const image = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACx
                    jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG+SURBVFhH7VavT8NAFK7DLIF2JBgSJBKJgoldN4khwa3Z3ZJJJBLB/4BEIp
                    HI4SaRyElk5Sy87/radbfeeiNtCaFf8pK+d+/dvV/3el6LFn8eQageu6H6AgVifMfiZtC5HO3rg0M5C4R6IWeWkPFy/fDF5DyJ
@@ -78,8 +69,7 @@ function Download(props) {
         let tagString = '';
         let tags = contextState.posts[index].tags;
         tagString += tags[0];
-        for (let i = 1; i < tags.length; i++)
-        {
+        for (let i = 1; i < tags.length; i++) {
             tagString += ', ' + tags[i];
         }
         return tagString;
@@ -125,16 +115,8 @@ function Download(props) {
         </Document>
     )
 
-    const generatePdfDocument = async () => {
-        const blob = await pdf(<MyDocument />).toBlob()
-        saveAs(blob, (contextState.discussionName !== '' ? contextState.discussionName : "Discussion") + '.pdf')
-    }
+    pdf(<MyDocument />).toBlob().then((blob) => {
+        saveAs(blob, 'Discussion.pdf')
+    })
 
-    return (
-        <button className="lg-button" id="download" onClick={generatePdfDocument}>
-            <BsDownload />
-        </button>
-    )
 }
-
-export default Download

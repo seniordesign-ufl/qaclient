@@ -37,7 +37,7 @@ function PostSummary(props) {
     }
 
     return (
-        <animated.div style={props.animated} className="m-4 postSummary shadow-md rounded-md border border-light">
+        <animated.div style={props.animated} className="m-4 py-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
                 <div className="flex-none pl-8">
                     <button disabled={hasUpvote} onClick={() => handleUpvote()} className="mt-2">
