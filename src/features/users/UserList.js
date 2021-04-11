@@ -1,12 +1,15 @@
 import React, { useContext, useState } from 'react'
-import { API, AppContext } from '../AppContext'
+import { API, AppContext } from '../../AppContext'
+import '../../Styling/Header.css'
 import { CSVLink } from 'react-csv'
 
+<<<<<<< HEAD:src/features/users/UserList.js
+=======
 import '../../Styling/Header.css'
 
+>>>>>>> main:src/components/UserList.js
 import { Form, Modal, Button, Container, Row, Dropdown, DropdownButton } from 'react-bootstrap'
 import { BiDotsHorizontal, BiImport } from 'react-icons/bi'
-import context from 'react-bootstrap/esm/AccordionContext'
 
 function UserList(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
