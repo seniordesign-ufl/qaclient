@@ -70,20 +70,20 @@ function UserList(props) {
         {
             return (
                 <div className="w-full">
-                    <h5>Regular Users</h5>
+                    <h4>Regular</h4>
                     {regular_users.map(element =>
-                        <div className="flex">
+                        <div className="flex border-2">
                             <div className="flex-1 w-4/5">
                                 <h4>{element.name}</h4>
-                                <p className="text-sm italic">{element.id}</p>
+                                <p className="text-sm italic"><b>ID:</b> {element.id}</p>
                             </div>
-                            <DropdownButton className="flex-2" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
+                            <DropdownButton className="flex-2 border-2 grid" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
                                 <Dropdown.Item value="promote-admin" onClick={() => promoteAdmin(element.id, element.name)}>
                                     Promote to Admin
-                            </Dropdown.Item>
+                                </Dropdown.Item>
                                 <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id, element.name)}>
                                     Kick User
-                            </Dropdown.Item>
+                                </Dropdown.Item>
                             </DropdownButton>
                         </div>
                     )}
@@ -107,7 +107,7 @@ function UserList(props) {
             let temp = admins.shift()
             return(
                 <div className="w-full">
-                    <h5>Administrative Users</h5>
+                    <h4>Administrative</h4>
                     <div className="flex">
                         <div className="flex-1 w-4/5">
                             <h4>{temp.name}</h4>
@@ -115,18 +115,18 @@ function UserList(props) {
                         </div>
                     </div>
                     {admins.map(element =>
-                        <div className="flex">
+                        <div className="flex border-2">
                             <div className="flex-1 w-4/5">
                                 <h4>{element.name}</h4>
                                 <p className="text-sm italic">{element.id}</p>
                             </div>
-                            <DropdownButton className="flex-2" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
+                            <DropdownButton className="flex-2 border-2 grid" title={<BiDotsHorizontal className="content-center" />} id="basic-nav-dropdown">
                                 <Dropdown.Item value="promote-admin" onClick={() => demoteAdmin(element.id, element.name)}>
                                     Demote Admin
-                            </Dropdown.Item>
+                                </Dropdown.Item>
                                 <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id, element.name)}>
                                     Kick User
-                            </Dropdown.Item>
+                                </Dropdown.Item>
                             </DropdownButton>
                         </div>
                     )}
@@ -137,7 +137,7 @@ function UserList(props) {
         {
             return (
                 <div className="w-full">
-                    <h5>Administrative Users</h5>
+                    <h4>Administrative Users</h4>
                     {admins.map(element =>
                         <div className="flex">
                             <div className="flex-1 w-4/5">
@@ -175,9 +175,9 @@ function UserList(props) {
     }
 
     return (
-        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show}>
+        <Modal size="xl" aria-labelledby="contained-modal-title-vcenter" centered show={props.show}>
             <Modal.Header closeButton onClick={props.onHide}>
-                <Modal.Title id="contained-modal-title-vcenter">User</Modal.Title>
+                <Modal.Title id="contained-modal-title-vcenter">Users</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Container>
