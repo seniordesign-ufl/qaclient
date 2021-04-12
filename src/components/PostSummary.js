@@ -59,9 +59,15 @@ function PostSummary(props) {
                     <span>{props.post.comments.length}</span>
                 </div>
                 <div className="pl-4 pt-2 flex-1 text-left">
-                    <div className="flex">
-                        <PostHeader post={props.post}/>
-                    </div>
+                    <Link
+                        style={{ pointerEvents: props.disableLink ? 'none' : '' }}
+                        to={`${match.url}/${props.post.id}`}
+                        className="text-gray-900"
+                    >
+                        <div className="flex">
+                            <PostHeader post={props.post}/>
+                        </div>
+                    </Link>
                     <div className="divide-y">
                         <div className="mx-4 my-2 break-all">{props.post.content}</div>
                         <blockquote>

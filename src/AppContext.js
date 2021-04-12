@@ -16,6 +16,7 @@ const INITIAL_STATE = {
     filter_by: '',
     admin: false,
     joinSuccess: false,
+    kicked: []
 }
 const reducer = produce((draft, action) => {
     console.log(action);
@@ -53,6 +54,13 @@ const reducer = produce((draft, action) => {
             break
         case 'join-successful':
             draft.joinSuccess = action.joinSuccess
+            break
+        case 'kicked':
+            draft.kicked.push(action.kicked)
+            break
+        case 'remove-from-kicked':
+            const index = draft.kicked.findIndex((element) => element === action.userId)
+            draft.kicked.splice(index, 1)
             break
         default:
             console.log('Unknown case? (', action.type, ')')
@@ -100,6 +108,9 @@ export const API = {
     },
     demoteAdmin: (user, groupID) => {
         socket.emit('demote-admin', {user, groupID})
+    },
+    kickUser: (user, groupID) => {
+        socket.emit('kick-user', {user, groupID})
     }
 }
 
@@ -152,6 +163,12 @@ const socketEvents = (dispatch) => {
         // if (groupID === contextState.roomKey)
         //     handleClose();
         // console.log(contextState.posts)
+    })
+    socket.on('kicked', (userId) => {
+        dispatch({type: 'kicked', kicked: userId })
+        // dispatch({type: 'join-successful', joinSuccess: false })
+        // dispatch({type: 'update-name', displayName: ''})
+        console.log("User kicked! ID: " + userId)
     })
     socket.on('get-admins', ({ groupID, admins }) => {
         dispatch({ type: 'update-admins', admins: admins })

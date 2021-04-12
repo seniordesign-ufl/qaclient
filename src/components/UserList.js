@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import { CSVLink } from 'react-csv'
+import { toast } from 'react-toastify'
 
 import '../Styling/Header.css'
 
@@ -13,15 +14,44 @@ function UserList(props) {
     const headers = [{ label: "ID Number", key: "id" }, { label: "Name", key: "name" }, { label: "Administrator?", key: "administrator"}];
     const [ data, setData ] = useState([{}]);
 
-    function promoteAdmin(id) {
+    function promoteAdmin(id, name) {
+        toast.success(name + ' was promoted to admin!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
         API.updateAdmin(id, contextState.roomKey);
     }
 
-    function demoteAdmin(id) {
+    function demoteAdmin(id, name) {
+        toast.success(name + ' was demoted from admin!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
         API.demoteAdmin(id, contextState.roomKey);
     }
 
-    function kickUser(id) {
+    function kickUser(id, name) {
+        toast.success(name + ' has been kicked!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+
+        API.kickUser(id, contextState.roomKey);
         //TODO
     }
 
@@ -48,10 +78,10 @@ function UserList(props) {
                                 <p className="text-sm italic">{element.id}</p>
                             </div>
                             <DropdownButton className="flex-2" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-                                <Dropdown.Item value="promote-admin" onClick={() => promoteAdmin(element.id)}>
+                                <Dropdown.Item value="promote-admin" onClick={() => promoteAdmin(element.id, element.name)}>
                                     Promote to Admin
                             </Dropdown.Item>
-                                <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id)}>
+                                <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id, element.name)}>
                                     Kick User
                             </Dropdown.Item>
                             </DropdownButton>
@@ -91,10 +121,10 @@ function UserList(props) {
                                 <p className="text-sm italic">{element.id}</p>
                             </div>
                             <DropdownButton className="flex-2" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-                                <Dropdown.Item value="promote-admin" onClick={() => demoteAdmin(element.id)}>
+                                <Dropdown.Item value="promote-admin" onClick={() => demoteAdmin(element.id, element.name)}>
                                     Demote Admin
                             </Dropdown.Item>
-                                <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id)}>
+                                <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id, element.name)}>
                                     Kick User
                             </Dropdown.Item>
                             </DropdownButton>
