@@ -108,6 +108,7 @@ function ReplyBox(props) {
         const comment = {
             content: content,
             author: contextState.displayName,
+            authorId: contextState.userId,
             time: time,
             isAnon: anonymous,
         }

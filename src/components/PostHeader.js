@@ -107,7 +107,7 @@ function DisplayOptions(props) {
                 </Modal>
             </>
         )
-    } else if (contextState.displayName === props.post.author) {
+    } else if (contextState.userId === props.post.authorId) {
         return (
             /* Check if current display name matches name of post. If so allow them to remove it */
             <div className="flex-none pr-4">
