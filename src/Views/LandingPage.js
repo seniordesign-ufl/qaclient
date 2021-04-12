@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
+import { CgLink } from 'react-icons/cg'
 
 import Header from '../components/Header'
-import RoomIllustration from '../resources/room_illustration.svg'
+import RoomIllustration from '../static/room_illustration.svg'
 
 import '../Styling/LandingPage.css'
 import '../Styling/index.css'
@@ -20,6 +21,8 @@ function Landing(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
     const [showLink, updateShowLink] = useState(false)
     const [name, updateName] = useState('')
+    const [discussionName, updateDiscussionName] = useState('')
+    const [email, updateEmail] = useState('')
     /* 
     Function That Executes When Generate Room Button Is Clicked
     Updates The Room Code, Display Name, and Sets The Show Link Boolean to True
@@ -27,10 +30,14 @@ function Landing(props) {
     */
     function handleGenerateClick(e) {
         e.preventDefault()
+        let emailInfo = {
+            discussionName: discussionName,
+            email: email
+        }
         if (name) {
             dispatch({ type: 'update-name', displayName: name })
-            API.requestRoom()
             updateShowLink(true)
+            API.requestRoom(emailInfo)
         } else {
             toast.error('Please input a name')
         }
@@ -50,9 +57,7 @@ function Landing(props) {
                     <div className="">
                         <div>
                             <p className="font-medium">Try creating a discussion room!</p>
-                            <h3 className="font-bold text-3xl ">Create a Discussion Room</h3>
-                            <br />
-                            <br />
+                            <h3 className="font-bold text-3xl mb-10">Create a Discussion Room</h3>
                             <form onSubmit={handleGenerateClick}>
                                 <input
                                     type="text"
@@ -62,6 +67,26 @@ function Landing(props) {
                                     input
                                     placeholder="Enter Display Name"
                                     onChange={(e) => updateName(e.target.value)}
+                                />
+                                <br />
+                                <input
+                                    type="text"
+                                    id="discussionName"
+                                    className="form-control w-full"
+                                    aria-describedby="passwordHelpBlock"
+                                    input
+                                    placeholder="Enter Discussion Name"
+                                    onChange={(e) => updateDiscussionName(e.target.value)}
+                                />{' '}
+                                <br />
+                                <input
+                                    type="text"
+                                    id="email"
+                                    className="form-control w-full"
+                                    aria-describedby="passwordHelpBlock"
+                                    input
+                                    placeholder="Enter Email"
+                                    onChange={(e) => updateEmail(e.target.value)}
                                 />{' '}
                                 <br />
                                 <button
@@ -71,24 +96,24 @@ function Landing(props) {
                                     onClick={handleGenerateClick}
                                 >
                                     Generate Room
-                            </button>
+                                        </button>
                             </form>
                         </div>
-                        <div className="link-box">
-                            {showLink ? (
-                                <Slideout>
-                                    <div>
-                                        Link:{' '}
-                                        <Link to={`/room/${contextState.roomKey}`}>
-                                            {'https://localhost:3001/room/' + contextState.roomKey}
-                                        </Link>
-                                        <Copy link={`https://localhost:3001/room/${contextState.roomKey}`} />
-                                    </div>
-                                </Slideout>
-                            ) : (
-                                <div></div>
-                            )}
-                        </div>
+                    </div>
+                    <div className="link-box">
+                        {showLink ? (
+                            <Slideout>
+                                <div className="flex justify-center items-center">
+                                    <Link to={`/room/${contextState.roomKey}`}>
+                                        <CgLink size={24} className="inline-block" />
+                                        {window.location.href + contextState.roomKey}
+                                    </Link>
+                                    <Copy link={window.location.href + contextState.roomKey} />
+                                </div>
+                            </Slideout>
+                        ) : (
+                            <div></div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -109,7 +134,7 @@ function Copy(props) {
     }
     return (
         <>
-            <button onClick={doCopy} disabled={clicked} className={`copy-btn inline-flex ${clicked && 'clicked'}`}>
+            <button onClick={doCopy} disabled={clicked} className={`p-2 ml-2 rounded-md copy-btn inline-flex ${clicked && 'clicked'}`}>
                 {clicked ? (
                     <FaClipboardCheck className="flex-1 self-center" />
                 ) : (

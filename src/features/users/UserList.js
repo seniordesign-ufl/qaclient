@@ -1,17 +1,15 @@
 import React, { useContext, useState } from 'react'
-import { API, AppContext } from '../AppContext'
+import { API, AppContext } from '../../AppContext'
+import '../../Styling/Header.css'
 import { CSVLink } from 'react-csv'
-
-import '../Styling/Header.css'
 
 import { Form, Modal, Button, Container, Row, Dropdown, DropdownButton } from 'react-bootstrap'
 import { BiDotsHorizontal, BiImport } from 'react-icons/bi'
-import context from 'react-bootstrap/esm/AccordionContext'
 
 function UserList(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
-    const headers = [{ label: "ID Number", key: "id" }, { label: "Name", key: "name" }, { label: "Administrator?", key: "administrator"}];
-    const [ data, setData ] = useState([{}]);
+    const headers = [{ label: "ID Number", key: "id" }, { label: "Name", key: "name" }, { label: "Administrator?", key: "administrator" }];
+    const [data, setData] = useState([{}]);
 
     function promoteAdmin(id) {
         API.updateAdmin(id, contextState.roomKey);
@@ -32,12 +30,10 @@ function UserList(props) {
 
         let regular_users = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.id) === false)
 
-        if (regular_users.length === 0)
-        {
+        if (regular_users.length === 0) {
             return null;
         }
-        else
-        {
+        else {
             return (
                 <div className="w-full">
                     <h5>Regular Users</h5>
@@ -60,22 +56,21 @@ function UserList(props) {
                 </div>
             );
         }
-        
+
     }
 
     function displayAdministrativeUsers() {
         let admins = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.id) === true)
-        
+
         /*
         *   Checks to see if user is the creator of the room.
         *   If true, then they will have the ability to kick and demote any administrator.
         *   If not true, then they will not have the ability to kick and demonte administrators.
         */
 
-        if(contextState.userId === contextState.admins[0])
-        {
+        if (contextState.userId === contextState.admins[0]) {
             let temp = admins.shift()
-            return(
+            return (
                 <div className="w-full">
                     <h5>Administrative Users</h5>
                     <div className="flex">
@@ -103,8 +98,7 @@ function UserList(props) {
                 </div>
             );
         }
-        else
-        {
+        else {
             return (
                 <div className="w-full">
                     <h5>Administrative Users</h5>
@@ -119,7 +113,7 @@ function UserList(props) {
                 </div>
             );
         }
-        
+
     }
 
     // TO-DO: Create Excel Files With All User Information
@@ -127,7 +121,7 @@ function UserList(props) {
         let dataValues = [];
 
         let ordered_list = Array.from(contextState.users);
-        ordered_list.sort(function (x,y) {
+        ordered_list.sort(function (x, y) {
             return contextState.admins.includes(x.id) - contextState.admins.includes(y.id)
         });
         ordered_list.reverse();
@@ -145,7 +139,7 @@ function UserList(props) {
     }
 
     return (
-        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show}>
+        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.onHide}>
             <Modal.Header closeButton onClick={props.onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">User</Modal.Title>
             </Modal.Header>
@@ -162,7 +156,7 @@ function UserList(props) {
             <Modal.Footer>
                 <Button className="bg-gray-200">
                     <CSVLink className="max-h-full" onClick={() => downloadUsers()} headers={headers} data={data} filename="users.csv">
-                            <BiImport />
+                        <BiImport size={24} />
                     </CSVLink>
                 </Button>
             </Modal.Footer>

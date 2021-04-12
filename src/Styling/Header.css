@@ -51,7 +51,8 @@
     background-color: white;
 }
 
-#download {
+
+.lg-button {
     margin-left: 15px;
     margin-bottom: 15px;
     background: #F56F60;
@@ -59,16 +60,13 @@
     border-radius: 6px;
     padding: 15px 20px;
     border: 0;
-    float: right;
 }
 
-#userlist {
-    margin-left: 15px;
-    margin-bottom: 15px;
-    background: #F56F60;
-    color: white;
-    border-radius: 6px;
-    padding: 15px 20px;
-    border: 0;
-    float: right;
+.showy {
+    animation: fadeIn ease 0.25s;
+}
+
+@keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
 }
