@@ -44,7 +44,7 @@ function UserList(props) {
                                 <p className="text-sm italic">{element.id}</p>
                             </div>
                             <DropdownButton className="flex-2" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-                                <Dropdown.Item value="promote-admin" onClick={() => promoteAdmin(element.id)}>
+                                <Dropdown.Item value="promote-admin" onClick={() => promoteAdmin(element.cid)}>
                                     Promote to Admin
                             </Dropdown.Item>
                                 <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id)}>
@@ -60,7 +60,7 @@ function UserList(props) {
     }
 
     function displayAdministrativeUsers() {
-        let admins = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.id) === true)
+        let admins = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.cid) === true)
 
         /*
         *   Checks to see if user is the creator of the room.
@@ -86,7 +86,7 @@ function UserList(props) {
                                 <p className="text-sm italic">{element.id}</p>
                             </div>
                             <DropdownButton className="flex-2" title={<BiDotsHorizontal />} id="basic-nav-dropdown">
-                                <Dropdown.Item value="promote-admin" onClick={() => demoteAdmin(element.id)}>
+                                <Dropdown.Item value="promote-admin" onClick={() => demoteAdmin(element.cid)}>
                                     Demote Admin
                             </Dropdown.Item>
                                 <Dropdown.Item value="kick-user" onClick={() => kickUser(element.id)}>
