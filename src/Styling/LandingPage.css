@@ -30,12 +30,6 @@
 .landing-page .copy-btn {
     background: #e98074;
     color: white;
-    width: 2em;
-    height: 2em;
-    border-radius: 6px;
-    border: 0;
-    padding: 0;
-    margin-left: 1em;
 }
 
 .clicked {
@@ -46,6 +40,6 @@
     text-align: center;
 }
 
-#displayName {
+#email {
     margin-bottom: 5%;
 }

@@ -14,6 +14,7 @@ const INITIAL_STATE = {
     upVotes: [],
     search_phrase: '',
     filter_by: '',
+    discussionName: '',
     admin: false,
     joinSuccess: false,
     kicked: []
@@ -53,7 +54,8 @@ const reducer = produce((draft, action) => {
             draft.upVotes = action.upVotes
             break
         case 'join-successful':
-            draft.joinSuccess = action.joinSuccess
+            draft.joinSuccess = action.join.joinSuccess
+            draft.discussionName = action.join.discussionName
             break
         case 'kicked':
             draft.kicked.push(action.kicked)
@@ -76,8 +78,9 @@ export const API = {
     leave: (userName, groupID) => {
         socket.emit('leave', { userName, groupID })
     },
-    requestRoom: () => {
-        socket.emit('request-room')
+    requestRoom: (emailInfo) => {
+        console.log(emailInfo);
+        socket.emit('request-room', {emailInfo})
     },
     createPost: (post, groupID) => {
         socket.emit('create-post', { post, groupID })
@@ -146,8 +149,13 @@ const socketEvents = (dispatch) => {
         }
     })
 
-    socket.on('join-successful', () => {
-        dispatch({type: 'join-successful', joinSuccess: true})
+    socket.on('join-successful', (discussionName) => {
+        const join = {
+            joinSuccess: true,
+            discussionName: discussionName
+        }
+        dispatch({type: 'join-successful', join})
+        console.log("join", discussionName)
     })
     socket.on('room-code', (roomCode) => {
         dispatch({ type: 'join-room', roomKey: roomCode })
@@ -184,6 +192,22 @@ export const initSockets = (dispatch) => {
     console.log('init socket', process.env)
     socket = socketIOClient(process.env.REACT_APP_SIGNAL_URL)
     socketEvents(dispatch)
+}
+
+export function useAppState() {
+    const context = React.useContext(AppContext)
+    if (context === undefined) {
+        throw new Error("useAppState must be used within a AppContext Provider")
+    }
+    return context.state;
+}
+
+export function useDispatch() {
+    const context = React.useContext(AppContext)
+    if (context === undefined) {
+        throw new Error("useDispatch must be used within a AppContext Provider")
+    }
+    return context.dispatch;
 }
 
 export function ContextProvider({ init, children }) {

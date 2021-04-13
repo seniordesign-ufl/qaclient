@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { API, AppContext } from '../AppContext'
+import { API, AppContext } from '../../AppContext'
+import '../../Styling/Header.css'
 import { CSVLink } from 'react-csv'
 import { toast } from 'react-toastify'
 
-import '../Styling/Header.css'
+import { Modal, Button, Container, Row } from 'react-bootstrap'
+import { BiImport, BiUser, BiUserMinus, BiUserCheck, BiMeteor } from 'react-icons/bi'
 
-import { Form, Modal, Button, Container, Row, Dropdown, DropdownButton } from 'react-bootstrap'
-import { BiDotsHorizontal, BiImport, BiUser, BiUserMinus, BiUserCheck, BiMeteor } from 'react-icons/bi'
-import { BsExclamationSquareFill } from 'react-icons/bs'
 
 function UserList(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
@@ -213,8 +212,7 @@ function UserList(props) {
         {
             return <p>No Regular Users!</p>;
         }
-        else
-        {
+        else {
             return (
                 <div className="w-full">
                     <div className="flex flex-row justify-between py-2 bg-gray-300">
@@ -245,7 +243,7 @@ function UserList(props) {
                 </div>
             );
         }
-        
+
     }
 
     function displayAdministrativeUsers() {
@@ -256,10 +254,9 @@ function UserList(props) {
         *   If not true, then they will not have the ability to kick and demonte administrators.
         */
 
-        if(contextState.userId === contextState.admins[0])
-        {
+        if (contextState.userId === contextState.admins[0]) {
             let temp = admins.shift()
-            return(
+            return (
                 <div className="w-full">
                     <div className="flex flex-row justify-between py-2 bg-gray-300">
                         <div className="pl-4"><b>Name</b></div>
@@ -341,7 +338,7 @@ function UserList(props) {
                 </div>
             );
         }
-        
+
     }
 
     // TO-DO: Create Excel Files With All User Information
@@ -349,7 +346,7 @@ function UserList(props) {
         let dataValues = [];
 
         let ordered_list = Array.from(contextState.users);
-        ordered_list.sort(function (x,y) {
+        ordered_list.sort(function (x, y) {
             return contextState.admins.includes(x.id) - contextState.admins.includes(y.id)
         });
         ordered_list.reverse();
