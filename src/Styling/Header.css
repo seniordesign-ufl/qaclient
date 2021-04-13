@@ -6,11 +6,11 @@
 }
 
 .navbar-brand {
-    color: #e98074;
+    color: #F56F60;
 }
 
 .navbar-brand:hover {
-    color: #e98074;
+    color: #F56F60;
 }
 
 .search-input {
@@ -58,7 +58,7 @@
 .lg-button {
     margin-left: 15px;
     margin-bottom: 15px;
-    background: #e98074;
+    background: #F56F60;
     color: white;
     border-radius: 6px;
     padding: 15px 20px;

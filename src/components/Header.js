@@ -3,6 +3,7 @@ import { AppContext, useAppState, useDispatch } from '../AppContext'
 import '../Styling/index.css'
 import '../index.css'
 import '../Styling/Header.css'
+import SmallTalk_Logo from '../static/smalltalk_logo.svg'
 
 import { Container, FormControl, Dropdown, DropdownButton, Button, InputGroup } from 'react-bootstrap'
 import { IoLogOutOutline, IoSettingsSharp } from "react-icons/io5"
@@ -18,7 +19,7 @@ function Header(props) {
         <div className="flex flex-col md:flex-row justify-between max-w mx-8 mt-4">
             <div className="flex-initial pl-16">
                 <a className="primary-color font-bold text-2xl" href="/">
-                    SmallTalk
+                    <img src={SmallTalk_Logo} />
                 </a>
             </div>
             <div className="flex-1">

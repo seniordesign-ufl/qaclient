@@ -71,8 +71,8 @@ function UserList(props) {
     }
 
     function displayAllUsers() {
-        let admins = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.id) === true)
-        let regular_users = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.id) === false)
+        let admins = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.cid) === true)
+        let regular_users = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.cid) === false)
 
         if(contextState.userId === contextState.admins[0])
         {
@@ -206,7 +206,7 @@ function UserList(props) {
         // API.updateAdmin(contextState.userId, contextState.roomKey)
         // dispatch({ type: 'update-admins', admins: contextState.admins })
 
-        let regular_users = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.id) === false)
+        let regular_users = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.cid) === false)
 
         if (regular_users.length === 0)
         {
@@ -230,11 +230,11 @@ function UserList(props) {
                             </div>
                             <div className="flex flex-row pr-3">
                                 <div className="pr-2 flex flex-col justify-center items-center">
-                                    <BiUserCheck className="stroke-1 text-center" value="promote-admin" onClick={() => promoteAdmin(element.id, element.name)} />
+                                    <BiUserCheck className="stroke-1 text-center" value="promote-admin" onClick={() => promoteAdmin(element.cid, element.name)} />
                                     <p className="text-xs text-center">Promote</p>
                                 </div>
                                 <div className="flex flex-col justify-center items-center">
-                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.id, element.name)} />
+                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.name)} />
                                     <p className="text-xs text-center">Kick</p>
                                 </div>
                             </div>
@@ -247,7 +247,7 @@ function UserList(props) {
     }
 
     function displayAdministrativeUsers() {
-        let admins = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.id) === true)
+        let admins = Array.from(contextState.users).filter((c) => contextState.admins.includes(c.cid) === true)
         /*
         *   Checks to see if user is the creator of the room.
         *   If true, then they will have the ability to kick and demote any administrator.
@@ -286,11 +286,11 @@ function UserList(props) {
                             </div>
                             <div className="flex flex-row pr-3">
                                 <div className="pr-2 flex flex-col justify-center items-center">
-                                    <BiUserMinus className="stroke-1 text-center" value="demote-admin" onClick={() => demoteAdmin(element.id, element.name)} />
+                                    <BiUserMinus className="stroke-1 text-center" value="demote-admin" onClick={() => demoteAdmin(element.cid, element.name)} />
                                     <p className="text-xs text-center">Demote</p>
                                 </div>
                                 <div className="flex flex-col justify-center items-center">
-                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.id, element.name)} />
+                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.name)} />
                                     <p className="text-xs text-center">Kick</p>
                                 </div>
                             </div>
