@@ -35,12 +35,16 @@ function Landing(props) {
             email: email
         }
         if (name) {
-            dispatch({ type: 'update-name', displayName: name})
+            dispatch({ type: 'update-name', displayName: name })
             updateShowLink(true)
             API.requestRoom(emailInfo)
         } else {
             toast.error('Please input a name')
         }
+    }
+
+    function handleJoin(e) {
+        API.join(contextState.displayName, contextState.roomKey);
     }
     return (
         <div>
@@ -95,7 +99,7 @@ function Landing(props) {
                         {showLink ? (
                             <Slideout>
                                 <div className="flex justify-center items-center">
-                                    <Link to={`/room/${contextState.roomKey}`}>
+                                    <Link to={`/room/${contextState.roomKey}`} onClick={handleJoin}>
                                         <CgLink size={24} className="inline-block" />
                                         {window.location.href + contextState.roomKey}
                                     </Link>

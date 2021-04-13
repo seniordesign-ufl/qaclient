@@ -72,7 +72,7 @@ export const API = {
     },
     requestRoom: (emailInfo) => {
         console.log(emailInfo);
-        socket.emit('request-room', {emailInfo})
+        socket.emit('request-room', { emailInfo })
     },
     createPost: (post, groupID) => {
         socket.emit('create-post', { post, groupID })
@@ -102,7 +102,7 @@ export const API = {
         socket.emit('make-admin', { user, groupID })
     },
     demoteAdmin: (user, groupID) => {
-        socket.emit('demote-admin', {user, groupID})
+        socket.emit('demote-admin', { user, groupID })
     }
 }
 
@@ -143,7 +143,7 @@ const socketEvents = (dispatch) => {
             joinSuccess: true,
             discussionName: discussionName
         }
-        dispatch({type: 'join-successful', join})
+        dispatch({ type: 'join-successful', join })
         console.log("join", discussionName)
     })
     socket.on('room-code', (roomCode) => {

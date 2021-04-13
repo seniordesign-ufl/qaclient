@@ -1,5 +1,5 @@
 import { React, useContext, useEffect, useRef, useState } from 'react'
-import { AppContext, useAppState, useDispatch } from '../AppContext'
+import { AppContext, useAppState, useDispatch, API } from '../AppContext'
 import '../Styling/index.css'
 import '../index.css'
 import '../Styling/Header.css'
@@ -9,7 +9,7 @@ import { IoLogOutOutline, IoSettingsSharp } from "react-icons/io5"
 import { BsDownload } from "react-icons/bs"
 import { BsPeopleFill } from 'react-icons/bs'
 import UserList from "../features/users/UserList"
-import { useRouteMatch } from 'react-router'
+import { useHistory, useRouteMatch } from 'react-router'
 import DownloadTranscript from '../features/transcript/DownloadTranscript'
 
 function Header(props) {
@@ -41,10 +41,12 @@ function Options(props) {
     const [showUsers, setShowUsers] = useState(false)
     const handleShow = () => !showUsers && setShowUsers(true)
     const handleClose = () => showUsers && setShowUsers(false)
+    const history = useHistory();
 
 
     const handleLogout = () => {
-        //TODO
+        API.leave(state.displayName, state.roomKey)
+        window.location.replace(`/`)
     }
 
     const checkClick = (e) => {

@@ -20,8 +20,8 @@ export default function CommentList(props) {
     let posts = Array.from(contextState.posts)
 
     if (contextState.search_phrase !== '') {
-        posts = posts.filter((c) => c.title.includes(contextState.search_phrase) || 
-                                    c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined)
+        posts = posts.filter((c) => c.title.includes(contextState.search_phrase) ||
+            c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined)
     }
 
     if (contextState.filter_by === 'Popularity') {
@@ -83,7 +83,7 @@ export default function CommentList(props) {
         <div className="container roomContainer">
             <div className="flex justify-between flex-col md:flex-row">
                 <div id="discussionHeader">
-                    <h2 className="pr-4">
+                    <h2 className="font-bold text-xl pr-4">
                         {contextState.discussionName !== '' ? contextState.discussionName : "Discussion"}{' '}
                         <div className="pl-2 inline">
                             <BsPerson className="text-base inline" />{' '}
