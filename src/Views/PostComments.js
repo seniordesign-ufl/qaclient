@@ -16,7 +16,7 @@ function PostComments(props) {
     const postID = props.match.params.postID
     const post = contextState.posts.find((p) => p.id === postID)
     const [displayForm, setDisplayForm] = useState(false)
-    let comments = [];
+    let comments = post && post.comments;
 
     const transitions = useTransition(comments, (post) => post.id, {
         from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
@@ -36,8 +36,6 @@ function PostComments(props) {
             </div>
         )
     }
-
-    comments = Array.from(post.comments)
 
     if (contextState.search_phrase !== '') {
         comments = comments.filter((c) => c.content.includes(contextState.search_phrase))
@@ -59,6 +57,7 @@ function PostComments(props) {
         })
         comments = temp
     }
+    console.log(comments);
 
 
 

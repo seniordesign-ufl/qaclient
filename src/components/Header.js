@@ -18,9 +18,9 @@ function Header(props) {
     return (
         <div className="flex flex-col md:flex-row justify-between max-w mx-8 mt-4">
             <div className="flex-initial pl-16">
-                <a className="primary-color font-bold text-2xl" href="/">
+                <span className="primary-color font-bold text-2xl" href="/">
                     <img src={SmallTalk_Logo} />
-                </a>
+                </span>
             </div>
             <div className="flex-1">
                 <RenderIfInRoom component={Searchbar} />
@@ -47,6 +47,7 @@ function Options(props) {
 
     const handleLogout = () => {
         API.leave(state.displayName, state.roomKey)
+        localStorage.removeItem("stjwt");
         window.location.replace(`/`)
     }
 
