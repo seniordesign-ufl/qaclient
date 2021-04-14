@@ -83,7 +83,7 @@ export default function CommentList(props) {
         <div className="container roomContainer">
             <div className="flex justify-between flex-col md:flex-row">
                 <div id="discussionHeader">
-                    <h2 className="font-bold text-xl pr-4">
+                    <h2 className="font-bold text-4xl pr-4">
                         {contextState.discussionName !== '' ? contextState.discussionName : "Discussion"}{' '}
                         <div className="pl-2 inline">
                             <BsPerson className="text-base inline" />{' '}

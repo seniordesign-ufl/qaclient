@@ -130,6 +130,7 @@ const socketEvents = (dispatch) => {
             dispatch({ type: "update-name", displayName: m.username });
             dispatch({ type: "update-user-id", userId: m.client_id });
             dispatch({ type: "redirect" })
+            toast.info("Rejoined previous room!");
         }
     })
 

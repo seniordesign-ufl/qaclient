@@ -57,7 +57,6 @@ function PostComments(props) {
         })
         comments = temp
     }
-    console.log(comments);
 
 
 
