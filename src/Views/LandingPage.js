@@ -55,33 +55,37 @@ function Landing(props) {
                         <h3 className="font-bold text-3xl mb-10">Create a Discussion Room</h3>
                         <img className="mx-auto mb-4" src={RoomIllustration} />
                         <form onSubmit={handleGenerateClick}>
+                            <label className="float-left font-bold text-lg" htmlFor="displayName">
+                                Display Name
+                            </label>
                             <input
                                 type="text"
                                 id="displayName"
                                 className="form-control w-full"
                                 aria-describedby="passwordHelpBlock"
-                                input
                                 placeholder="Enter Display Name"
                                 onChange={(e) => updateName(e.target.value)}
                             />
-                            <br />
+                            <label className="float-left font-bold text-lg mt-4" htmlFor="discussionName">
+                                Discussion Name
+                            </label>
                             <input
                                 type="text"
                                 id="discussionName"
                                 className="form-control w-full"
                                 aria-describedby="passwordHelpBlock"
-                                input
                                 placeholder="Enter Discussion Name"
                                 onChange={(e) => updateDiscussionName(e.target.value)}
-                            />{' '}
-                            <br />
+                            />
+                            <label className="float-left font-bold text-lg mt-4" htmlFor="email">
+                                Email
+                            </label>
                             <input
                                 type="text"
                                 id="email"
                                 className="form-control w-full"
                                 aria-describedby="passwordHelpBlock"
-                                input
-                                placeholder="Enter Email"
+                                placeholder="Enter Email (optional)"
                                 onChange={(e) => updateEmail(e.target.value)}
                             />{' '}
                             <br />
