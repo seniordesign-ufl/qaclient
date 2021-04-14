@@ -121,6 +121,10 @@ const socketEvents = (dispatch) => {
         localStorage.setItem("stjwt", token);
     });
 
+    socket.on("client-id", (userId) => {
+        dispatch({ type: "update-user-id", userId });
+    });
+
     socket.on("rejoin", (m) => {
         if (m.error) {
             localStorage.removeItem("stjwt");
