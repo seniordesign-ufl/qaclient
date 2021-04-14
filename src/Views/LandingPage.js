@@ -49,55 +49,60 @@ function Landing(props) {
     return (
         <div>
             <Header roomKey={contextState.roomKey} />
-            <div className="landing-page md:w-1/2 p-10">
-                <div className="">
-                    <div>
-                        <h3 className="font-bold text-3xl mb-10">Create a Discussion Room</h3>
-                        <img className="mx-auto mb-4" src={RoomIllustration} />
-                        <form onSubmit={handleGenerateClick}>
-                            <label className="float-left font-bold text-lg" htmlFor="displayName">
-                                Display Name
-                            </label>
-                            <input
-                                type="text"
-                                id="displayName"
-                                className="form-control w-full"
-                                aria-describedby="passwordHelpBlock"
-                                placeholder="Enter Display Name"
-                                onChange={(e) => updateName(e.target.value)}
-                            />
-                            <label className="float-left font-bold text-lg mt-4" htmlFor="discussionName">
-                                Discussion Name
-                            </label>
-                            <input
-                                type="text"
-                                id="discussionName"
-                                className="form-control w-full"
-                                aria-describedby="passwordHelpBlock"
-                                placeholder="Enter Discussion Name"
-                                onChange={(e) => updateDiscussionName(e.target.value)}
-                            />
-                            <label className="float-left font-bold text-lg mt-4" htmlFor="email">
-                                Email
-                            </label>
-                            <input
-                                type="text"
-                                id="email"
-                                className="form-control w-full"
-                                aria-describedby="passwordHelpBlock"
-                                placeholder="Enter Email (optional)"
-                                onChange={(e) => updateEmail(e.target.value)}
-                            />{' '}
-                            <br />
-                            <button
-                                type="button"
-                                className="btn btn-primary btn-lg generate-btn"
-                                disabled={showLink}
-                                onClick={handleGenerateClick}
-                            >
-                                Generate Room
-                            </button>
-                        </form>
+            <div className="grid grid-cols-2 m-3">
+                <div className="landing-welcome ml-9 mt-8 p-10">
+                    <h3 className="font-bold text-6xl">Let's get talkin'!</h3>
+                    <br />
+                    <p className="font-medium text-lg">Introducing a new way to have live lecture discussion.</p>
+                    <img className="mx-auto" src={RoomIllustration} />
+                </div>
+
+                <div className="landing-page ml-8 p-10">
+                    <div className="">
+                        <div>
+                            <p className="font-medium">Try creating a discussion room!</p>
+                            <h3 className="font-bold text-3xl mb-10">Create a Discussion Room</h3>
+                            <form onSubmit={handleGenerateClick}>
+                                <input
+                                    type="text"
+                                    id="displayName"
+                                    className="form-control w-full"
+                                    aria-describedby="passwordHelpBlock"
+                                    input
+                                    placeholder="Enter Display Name"
+                                    onChange={(e) => updateName(e.target.value)}
+                                />
+                                <br />
+                                <input
+                                    type="text"
+                                    id="discussionName"
+                                    className="form-control w-full"
+                                    aria-describedby="passwordHelpBlock"
+                                    input
+                                    placeholder="Enter Discussion Name"
+                                    onChange={(e) => updateDiscussionName(e.target.value)}
+                                />{' '}
+                                <br />
+                                <input
+                                    type="text"
+                                    id="email"
+                                    className="form-control w-full"
+                                    aria-describedby="passwordHelpBlock"
+                                    input
+                                    placeholder="Enter Email"
+                                    onChange={(e) => updateEmail(e.target.value)}
+                                />{' '}
+                                <br />
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-lg generate-btn"
+                                    disabled={showLink}
+                                    onClick={handleGenerateClick}
+                                >
+                                    Generate Room
+                                        </button>
+                            </form>
+                        </div>
                     </div>
                     <div className="link-box">
                         {showLink ? (
@@ -116,13 +121,13 @@ function Landing(props) {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
 
 /**
  * Copy button that disables itself once clicked.
- * @param {} props
+ * @param { } props
  */
 function Copy(props) {
     const [clicked, setClicked] = useState(false)
