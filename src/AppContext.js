@@ -17,7 +17,7 @@ const INITIAL_STATE = {
     discussionName: '',
     admin: false,
     joinSuccess: false,
-    kicked: []
+    kicked: false
 }
 const reducer = produce((draft, action) => {
     console.log(action);
@@ -58,11 +58,13 @@ const reducer = produce((draft, action) => {
             draft.discussionName = action.join.discussionName
             break
         case 'kicked':
-            draft.kicked.push(action.kicked)
+            if(draft.userId === action.kicked)
+            {
+                draft.kicked = true
+            }
             break
-        case 'remove-from-kicked':
-            const index = draft.kicked.findIndex((element) => element === action.userId)
-            draft.kicked.splice(index, 1)
+        case 'remove-kicked':
+            draft.kicked = false
             break
         default:
             console.log('Unknown case? (', action.type, ')')

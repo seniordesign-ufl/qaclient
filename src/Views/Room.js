@@ -19,7 +19,7 @@ function Room(props) {
         }
     }, [])
 
-    if(contextState.kicked.includes(contextState.userId))
+    if(contextState.kicked === true)
     {
         dispatch({type: 'join-successful', joinSuccess: false})
         dispatch({ type: 'update-name', displayName: '' })
