@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import produce from 'immer'
 import socketIOClient from 'socket.io-client'
+import { toast } from 'react-toastify'
 
 export const AppContext = React.createContext()
 
@@ -17,7 +18,8 @@ const INITIAL_STATE = {
     discussionName: '',
     admin: false,
     joinSuccess: false,
-    kicked: false
+    kicked: false,
+    redirect: false,
 }
 const reducer = produce((draft, action) => {
     console.log(action);
@@ -66,6 +68,12 @@ const reducer = produce((draft, action) => {
         case 'remove-kicked':
             draft.kicked = false
             break
+        case "redirect":
+            draft.redirect = true;
+            break
+        case "redirect-false":
+            draft.redirect = false;
+            break
         default:
             console.log('Unknown case? (', action.type, ')')
     }
@@ -82,7 +90,7 @@ export const API = {
     },
     requestRoom: (emailInfo) => {
         console.log(emailInfo);
-        socket.emit('request-room', {emailInfo})
+        socket.emit('request-room', { emailInfo })
     },
     createPost: (post, groupID) => {
         socket.emit('create-post', { post, groupID })
@@ -120,34 +128,26 @@ export const API = {
 }
 
 const socketEvents = (dispatch) => {
-    socket.on('client-id', (client_id) => {
-        const cid = localStorage.getItem('client-id')
-        if (cid) {
-            console.log('rejoin attempt', cid)
-            socket.emit('rejoin', { client_id: cid, pathname: window.location.pathname })
-            socket.once('rejoin', (m) => {
-                console.log(m)
-                if (m.error) {
-                    localStorage.setItem('client-id', client_id)
-                    dispatch({ type: 'update-user-id', userId: client_id })
-                } else {
-                    if (window.location.pathname === '') {
-                        window.location.replace(`/room/${m.groupID}`)
-                    }
-                    dispatch({
-                        type: 'update-name',
-                        displayName: m.username.name,
-                    })
-                    dispatch({ type: 'update-user-id', userId: m.username.id })
-                    dispatch({ type: 'update-users', users: m.users })
-                    dispatch({ type: 'update-posts', posts: m.posts })
-                    dispatch({ type: 'update-admins', admins: m.admins })
-                }
-            })
-            dispatch({ type: 'update-user-id', userId: client_id })
+
+    socket.on("token", (token) => {
+        console.log("New token", token);
+        localStorage.setItem("stjwt", token);
+    });
+
+    socket.on("client-id", (userId) => {
+        dispatch({ type: "update-user-id", userId });
+    });
+
+    socket.on("rejoin", (m) => {
+        if (m.error) {
+            localStorage.removeItem("stjwt");
         } else {
-            localStorage.setItem('client-id', client_id)
-            dispatch({ type: 'update-user-id', userId: client_id })
+            API.join(m.username, m.groupID);
+            dispatch({ type: "join-room", roomKey: m.groupID })
+            dispatch({ type: "update-name", displayName: m.username });
+            dispatch({ type: "update-user-id", userId: m.client_id });
+            dispatch({ type: "redirect" })
+            toast.info("Rejoined previous room!");
         }
     })
 
@@ -156,7 +156,7 @@ const socketEvents = (dispatch) => {
             joinSuccess: true,
             discussionName: discussionName
         }
-        dispatch({type: 'join-successful', join})
+        dispatch({ type: 'join-successful', join })
         console.log("join", discussionName)
     })
     socket.on('room-code', (roomCode) => {
@@ -194,6 +194,10 @@ export const initSockets = (dispatch) => {
     console.log('init socket', process.env)
     socket = socketIOClient(process.env.REACT_APP_SIGNAL_URL)
     socketEvents(dispatch)
+    const token = localStorage.getItem("stjwt")
+    if (token) {
+        socket.emit("rejoin", token)
+    }
 }
 
 export function useAppState() {

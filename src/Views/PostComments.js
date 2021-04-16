@@ -16,8 +16,26 @@ function PostComments(props) {
     const postID = props.match.params.postID
     const post = contextState.posts.find((p) => p.id === postID)
     const [displayForm, setDisplayForm] = useState(false)
+    let comments = post && post.comments;
 
-    let comments = Array.from(post.comments)
+    const transitions = useTransition(comments, (post) => post.id, {
+        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
+    })
+
+    if (!post) {
+        return (
+            <div>
+                Post not found.
+                <Link to=".">
+                    <Button variant="light" style={{ marginTop: '10px' }}>
+                        <BsArrowLeft />
+                    </Button>
+                </Link>
+            </div>
+        )
+    }
 
     if (contextState.search_phrase !== '') {
         comments = comments.filter((c) => c.content.includes(contextState.search_phrase))
@@ -40,24 +58,7 @@ function PostComments(props) {
         comments = temp
     }
 
-    const transitions = useTransition(comments, (post) => post.id, {
-        from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
-        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
-        leave: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
-    })
 
-    if (!post) {
-        return (
-            <div>
-                Post not found.
-                <Link to=".">
-                    <Button variant="light" style={{ marginTop: '10px' }}>
-                        <BsArrowLeft />
-                    </Button>
-                </Link>
-            </div>
-        )
-    }
 
     return (
         <Container>

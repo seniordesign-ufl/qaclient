@@ -7,7 +7,6 @@ import '../Styling/EnterDisplayName.css'
 export default function EnterDisplayName(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
     const [name, setName] = useState('')
-    console.log(props)
     function handleJoinClick(e) {
         e.preventDefault()
         API.join(name, props.match.params.roomID)
