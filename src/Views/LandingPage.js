@@ -42,6 +42,10 @@ function Landing(props) {
             toast.error('Please input a name')
         }
     }
+
+    function handleJoin(e) {
+        API.join(contextState.displayName, contextState.roomKey);
+    }
     return (
         <div>
             <Header roomKey={contextState.roomKey} />
@@ -57,38 +61,41 @@ function Landing(props) {
                     <div className="">
                         <div>
                             <p className="font-medium">Try creating a discussion room!</p>
-                            <h3 className="font-bold text-3xl mb-10">Create a Discussion Room</h3>
+                            <h3 className="font-bold text-3xl mb-10 text-gray-700">Create a Discussion Room</h3>
                             <form onSubmit={handleGenerateClick}>
+                                <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                    Display Name
+                                </label>
                                 <input
                                     type="text"
                                     id="displayName"
                                     className="form-control w-full"
                                     aria-describedby="passwordHelpBlock"
-                                    input
                                     placeholder="Enter Display Name"
                                     onChange={(e) => updateName(e.target.value)}
                                 />
-                                <br />
+                                <label htmlFor="discussionName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                    Discussion Name
+                                </label>
                                 <input
                                     type="text"
                                     id="discussionName"
                                     className="form-control w-full"
                                     aria-describedby="passwordHelpBlock"
-                                    input
                                     placeholder="Enter Discussion Name"
                                     onChange={(e) => updateDiscussionName(e.target.value)}
-                                />{' '}
-                                <br />
+                                />
+                                <label htmlFor="email" className="float-left text-gray-700 text-md font-bold mt-2">
+                                    Email
+                                </label>
                                 <input
                                     type="text"
                                     id="email"
                                     className="form-control w-full"
                                     aria-describedby="passwordHelpBlock"
-                                    input
-                                    placeholder="Enter Email"
+                                    placeholder="Enter Email (optional)"
                                     onChange={(e) => updateEmail(e.target.value)}
-                                />{' '}
-                                <br />
+                                />
                                 <button
                                     type="button"
                                     className="btn btn-primary btn-lg generate-btn"
@@ -104,7 +111,7 @@ function Landing(props) {
                         {showLink ? (
                             <Slideout>
                                 <div className="flex justify-center items-center">
-                                    <Link to={`/room/${contextState.roomKey}`}>
+                                    <Link to={`/room/${contextState.roomKey}`} onClick={handleJoin}>
                                         <CgLink size={24} className="inline-block" />
                                         {window.location.href + contextState.roomKey}
                                     </Link>
