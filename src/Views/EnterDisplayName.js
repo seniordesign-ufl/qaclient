@@ -2,6 +2,9 @@ import { React, useContext, useEffect, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import { toast } from 'react-toastify'
 
+import Header from '../components/Header'
+import RoomIllustration from '../static/room_illustration.svg'
+
 import '../Styling/EnterDisplayName.css'
 
 export default function EnterDisplayName(props) {
@@ -11,39 +14,53 @@ export default function EnterDisplayName(props) {
         e.preventDefault()
         API.join(name, props.match.params.roomID)
         dispatch({ type: 'update-name', displayName: name })
-        if(contextState.kicked === true)
-        {
+        if (contextState.kicked === true) {
             dispatch({ type: 'remove-kicked' })
         }
     }
 
     return (
-        <div className="create-page">
-            <div className="p-4 m-4">
-                <h4 className="display-name">
-                    Display Name <span className="required">*</span>
-                </h4>
-                {contextState.kicked === true ? 
-                    <h6>
-                        Sorry you've been kicked by an admin! Please enter your name again to log back in!
-                    </h6> : null
-                }
-                <br />
-                <form onSubmit={handleJoinClick}>
-                    <input
-                        type="text"
-                        id="displayName"
-                        placeholder="Enter Display Name"
-                        class="form-control"
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />{' '}
+        <div>
+            <Header roomKey={contextState.roomKey} />
+            <div className="grid grid-cols-2 m-3">
+                <div className="ml-9 mt-8 p-10">
+                    <h3 className="font-bold text-6xl">Let's get talking!</h3>
                     <br />
-                    <button type="submit" className="btn btn-primary btn-lg generate-btn" onClick={handleJoinClick}>
-                        Join Room
+                    <p className="font-medium text-lg">Introducing a new way to have live lecture discussion.</p>
+                    <img className="mx-auto" src={RoomIllustration} />
+                </div>
+
+                <div className="join-page ml-8 p-10">
+                    <div className="">
+                        <p className="font-medium">You've been invited!</p>
+                        <h4 className="display-name font-bold text-3xl mb-10 text-gray-700">
+                            Join the Discussion Room
+                        </h4>
+                        <form onSubmit={handleJoinClick}>
+                            <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                Name <span className="required">*</span>
+                            </label>
+                            {contextState.kicked === true ?
+                                <h6>
+                                    Sorry you've been kicked by an admin! Please enter your name again to log back in!
+                    </h6> : null
+                            }
+                            <input
+                                type="text"
+                                id="displayName"
+                                placeholder="Enter Your Name"
+                                class="form-control"
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />{' '}
+                            <br />
+                            <button type="submit" className="btn btn-primary btn-lg generate-btn" onClick={handleJoinClick}>
+                                Join Room
                     </button>
-                </form>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div >
     )
 }

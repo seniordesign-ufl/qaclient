@@ -50,17 +50,16 @@ function Landing(props) {
         <div>
             <Header roomKey={contextState.roomKey} />
             <div className="grid grid-cols-2 m-3">
-                <div className="landing-welcome ml-9 mt-8 p-10">
-                    <h3 className="font-bold text-6xl">Let's get talkin'!</h3>
+                <div className="ml-9 mt-8 p-10">
+                    <h3 className="font-bold text-6xl">Let's get talking!</h3>
                     <br />
                     <p className="font-medium text-lg">Introducing a new way to have live lecture discussion.</p>
                     <img className="mx-auto" src={RoomIllustration} />
                 </div>
 
-                <div className="landing-page ml-8 p-10">
+                <div className="landing-page ml-8 p-8">
                     <div className="">
                         <div>
-                            <p className="font-medium">Try creating a discussion room!</p>
                             <h3 className="font-bold text-3xl mb-10 text-gray-700">Create a Discussion Room</h3>
                             <form onSubmit={handleGenerateClick}>
                                 <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
