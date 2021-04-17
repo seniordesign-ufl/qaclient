@@ -18,6 +18,7 @@ const INITIAL_STATE = {
     discussionName: '',
     admin: false,
     joinSuccess: false,
+    kicked: false,
     redirect: false,
 }
 const reducer = produce((draft, action) => {
@@ -57,6 +58,15 @@ const reducer = produce((draft, action) => {
         case 'join-successful':
             draft.joinSuccess = action.join.joinSuccess
             draft.discussionName = action.join.discussionName
+            break
+        case 'kicked':
+            if(draft.userId === action.kicked)
+            {
+                draft.kicked = true
+            }
+            break
+        case 'remove-kicked':
+            draft.kicked = false
             break
         case "redirect":
             draft.redirect = true;
@@ -110,7 +120,10 @@ export const API = {
         socket.emit('make-admin', { user, groupID })
     },
     demoteAdmin: (user, groupID) => {
-        socket.emit('demote-admin', { user, groupID })
+        socket.emit('demote-admin', {user, groupID})
+    },
+    kickUser: (user, groupID) => {
+        socket.emit('kick-user', {user, groupID})
     }
 }
 
@@ -160,6 +173,12 @@ const socketEvents = (dispatch) => {
         // if (groupID === contextState.roomKey)
         //     handleClose();
         // console.log(contextState.posts)
+    })
+    socket.on('kicked', (userId) => {
+        dispatch({type: 'kicked', kicked: userId })
+        // dispatch({type: 'join-successful', joinSuccess: false })
+        // dispatch({type: 'update-name', displayName: ''})
+        console.log("User kicked! ID: " + userId)
     })
     socket.on('get-admins', ({ groupID, admins }) => {
         dispatch({ type: 'update-admins', admins: admins })

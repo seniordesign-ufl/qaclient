@@ -43,6 +43,23 @@ function Comment(props) {
         API.removeComment(removeComment, contextState.roomKey)
     }
 
+    function displayOptions () {
+        if(contextState.userId === props.comment.authorId || contextState.admins.includes(contextState.userId) === true)
+        {
+            return(
+                <div className="float-right pt-2 pr-4">
+                    <button className="w-8 h-8 flex btn-color rounded-md" onClick={handleShow}>
+                        <IoClose className="flex-1 self-center" />
+                    </button>
+                </div>
+            )
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     return (
         <animated.div
             style={props.animated}
@@ -57,16 +74,7 @@ function Comment(props) {
                     <a>{props.comment.upVotes}</a>
                 </div>
                 <div className="flex-1 pl-4 pt-2 text-left">
-                    {
-                        /* Check if current display name matches name of post. If so allow them to remove it */
-                        contextState.displayName === props.comment.author && (
-                            <div className="float-right pt-2 pr-4">
-                                <button className="w-8 h-8 flex btn-color rounded-md" onClick={handleShow}>
-                                    <IoClose className="flex-1 self-center" />
-                                </button>
-                            </div>
-                        )
-                    }
+                    {displayOptions()}
                     <div className="divide-y">
                         <div className="pt-4 pl-4 pb-12">{props.comment.content}</div>
                         <blockquote>

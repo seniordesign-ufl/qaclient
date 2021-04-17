@@ -19,12 +19,27 @@ function Room(props) {
         }
     }, [])
 
-    return (
-        <div className="room-page">
-            {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
-            {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} />}
-        </div>
-    )
+    if(contextState.kicked === true)
+    {
+        dispatch({type: 'join-successful', joinSuccess: false})
+        dispatch({ type: 'update-name', displayName: '' })
+        return (
+            <div className="room-page">
+                {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
+                {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} kicked={true}/>}
+            </div>
+        )
+    }
+    else
+    {
+        return (
+            <div className="room-page">
+                {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
+                {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} kicked={false}/>}
+            </div>
+        )
+    }
+
 }
 
 export default Room

@@ -8,7 +8,8 @@ import { BsAwardFill } from 'react-icons/bs'
 import { animated, useSpring } from 'react-spring'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { useHistory, useRouteMatch } from 'react-router'
+import { Link, useRouteMatch } from 'react-router-dom'
+import { useHistory } from 'react-router'
 
 function DisplayPinned(props) {
     const styleProps = useSpring({
@@ -112,7 +113,7 @@ function DisplayOptions(props) {
                 </Modal>
             </>
         )
-    } else if (contextState.displayName === props.post.author) {
+    } else if (contextState.userId === props.post.authorId) {
         return (
             /* Check if current display name matches name of post. If so allow them to remove it */
             <div className="flex-none pr-4">
@@ -146,6 +147,8 @@ function DisplayOptions(props) {
 }
 
 export default function PostHeader(props) {
+    const match = useRouteMatch()
+
     function mapTags() {
         return (
             <div className="inline-flex w-full justify-end mr-3 text-lg font-extralight">
@@ -164,7 +167,13 @@ export default function PostHeader(props) {
         <div className="flex flex-1">
             <div className="flex-1 flex">
                 <DisplayPinned post={props.post} />
-                <div className="flex-initial font-semibold break-all">{props.post.title}</div>
+                <Link
+                    style={{ pointerEvents: props.disableLink ? 'none' : '' }}
+                    to={`${match.url}/${props.post.id}`}
+                    className="text-gray-900"
+                >
+                    <div className="flex-initial font-semibold break-all">{props.post.title}</div>
+                </Link>
                 <DisplaySolved solved={props.post.solved} />
             </div>
             <div className="flex justify-end">

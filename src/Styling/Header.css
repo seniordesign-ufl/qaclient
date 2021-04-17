@@ -45,10 +45,13 @@
     border: none !important;
     padding-left: 20px;
     padding-right: 20px;
+    text-align: center;
+    justify-content: center;
 }
 
 #basic-nav-dropdown:focus {
     background-color: white;
+    text-align: center;
 }
 
 

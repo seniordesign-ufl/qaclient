@@ -23,6 +23,7 @@ function NewPost(props) {
             title: title,
             content: body,
             author: contextState.displayName,
+            authorId: contextState.userId,
             time: time,
             isAnon: anonymous,
             tags: tagList,
