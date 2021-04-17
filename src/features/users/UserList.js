@@ -5,7 +5,7 @@ import { CSVLink } from 'react-csv'
 import { toast } from 'react-toastify'
 
 import { Modal, Button, Container, Row } from 'react-bootstrap'
-import { BiImport, BiUser, BiUserMinus, BiUserCheck, BiMeteor } from 'react-icons/bi'
+import { BiImport, BiUser, BiUserMinus, BiUserCheck, BiTrash } from 'react-icons/bi'
 
 
 function UserList(props) {
@@ -40,8 +40,8 @@ function UserList(props) {
         API.demoteAdmin(id, contextState.roomKey);
     }
 
-    function kickUser(id, name) {
-        toast.success(name + ' has been kicked!', {
+    function kickUser(user_cid, user_id, user_name) {
+        toast.success(user_name + ' has been kicked!', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -51,8 +51,13 @@ function UserList(props) {
             progress: undefined,
         });
 
-        API.kickUser(id, contextState.roomKey);
-        //TODO
+        let user = {
+            _id: user_id,
+            name: user_name,
+            cid: user_cid
+        }
+        
+        API.kickUser(user, contextState.roomKey);
     }
 
     function option() {
@@ -107,11 +112,11 @@ function UserList(props) {
                             </div>
                             <div className="flex flex-row pr-3">
                                 <div className="pr-2 flex flex-col justify-center items-center">
-                                    <BiUserMinus className="stroke-1 text-center" value="demote-admin" onClick={() => demoteAdmin(element.id, element.name)} />
+                                    <BiUserMinus className="stroke-1 text-center" value="demote-admin" onClick={() => demoteAdmin(element.cid, element.name)} />
                                     <p className="text-xs text-center">Demote</p>
                                 </div>
                                 <div className="flex flex-col justify-center items-center">
-                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.id, element.name)} />
+                                    <BiTrash className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.id, element.name)} />
                                     <p className="text-xs text-center">Kick</p>
                                 </div>
                             </div>
@@ -127,11 +132,11 @@ function UserList(props) {
                             </div>
                             <div className="flex flex-row pr-3">
                                 <div className="pr-2 flex flex-col justify-center items-center">
-                                    <BiUserCheck className="stroke-1 text-center" value="promote-admin" onClick={() => promoteAdmin(element.id, element.name)} />
+                                    <BiUserCheck className="stroke-1 text-center" value="promote-admin" onClick={() => promoteAdmin(element.cid, element.name)} />
                                     <p className="text-xs text-center">Promote</p>
                                 </div>
                                 <div className="flex flex-col justify-center items-center">
-                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.id, element.name)} />
+                                    <BiTrash className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.id, element.name)} />
                                     <p className="text-xs text-center">Kick</p>
                                 </div>
                             </div>
@@ -142,6 +147,7 @@ function UserList(props) {
         }
         else
         {
+            console.log("HERE")
             let temp = admins.shift()
             return (
                 <div className="w-full">
@@ -186,11 +192,11 @@ function UserList(props) {
                             </div>
                             <div className="flex flex-row pr-3">
                                 <div className="pr-2 flex flex-col justify-center items-center">
-                                    <BiUserCheck className="stroke-1 text-center" value="promote-admin" onClick={() => promoteAdmin(element.id, element.name)} />
+                                    <BiUserCheck className="stroke-1 text-center" value="promote-admin" onClick={() => promoteAdmin(element.cid, element.name)} />
                                     <p className="text-xs text-center">Promote</p>
                                 </div>
                                 <div className="flex flex-col justify-center items-center">
-                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.id, element.name)} />
+                                    <BiTrash className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.id, element.name)} />
                                     <p className="text-xs text-center">Kick</p>
                                 </div>
                             </div>
@@ -234,7 +240,7 @@ function UserList(props) {
                                     <p className="text-xs text-center">Promote</p>
                                 </div>
                                 <div className="flex flex-col justify-center items-center">
-                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.name)} />
+                                    <BiTrash className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.id, element.name)} />
                                     <p className="text-xs text-center">Kick</p>
                                 </div>
                             </div>
@@ -290,7 +296,7 @@ function UserList(props) {
                                     <p className="text-xs text-center">Demote</p>
                                 </div>
                                 <div className="flex flex-col justify-center items-center">
-                                    <BiMeteor className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.name)} />
+                                    <BiTrash className="stroke-1 text-center" value="kick-user" onClick={() => kickUser(element.cid, element.id, element.name)} />
                                     <p className="text-xs text-center">Kick</p>
                                 </div>
                             </div>
@@ -360,41 +366,48 @@ function UserList(props) {
         });
 
         setData(dataValues);
-        console.log(data)
     }
 
-    return (
-        <Modal size="xl" aria-labelledby="contained-modal-title-vcenter" centered show={props.show}>
-            <Modal.Header className="border-0" closeButton onClick={props.onHide}>
-                <Modal.Title id="contained-modal-title-vcenter">Users</Modal.Title>
-            </Modal.Header>
-            <div className="flex flex-row border-bottom">
-                <div className="w-2/3 flex flex-row">
-                    <div className="pl-3 focus:text-gray-900 focus:border-b-8">
-                        <h4 class="cursor-pointer text-gray-600 hover:text-gray-900" onClick={() => setDisplay("All")}>All</h4>
+    if(contextState.admins !== null)
+    {
+        return (
+            <Modal size="xl" aria-labelledby="contained-modal-title-vcenter" centered show={props.show}>
+                <Modal.Header className="border-0" closeButton onClick={props.onHide}>
+                    <Modal.Title id="contained-modal-title-vcenter">Users</Modal.Title>
+                </Modal.Header>
+                <div className="flex flex-row border-bottom">
+                    <div className="w-2/3 flex flex-row">
+                        <div className="pl-3 focus:text-gray-900 focus:border-b-8">
+                            <h4 class="cursor-pointer text-gray-600 hover:text-gray-900" onClick={() => setDisplay("All")}>All</h4>
+                        </div>
+                        <div className="px-3 focus:text-gray-900 focus:border-b-8">
+                            <h4 class="cursor-pointer text-gray-600 hover:text-gray-900" onClick={() => setDisplay("Administrators")}>Administrators</h4>
+                        </div>
+                        <div className="focus:text-gray-900 focus:border-b-8">
+                            <h4 class="cursor-pointer text-gray-600 hover:text-gray-900" onClick={() => setDisplay("Regulars")}>Regulars</h4>
+                        </div>
                     </div>
-                    <div className="px-3 focus:text-gray-900 focus:border-b-8">
-                        <h4 class="cursor-pointer text-gray-600 hover:text-gray-900" onClick={() => setDisplay("Administrators")}>Administrators</h4>
-                    </div>
-                    <div className="focus:text-gray-900 focus:border-b-8">
-                        <h4 class="cursor-pointer text-gray-600 hover:text-gray-900" onClick={() => setDisplay("Regulars")}>Regulars</h4>
+                    <div className="w-1/3">
+                        <Button className="bg-gray-200 float-right">
+                            <CSVLink className="max-h-full" onClick={() => downloadUsers()} headers={headers} data={data} filename="users.csv">
+                                <BiImport />
+                            </CSVLink>
+                        </Button>
                     </div>
                 </div>
-                <div className="w-1/3">
-                    <Button className="bg-gray-200 float-right">
-                        <CSVLink className="max-h-full" onClick={() => downloadUsers()} headers={headers} data={data} filename="users.csv">
-                            <BiImport />
-                        </CSVLink>
-                    </Button>
-                </div>
-            </div>
-            <Modal.Body>
-                <Row>
-                    {option()}
-                </Row>
-            </Modal.Body>
-        </Modal>
-    )
+                <Modal.Body>
+                    <Row>
+                        {props.show ? option() : null}
+                    </Row>
+                </Modal.Body>
+            </Modal>
+        )
+    }
+    else
+    {
+        console.log("LOADING")
+    }
+
 }
 
 export default UserList
