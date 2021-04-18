@@ -127,7 +127,7 @@ function Options(props) {
 const RenderIfInRoom = ({ component }) => {
     const state = useAppState();
     const match = useRouteMatch("/room/:roomID");
-    if (state.displayName == null || !match) {
+    if (state.displayName == null || !match || state.kicked == true) {
         return null;
     } else {
         return component();

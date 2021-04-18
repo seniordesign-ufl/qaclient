@@ -1,8 +1,8 @@
 import { React, useContext, useEffect, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import { toast } from 'react-toastify'
-
-import '../Styling/EnterDisplayName.css'
+import Header from '../components/Header'
+import RoomIllustration from '../static/room_illustration.svg'
 
 export default function EnterDisplayName(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
@@ -18,31 +18,46 @@ export default function EnterDisplayName(props) {
     }
 
     return (
-        <div className="create-page">
-            <div className="p-4 m-4">
-                <h4 className="display-name">
-                    Display Name <span className="required">*</span>
-                </h4>
-                {contextState.kicked === true ? 
-                    <h6>
-                        Sorry you've been kicked by an admin! Please enter your name again to log back in!
-                    </h6> : null
-                }
-                <br />
-                <form onSubmit={handleJoinClick}>
-                    <input
-                        type="text"
-                        id="displayName"
-                        placeholder="Enter Display Name"
-                        class="form-control"
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />{' '}
+        <div>
+            <Header roomKey={contextState.roomKey} />
+            <div className="grid grid-cols-2 m-3">
+                <div className="landing-welcome ml-9 mt-8 p-10">
+                    <h3 className="font-bold text-6xl">Let's get talkin'!</h3>
                     <br />
-                    <button type="submit" className="btn btn-primary btn-lg generate-btn" onClick={handleJoinClick}>
-                        Join Room
-                    </button>
-                </form>
+                    <p className="font-medium text-lg">Introducing a new way to have live lecture discussion.</p>
+                    <img className="mx-auto" src={RoomIllustration} />
+                </div>
+
+                <div className="landing-page ml-8 p-10">
+                    <div className="">
+                        <div>
+                            <p className="font-medium">Join Your Discussion Room Here!</p>
+                            {contextState.kicked ? <h3 className="font-bold text-3xl mb-10 text-gray-700">You've been kicked! You can rejoin the room.</h3> : null}
+                            <form onSubmit={handleJoinClick}>
+                                <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                    Display Name
+                                </label>
+                                <input
+                                    type="text"
+                                    id="displayName"
+                                    className="form-control w-full"
+                                    aria-describedby="passwordHelpBlock"
+                                    placeholder="Enter Your Name"
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                                <br />
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-lg generate-btn"
+                                    onClick={handleJoinClick}
+                                >
+                                    Join Room
+                                        </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
