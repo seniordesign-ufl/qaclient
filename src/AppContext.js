@@ -63,6 +63,8 @@ const reducer = produce((draft, action) => {
             if(draft.userId === action.kicked)
             {
                 draft.kicked = true
+                draft.joinSuccess = false
+                draft.displayName = ''
             }
             break
         case 'remove-kicked':

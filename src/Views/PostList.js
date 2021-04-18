@@ -21,7 +21,8 @@ export default function CommentList(props) {
 
     if (contextState.search_phrase !== '') {
         posts = posts.filter((c) => c.title.includes(contextState.search_phrase) ||
-            c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined)
+            c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined ||
+            c.content.includes(contextState.search_phrase))
     }
 
     if (contextState.filter_by === 'Popularity') {
@@ -72,7 +73,11 @@ export default function CommentList(props) {
                 </Row>
             )
         } else if (contextState.posts.length > 0) {
-            return null
+            return (
+                <Row>
+                    <h5 className="font-bold ml-3 text-gray-500">DISCUSSION</h5>
+                </Row>
+            )
         }
         else {
             return <p>No Posts Available!</p>

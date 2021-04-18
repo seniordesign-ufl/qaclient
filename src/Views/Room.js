@@ -7,6 +7,7 @@ import '../Styling/index.css'
 import Header from '../components/Header'
 import EnterDisplayName from './EnterDisplayName'
 import RoomHomeScreen from './RoomHomeScreen'
+import context from 'react-bootstrap/esm/AccordionContext'
 
 function Room(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
@@ -19,26 +20,12 @@ function Room(props) {
         }
     }, [])
 
-    if(contextState.kicked === true)
-    {
-        dispatch({type: 'join-successful', joinSuccess: false})
-        dispatch({ type: 'update-name', displayName: '' })
-        return (
-            <div className="room-page">
-                {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
-                {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} kicked={true}/>}
-            </div>
-        )
-    }
-    else
-    {
-        return (
-            <div className="room-page">
-                {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
-                {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} kicked={false}/>}
-            </div>
-        )
-    }
+    return (
+        <div className="room-page">
+            {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
+            {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} />}
+        </div>
+    )
 
 }
 

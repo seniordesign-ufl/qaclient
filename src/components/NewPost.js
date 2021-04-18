@@ -15,6 +15,7 @@ function NewPost(props) {
     const [tag, updateTag] = useState("")
     const [displayError, updateDisplayError] = useState(false)
     const [tagList, updateTagList] = useState([])
+    const [attachmentName, updateAttachmentName] = useState("");
 
     const handleSubmitForm = (e) => {
         updateTime(new Date())
@@ -27,6 +28,8 @@ function NewPost(props) {
             time: time,
             isAnon: anonymous,
             tags: tagList,
+            attachment: attachment,
+            attachmentName: attachmentName,
         }
 
         API.createPost(post, contextState.roomKey)
@@ -63,7 +66,8 @@ function NewPost(props) {
     }
 
     const handleAttachment = (e) => {
-        updateAttachment(e.target.value);
+        updateAttachmentName(e.target.files[0].name)
+        updateAttachment(e.target.files[0]);
     }
 
     const handleAnonymousCheck = (e) => {

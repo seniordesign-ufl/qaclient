@@ -36,6 +36,26 @@ function PostSummary(props) {
         }
     }
 
+    function displayFile() {
+        if (props.post.attachment ==  null) {
+            return null;
+        }
+        else {
+            var ab = new ArrayBuffer(props.post.attachment.data.length);
+            var view = new Uint8Array(ab);
+            for (var i = 0; i < props.post.attachment.data.length; ++i) {
+                view[i] = props.post.attachment.data[i];
+            }
+            console.log(view);
+            const blob = new Blob([view]);
+            console.log(blob);
+            const fileDownloadURL = URL.createObjectURL(blob);
+            return (
+                <a download={props.post.attachmentName} href={fileDownloadURL}>{props.post.attachmentName}</a>
+            )
+        }
+    }
+
     return (
         <animated.div style={props.animated} className="m-4 py-4 postSummary shadow-md rounded-md border border-light">
             <div className="flex">
@@ -63,7 +83,11 @@ function PostSummary(props) {
                         <PostHeader post={props.post} />
                     </div>
                     <div className="divide-y">
-                        <div className="mx-4 my-2 break-all">{props.post.content}</div>
+                        <div className="mx-4 my-2 break-all">
+                            {props.post.content}
+                            <br />
+                            {displayFile()}
+                        </div>
                         <blockquote>
                             <div className="ml-2 mt-2">
                                 <div>

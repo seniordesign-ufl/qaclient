@@ -32,32 +32,35 @@ export default function EnterDisplayName(props) {
 
                 <div className="join-page ml-8 p-10">
                     <div className="">
-                        <p className="font-medium">You've been invited!</p>
-                        <h4 className="display-name font-bold text-3xl mb-10 text-gray-700">
-                            Join the Discussion Room
+                        <div>
+                            <p className="font-medium">You've been invited!</p>
+                            <h4 className="display-name font-bold text-3xl mb-10 text-gray-700">
+                                Join the Discussion Room
                         </h4>
-                        <form onSubmit={handleJoinClick}>
-                            <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
-                                Name <span className="required">*</span>
-                            </label>
-                            {contextState.kicked === true ?
-                                <h6>
-                                    Sorry you've been kicked by an admin! Please enter your name again to log back in!
-                    </h6> : null
-                            }
-                            <input
-                                type="text"
-                                id="displayName"
-                                placeholder="Enter Your Name"
-                                class="form-control"
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />{' '}
-                            <br />
-                            <button type="submit" className="btn btn-primary btn-lg generate-btn" onClick={handleJoinClick}>
-                                Join Room
-                    </button>
-                        </form>
+                            {contextState.kicked ? <h3 className="font-bold text-3xl mb-10 text-gray-700">You've been kicked! You can rejoin the room.</h3> : null}
+                            <form onSubmit={handleJoinClick}>
+                                <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                    Name
+                                </label>
+                                <input
+                                    type="text"
+                                    id="displayName"
+                                    className="form-control w-full"
+                                    aria-describedby="passwordHelpBlock"
+                                    placeholder="Enter Your Name"
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                                <br />
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-lg generate-btn"
+                                    onClick={handleJoinClick}
+                                >
+                                    Join Room
+                                        </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
