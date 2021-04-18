@@ -58,7 +58,7 @@ export default function EnterDisplayName(props) {
                                     onClick={handleJoinClick}
                                 >
                                     Join Room
-                                        </button>
+                                </button>
                             </form>
                         </div>
                     </div>

@@ -43,20 +43,20 @@ function Comment(props) {
         API.removeComment(removeComment, contextState.roomKey)
     }
 
-    function displayOptions () {
-        if(contextState.userId === props.comment.authorId || contextState.admins.includes(contextState.userId) === true)
-        {
-            return(
+    function displayOptions() {
+        if (
+            contextState.userId === props.comment.authorId ||
+            contextState.admins.includes(contextState.userId) === true
+        ) {
+            return (
                 <div className="float-right pt-2 pr-4">
                     <button className="w-8 h-8 flex btn-color rounded-md" onClick={handleShow}>
                         <IoClose className="flex-1 self-center" />
                     </button>
                 </div>
             )
-        }
-        else
-        {
-            return null;
+        } else {
+            return null
         }
     }
 

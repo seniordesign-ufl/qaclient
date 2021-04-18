@@ -37,21 +37,22 @@ function PostSummary(props) {
     }
 
     function displayFile() {
-        if (props.post.attachment ==  null) {
-            return null;
-        }
-        else {
-            var ab = new ArrayBuffer(props.post.attachment.data.length);
-            var view = new Uint8Array(ab);
+        if (props.post.attachment == null) {
+            return null
+        } else {
+            var ab = new ArrayBuffer(props.post.attachment.data.length)
+            var view = new Uint8Array(ab)
             for (var i = 0; i < props.post.attachment.data.length; ++i) {
-                view[i] = props.post.attachment.data[i];
+                view[i] = props.post.attachment.data[i]
             }
-            console.log(view);
-            const blob = new Blob([view]);
-            console.log(blob);
-            const fileDownloadURL = URL.createObjectURL(blob);
+            console.log(view)
+            const blob = new Blob([view])
+            console.log(blob)
+            const fileDownloadURL = URL.createObjectURL(blob)
             return (
-                <a download={props.post.attachmentName} href={fileDownloadURL}>{props.post.attachmentName}</a>
+                <a download={props.post.attachmentName} href={fileDownloadURL}>
+                    {props.post.attachmentName}
+                </a>
             )
         }
     }

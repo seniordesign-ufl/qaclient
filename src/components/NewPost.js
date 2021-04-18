@@ -12,10 +12,10 @@ function NewPost(props) {
     const [time, updateTime] = useState(new Date())
     const [anonymous, updateAnonymous] = useState(false)
     const [attachment, updateAttachment] = useState()
-    const [tag, updateTag] = useState("")
+    const [tag, updateTag] = useState('')
     const [displayError, updateDisplayError] = useState(false)
     const [tagList, updateTagList] = useState([])
-    const [attachmentName, updateAttachmentName] = useState("");
+    const [attachmentName, updateAttachmentName] = useState('')
 
     const handleSubmitForm = (e) => {
         updateTime(new Date())
@@ -37,60 +37,67 @@ function NewPost(props) {
     }
 
     function addTag() {
-        if (tag !== "" && tagList.length < 5) {
-            let newList = [...tagList];
-            newList.push(tag);
-            updateTagList(newList);
-            updateTag("");
-        }
-        else if (tagList.length >= 5) {
-            updateDisplayError(true);
+        if (tag !== '' && tagList.length < 5) {
+            let newList = [...tagList]
+            newList.push(tag)
+            updateTagList(newList)
+            updateTag('')
+        } else if (tagList.length >= 5) {
+            updateDisplayError(true)
         }
     }
 
     function removeTag(index) {
-        let newList = [...tagList];
-        newList.splice(index, 1);
-        updateTagList(newList);
+        let newList = [...tagList]
+        newList.splice(index, 1)
+        updateTagList(newList)
         updateDisplayError(false)
     }
 
     const handleTitleChange = (e) => {
-        updateTitle(e.target.value);
+        updateTitle(e.target.value)
     }
     const handleBodyChange = (e) => {
-        updateBody(e.target.value);
+        updateBody(e.target.value)
     }
     const handleTagChange = (e) => {
-        updateTag(e.target.value);
+        updateTag(e.target.value)
     }
 
     const handleAttachment = (e) => {
         updateAttachmentName(e.target.files[0].name)
-        updateAttachment(e.target.files[0]);
+        updateAttachment(e.target.files[0])
     }
 
     const handleAnonymousCheck = (e) => {
-        updateAnonymous(!anonymous);
+        updateAnonymous(!anonymous)
     }
 
     function mapTags() {
         return (
             <div className="inline-flex w-full text-lg font-extralight content-center mb-2">
-                {tagList.map((tag, i) =>
+                {tagList.map((tag, i) => (
                     <div className="mr-2 content-center" key={i}>
                         <Badge pill className="p-1.5" variant="secondary">
                             {tag}
-                            <button className="w-4 h-5 ml-1" onClick={() => removeTag(i)}>X</button>
+                            <button className="w-4 h-5 ml-1" onClick={() => removeTag(i)}>
+                                X
+                            </button>
                         </Badge>
                     </div>
-                )}
+                ))}
             </div>
         )
     }
 
     return (
-        <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.onHide}>
+        <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={props.show}
+            onHide={props.onHide}
+        >
             <Modal.Header closeButton onClick={props.onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">Create New Post</Modal.Title>
             </Modal.Header>
@@ -131,9 +138,17 @@ function NewPost(props) {
                                 onChange={handleTagChange}
                                 className="flex-1"
                             />
-                            <Button className="flex-none" style={{ backgroundColor: "#e98074", border: "none" }} onClick={() => addTag()}>+</Button>
+                            <Button
+                                className="flex-none"
+                                style={{ backgroundColor: '#e98074', border: 'none' }}
+                                onClick={() => addTag()}
+                            >
+                                +
+                            </Button>
                         </div>
-                        {displayError ? <p className="text-red-600">{"A post can only have a maximum of 5 tags"}</p> : null}
+                        {displayError ? (
+                            <p className="text-red-600">{'A post can only have a maximum of 5 tags'}</p>
+                        ) : null}
                         {tagList.length > 0 ? mapTags() : null}
                     </Form.Group>
                     <Form.Group controlId="post.attachments">
