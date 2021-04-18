@@ -63,14 +63,14 @@ function Landing(props) {
                             <h3 className="font-bold text-3xl mb-10 text-gray-700">Create a Discussion Room</h3>
                             <form onSubmit={handleGenerateClick}>
                                 <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
-                                    Display Name
+                                    Your Name
                                 </label>
                                 <input
                                     type="text"
                                     id="displayName"
                                     className="form-control w-full"
                                     aria-describedby="passwordHelpBlock"
-                                    placeholder="Enter Display Name"
+                                    placeholder="Enter Your Name"
                                     onChange={(e) => updateName(e.target.value)}
                                 />
                                 <label htmlFor="discussionName" className="float-left text-gray-700 text-md font-bold mt-2">
