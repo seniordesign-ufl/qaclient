@@ -1,8 +1,11 @@
 import { React, useContext, useEffect, useState } from 'react'
 import { API, AppContext } from '../AppContext'
 import { toast } from 'react-toastify'
+
 import Header from '../components/Header'
 import RoomIllustration from '../static/room_illustration.svg'
+
+import '../Styling/EnterDisplayName.css'
 
 export default function EnterDisplayName(props) {
     const { state: contextState, dispatch } = useContext(AppContext)
@@ -20,17 +23,20 @@ export default function EnterDisplayName(props) {
         <div>
             <Header roomKey={contextState.roomKey} />
             <div className="grid grid-cols-2 m-3">
-                <div className="landing-welcome ml-9 mt-8 p-10">
-                    <h3 className="font-bold text-6xl">Let's get talkin'!</h3>
+                <div className="ml-9 mt-8 p-10">
+                    <h3 className="font-bold text-6xl">Let's get talking!</h3>
                     <br />
                     <p className="font-medium text-lg">Introducing a new way to have live lecture discussion.</p>
                     <img className="mx-auto" src={RoomIllustration} />
                 </div>
 
-                <div className="landing-page ml-8 p-10">
+                <div className="join-page ml-8 p-10">
                     <div className="">
                         <div>
-                            <p className="font-medium">Join Your Discussion Room Here!</p>
+                            <p className="font-medium">You've been invited!</p>
+                            <h4 className="display-name font-bold text-3xl mb-10 text-gray-700">
+                                Join the Discussion Room
+                            </h4>
                             {contextState.kicked ? (
                                 <h3 className="font-bold text-3xl mb-10 text-gray-700">
                                     You've been kicked! You can rejoin the room.
@@ -41,7 +47,7 @@ export default function EnterDisplayName(props) {
                                     htmlFor="displayName"
                                     className="float-left text-gray-700 text-md font-bold mt-2"
                                 >
-                                    Display Name
+                                    Name
                                 </label>
                                 <input
                                     type="text"
