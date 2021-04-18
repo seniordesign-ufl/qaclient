@@ -20,9 +20,12 @@ export default function CommentList(props) {
     let posts = Array.from(contextState.posts)
 
     if (contextState.search_phrase !== '') {
-        posts = posts.filter((c) => c.title.includes(contextState.search_phrase) ||
-            c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined ||
-            c.content.includes(contextState.search_phrase))
+        posts = posts.filter(
+            (c) =>
+                c.title.includes(contextState.search_phrase) ||
+                c.tags.find((tag) => tag.includes(contextState.search_phrase)) !== undefined ||
+                c.content.includes(contextState.search_phrase)
+        )
     }
 
     if (contextState.filter_by === 'Popularity') {
@@ -66,10 +69,11 @@ export default function CommentList(props) {
             return (
                 <Row>
                     <h5 className="font-bold ml-3 text-gray-500">DISCUSSION</h5>
-                    {posts.length !== 0 ?
-                        nonPinnedPosts.map(({ item, props, key }) => (
-                            <PostSummary animated={props} post={item} key={key} />
-                        )) : null}
+                    {posts.length !== 0
+                        ? nonPinnedPosts.map(({ item, props, key }) => (
+                              <PostSummary animated={props} post={item} key={key} />
+                          ))
+                        : null}
                 </Row>
             )
         } else if (contextState.posts.length > 0) {
@@ -78,8 +82,7 @@ export default function CommentList(props) {
                     <h5 className="font-bold ml-3 text-gray-500">DISCUSSION</h5>
                 </Row>
             )
-        }
-        else {
+        } else {
             return <p>No Posts Available!</p>
         }
     }
@@ -89,7 +92,7 @@ export default function CommentList(props) {
             <div className="flex justify-between flex-col md:flex-row">
                 <div id="discussionHeader">
                     <h2 className="font-bold text-4xl pr-4">
-                        {contextState.discussionName !== '' ? contextState.discussionName : "Discussion"}{' '}
+                        {contextState.discussionName !== '' ? contextState.discussionName : 'Discussion'}{' '}
                         <div className="pl-2 inline">
                             <BsPerson className="text-base inline" />{' '}
                             <div className="text-base inline align-middle">{contextState.users.length}</div>

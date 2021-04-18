@@ -32,7 +32,7 @@ function Landing(props) {
         e.preventDefault()
         let emailInfo = {
             discussionName: discussionName,
-            email: email
+            email: email,
         }
         if (name) {
             dispatch({ type: 'update-name', displayName: name })
@@ -44,7 +44,7 @@ function Landing(props) {
     }
 
     function handleJoin(e) {
-        API.join(contextState.displayName, contextState.roomKey);
+        API.join(contextState.displayName, contextState.roomKey)
     }
     return (
         <div>
@@ -63,7 +63,10 @@ function Landing(props) {
                             <p className="font-medium">Try creating a discussion room!</p>
                             <h3 className="font-bold text-3xl mb-10 text-gray-700">Create a Discussion Room</h3>
                             <form onSubmit={handleGenerateClick}>
-                                <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                <label
+                                    htmlFor="displayName"
+                                    className="float-left text-gray-700 text-md font-bold mt-2"
+                                >
                                     Display Name
                                 </label>
                                 <input
@@ -74,7 +77,10 @@ function Landing(props) {
                                     placeholder="Enter Display Name"
                                     onChange={(e) => updateName(e.target.value)}
                                 />
-                                <label htmlFor="discussionName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                <label
+                                    htmlFor="discussionName"
+                                    className="float-left text-gray-700 text-md font-bold mt-2"
+                                >
                                     Discussion Name
                                 </label>
                                 <input
@@ -103,7 +109,7 @@ function Landing(props) {
                                     onClick={handleGenerateClick}
                                 >
                                     Generate Room
-                                        </button>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -141,7 +147,11 @@ function Copy(props) {
     }
     return (
         <>
-            <button onClick={doCopy} disabled={clicked} className={`p-2 ml-2 rounded-md copy-btn inline-flex ${clicked && 'clicked'}`}>
+            <button
+                onClick={doCopy}
+                disabled={clicked}
+                className={`p-2 ml-2 rounded-md copy-btn inline-flex ${clicked && 'clicked'}`}
+            >
                 {clicked ? (
                     <FaClipboardCheck className="flex-1 self-center" />
                 ) : (

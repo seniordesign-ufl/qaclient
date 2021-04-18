@@ -66,13 +66,13 @@ export default function DownloadTranscript(contextState) {
     })
 
     function tagsToString(index) {
-        let tagString = '';
-        let tags = contextState.posts[index].tags;
-        tagString += tags[0];
+        let tagString = ''
+        let tags = contextState.posts[index].tags
+        tagString += tags[0]
         for (let i = 1; i < tags.length; i++) {
-            tagString += ', ' + tags[i];
+            tagString += ', ' + tags[i]
         }
-        return tagString;
+        return tagString
     }
 
     const MyDocument = () => (
@@ -80,7 +80,7 @@ export default function DownloadTranscript(contextState) {
             <Page size="A4" style={styles.page}>
                 <View>
                     <View style={styles.header}>
-                        <Text>{contextState.discussionName !== '' ? contextState.discussionName : "Discussion"}</Text>
+                        <Text>{contextState.discussionName !== '' ? contextState.discussionName : 'Discussion'}</Text>
                     </View>
                     <View>
                         {console.log(contextState.posts)}
@@ -88,7 +88,9 @@ export default function DownloadTranscript(contextState) {
                             <View key={i} style={styles.post}>
                                 {console.log(post)}
                                 <Text style={styles.postHeader}>{post.title}</Text>
-                                {post.tags.length > 0 ? <Text style={styles.tags}>{'Tags: ' + tagsToString(i)}</Text> : null}
+                                {post.tags.length > 0 ? (
+                                    <Text style={styles.tags}>{'Tags: ' + tagsToString(i)}</Text>
+                                ) : null}
                                 <Text style={styles.postContent}>{'Description: ' + post.content}</Text>
                                 <Text style={styles.postAuthor}>
                                     {'-' + (post.isAnon ? 'Anonymous' : post.author) + '    '}
@@ -115,8 +117,9 @@ export default function DownloadTranscript(contextState) {
         </Document>
     )
 
-    pdf(<MyDocument />).toBlob().then((blob) => {
-        saveAs(blob, 'Discussion.pdf')
-    })
-
+    pdf(<MyDocument />)
+        .toBlob()
+        .then((blob) => {
+            saveAs(blob, 'Discussion.pdf')
+        })
 }

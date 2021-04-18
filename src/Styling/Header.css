@@ -6,11 +6,11 @@
 }
 
 .navbar-brand {
-    color: #F56F60;
+    color: #f56f60;
 }
 
 .navbar-brand:hover {
-    color: #F56F60;
+    color: #f56f60;
 }
 
 .search-input {
@@ -54,11 +54,10 @@
     text-align: center;
 }
 
-
 .lg-button {
     margin-left: 15px;
     margin-bottom: 15px;
-    background: #F56F60;
+    background: #f56f60;
     color: white;
     border-radius: 6px;
     padding: 15px 20px;
@@ -70,6 +69,10 @@
 }
 
 @keyframes fadeIn {
-0% {opacity:0;}
-100% {opacity:1;}
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

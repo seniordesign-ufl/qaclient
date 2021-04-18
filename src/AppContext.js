@@ -22,7 +22,7 @@ const INITIAL_STATE = {
     redirect: false,
 }
 const reducer = produce((draft, action) => {
-    console.log(action);
+    console.log(action)
     switch (action.type) {
         case 'join-room':
             draft.roomKey = action.roomKey
@@ -41,7 +41,7 @@ const reducer = produce((draft, action) => {
             break
         case 'update-admins':
             draft.admins = action.admins
-            draft.admin = draft.admins.includes(draft.userId);
+            draft.admin = draft.admins.includes(draft.userId)
             break
         case 'update-search':
             draft.search_phrase = action.search_phrase
@@ -60,8 +60,7 @@ const reducer = produce((draft, action) => {
             draft.discussionName = action.join.discussionName
             break
         case 'kicked':
-            if(draft.userId === action.kicked)
-            {
+            if (draft.userId === action.kicked) {
                 draft.kicked = true
                 draft.joinSuccess = false
                 draft.displayName = ''
@@ -70,11 +69,11 @@ const reducer = produce((draft, action) => {
         case 'remove-kicked':
             draft.kicked = false
             break
-        case "redirect":
-            draft.redirect = true;
+        case 'redirect':
+            draft.redirect = true
             break
-        case "redirect-false":
-            draft.redirect = false;
+        case 'redirect-false':
+            draft.redirect = false
             break
         default:
             console.log('Unknown case? (', action.type, ')')
@@ -91,7 +90,7 @@ export const API = {
         socket.emit('leave', { userName, groupID })
     },
     requestRoom: (emailInfo) => {
-        console.log(emailInfo);
+        console.log(emailInfo)
         socket.emit('request-room', { emailInfo })
     },
     createPost: (post, groupID) => {
@@ -122,44 +121,43 @@ export const API = {
         socket.emit('make-admin', { user, groupID })
     },
     demoteAdmin: (user, groupID) => {
-        socket.emit('demote-admin', {user, groupID})
+        socket.emit('demote-admin', { user, groupID })
     },
     kickUser: (user, groupID) => {
-        socket.emit('kick-user', {user, groupID})
-    }
+        socket.emit('kick-user', { user, groupID })
+    },
 }
 
 const socketEvents = (dispatch) => {
+    socket.on('token', (token) => {
+        console.log('New token', token)
+        localStorage.setItem('stjwt', token)
+    })
 
-    socket.on("token", (token) => {
-        console.log("New token", token);
-        localStorage.setItem("stjwt", token);
-    });
+    socket.on('client-id', (userId) => {
+        dispatch({ type: 'update-user-id', userId })
+    })
 
-    socket.on("client-id", (userId) => {
-        dispatch({ type: "update-user-id", userId });
-    });
-
-    socket.on("rejoin", (m) => {
+    socket.on('rejoin', (m) => {
         if (m.error) {
-            localStorage.removeItem("stjwt");
+            localStorage.removeItem('stjwt')
         } else {
-            API.join(m.username, m.groupID);
-            dispatch({ type: "join-room", roomKey: m.groupID })
-            dispatch({ type: "update-name", displayName: m.username });
-            dispatch({ type: "update-user-id", userId: m.client_id });
-            dispatch({ type: "redirect" })
-            toast.info("Rejoined previous room!");
+            API.join(m.username, m.groupID)
+            dispatch({ type: 'join-room', roomKey: m.groupID })
+            dispatch({ type: 'update-name', displayName: m.username })
+            dispatch({ type: 'update-user-id', userId: m.client_id })
+            dispatch({ type: 'redirect' })
+            toast.info('Rejoined previous room!')
         }
     })
 
     socket.on('join-successful', (discussionName) => {
         const join = {
             joinSuccess: true,
-            discussionName: discussionName
+            discussionName: discussionName,
         }
         dispatch({ type: 'join-successful', join })
-        console.log("join", discussionName)
+        console.log('join', discussionName)
     })
     socket.on('room-code', (roomCode) => {
         dispatch({ type: 'join-room', roomKey: roomCode })
@@ -177,14 +175,14 @@ const socketEvents = (dispatch) => {
         // console.log(contextState.posts)
     })
     socket.on('kicked', (userId) => {
-        dispatch({type: 'kicked', kicked: userId })
+        dispatch({ type: 'kicked', kicked: userId })
         // dispatch({type: 'join-successful', joinSuccess: false })
         // dispatch({type: 'update-name', displayName: ''})
-        console.log("User kicked! ID: " + userId)
+        console.log('User kicked! ID: ' + userId)
     })
     socket.on('get-admins', ({ groupID, admins }) => {
         dispatch({ type: 'update-admins', admins: admins })
-        console.log("Socket event update-admins: ", admins)
+        console.log('Socket event update-admins: ', admins)
     })
     socket.on('admin', () => {
         dispatch({ type: 'admin-granted' })
@@ -196,26 +194,26 @@ export const initSockets = (dispatch) => {
     console.log('init socket', process.env)
     socket = socketIOClient(process.env.REACT_APP_SIGNAL_URL)
     socketEvents(dispatch)
-    const token = localStorage.getItem("stjwt")
+    const token = localStorage.getItem('stjwt')
     if (token) {
-        socket.emit("rejoin", token)
+        socket.emit('rejoin', token)
     }
 }
 
 export function useAppState() {
     const context = React.useContext(AppContext)
     if (context === undefined) {
-        throw new Error("useAppState must be used within a AppContext Provider")
+        throw new Error('useAppState must be used within a AppContext Provider')
     }
-    return context.state;
+    return context.state
 }
 
 export function useDispatch() {
     const context = React.useContext(AppContext)
     if (context === undefined) {
-        throw new Error("useDispatch must be used within a AppContext Provider")
+        throw new Error('useDispatch must be used within a AppContext Provider')
     }
-    return context.dispatch;
+    return context.dispatch
 }
 
 export function ContextProvider({ init, children }) {

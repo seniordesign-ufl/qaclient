@@ -23,10 +23,13 @@ function Room(props) {
     return (
         <div className="room-page">
             {contextState.joinSuccess && <Header roomKey={contextState.roomKey} />}
-            {contextState.displayName !== null && contextState.joinSuccess ? <RoomHomeScreen /> : <EnterDisplayName {...props} />}
+            {contextState.displayName !== null && contextState.joinSuccess ? (
+                <RoomHomeScreen />
+            ) : (
+                <EnterDisplayName {...props} />
+            )}
         </div>
     )
-
 }
 
 export default Room

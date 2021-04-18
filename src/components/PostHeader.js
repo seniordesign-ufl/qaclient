@@ -50,8 +50,8 @@ function DisplaySolved(props) {
 function DisplayOptions(props) {
     const [show, setShow] = useState(false)
     const { state: contextState, dispatch } = useContext(AppContext)
-    const match = useRouteMatch();
-    const history = useHistory();
+    const match = useRouteMatch()
+    const history = useHistory()
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
     function handlePin() {
@@ -66,7 +66,7 @@ function DisplayOptions(props) {
     function handleSolved() {
         const postUpdate = {
             postID: props.post.id,
-            solved: !props.post.solved
+            solved: !props.post.solved,
         }
         API.updateSolved(postUpdate, contextState.roomKey)
     }
@@ -86,10 +86,10 @@ function DisplayOptions(props) {
                         Delete Post
                     </Dropdown.Item>
                     <Dropdown.Item value="pin-post" onClick={handlePin}>
-                        {(props.post.pinned === true) ? "Unpin Post" : "Pin Post"}
+                        {props.post.pinned === true ? 'Unpin Post' : 'Pin Post'}
                     </Dropdown.Item>
                     <Dropdown.Item value="solve-post" onClick={handleSolved}>
-                        {(props.post.solved === true) ? "Mark as Unsolved" : "Mark as Solved"}
+                        {props.post.solved === true ? 'Mark as Unsolved' : 'Mark as Solved'}
                     </Dropdown.Item>
                 </DropdownButton>
                 <Modal show={show} onHide={handleClose}>
@@ -152,13 +152,13 @@ export default function PostHeader(props) {
     function mapTags() {
         return (
             <div className="inline-flex w-full justify-end mr-3 text-lg font-extralight">
-                {props.post.tags.map((tag, i) =>
+                {props.post.tags.map((tag, i) => (
                     <div className="mr-2" key={i}>
                         <Badge pill className="px-2 py-1.5" variant="secondary">
                             {tag}
                         </Badge>
                     </div>
-                )}
+                ))}
             </div>
         )
     }

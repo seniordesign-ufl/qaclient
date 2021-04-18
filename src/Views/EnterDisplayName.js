@@ -11,8 +11,7 @@ export default function EnterDisplayName(props) {
         e.preventDefault()
         API.join(name, props.match.params.roomID)
         dispatch({ type: 'update-name', displayName: name })
-        if(contextState.kicked === true)
-        {
+        if (contextState.kicked === true) {
             dispatch({ type: 'remove-kicked' })
         }
     }
@@ -32,9 +31,16 @@ export default function EnterDisplayName(props) {
                     <div className="">
                         <div>
                             <p className="font-medium">Join Your Discussion Room Here!</p>
-                            {contextState.kicked ? <h3 className="font-bold text-3xl mb-10 text-gray-700">You've been kicked! You can rejoin the room.</h3> : null}
+                            {contextState.kicked ? (
+                                <h3 className="font-bold text-3xl mb-10 text-gray-700">
+                                    You've been kicked! You can rejoin the room.
+                                </h3>
+                            ) : null}
                             <form onSubmit={handleJoinClick}>
-                                <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                <label
+                                    htmlFor="displayName"
+                                    className="float-left text-gray-700 text-md font-bold mt-2"
+                                >
                                     Display Name
                                 </label>
                                 <input
@@ -53,7 +59,7 @@ export default function EnterDisplayName(props) {
                                     onClick={handleJoinClick}
                                 >
                                     Join Room
-                                        </button>
+                                </button>
                             </form>
                         </div>
                     </div>

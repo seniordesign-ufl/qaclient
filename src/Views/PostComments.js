@@ -16,7 +16,7 @@ function PostComments(props) {
     const postID = props.match.params.postID
     const post = contextState.posts.find((p) => p.id === postID)
     const [displayForm, setDisplayForm] = useState(false)
-    let comments = post && post.comments;
+    let comments = post && post.comments
 
     const transitions = useTransition(comments, (post) => post.id, {
         from: { transform: 'translate3d(0,-20%,0)', opacity: 0 },
@@ -58,8 +58,6 @@ function PostComments(props) {
         comments = temp
     }
 
-
-
     return (
         <Container>
             <Row>
@@ -87,7 +85,7 @@ function PostComments(props) {
                     </Row>
                 </div>
                 <div className="flex-1 overflow-y-auto">
-                    <div className="pl-4 mt-4 mx-4" style={{ height: "80vh" }}>
+                    <div className="pl-4 mt-4 mx-4" style={{ height: '80vh' }}>
                         {(comments.length &&
                             transitions.map(({ item, props, key }) => (
                                 <Comment animated={props} postID={post.id} comment={item} key={key} />
