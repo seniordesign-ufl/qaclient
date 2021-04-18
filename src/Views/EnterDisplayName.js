@@ -36,10 +36,17 @@ export default function EnterDisplayName(props) {
                             <p className="font-medium">You've been invited!</p>
                             <h4 className="display-name font-bold text-3xl mb-10 text-gray-700">
                                 Join the Discussion Room
-                        </h4>
-                            {contextState.kicked ? <h3 className="font-bold text-3xl mb-10 text-gray-700">You've been kicked! You can rejoin the room.</h3> : null}
+                            </h4>
+                            {contextState.kicked ? (
+                                <h3 className="font-bold text-3xl mb-10 text-gray-700">
+                                    You've been kicked! You can rejoin the room.
+                                </h3>
+                            ) : null}
                             <form onSubmit={handleJoinClick}>
-                                <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                <label
+                                    htmlFor="displayName"
+                                    className="float-left text-gray-700 text-md font-bold mt-2"
+                                >
                                     Name
                                 </label>
                                 <input
@@ -64,6 +71,6 @@ export default function EnterDisplayName(props) {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }

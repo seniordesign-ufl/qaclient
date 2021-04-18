@@ -12,9 +12,8 @@
 }
 
 .join-page p {
-    color: #F56F60;
+    color: #f56f60;
 }
-
 
 .display-name {
     margin-bottom: 5%;
@@ -28,7 +27,7 @@
 }
 
 .join-page .generate-btn {
-    background: #F56F60;
+    background: #f56f60;
     color: white;
     border-radius: 6px;
     padding: 5px 20px;

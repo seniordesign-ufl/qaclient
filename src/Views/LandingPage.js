@@ -62,7 +62,10 @@ function Landing(props) {
                         <div>
                             <h3 className="font-bold text-3xl mb-10 text-gray-700">Create a Discussion Room</h3>
                             <form onSubmit={handleGenerateClick}>
-                                <label htmlFor="displayName" className="float-left text-gray-700 text-md font-bold mt-2">
+                                <label
+                                    htmlFor="displayName"
+                                    className="float-left text-gray-700 text-md font-bold mt-2"
+                                >
                                     Your Name
                                 </label>
                                 <input
