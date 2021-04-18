@@ -31,7 +31,7 @@ function RouteToRoom() {
     const state = useAppState()
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch({ type: "redirect-false" })
+        dispatch({ type: 'redirect-false' })
     })
     return <Redirect to={`/room/${state.roomKey}`} />
 }
