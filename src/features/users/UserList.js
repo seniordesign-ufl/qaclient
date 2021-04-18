@@ -147,7 +147,6 @@ function UserList(props) {
         }
         else
         {
-            console.log("HERE")
             let temp = admins.shift()
             return (
                 <div className="w-full">
