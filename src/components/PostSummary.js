@@ -92,7 +92,7 @@ function PostSummary(props) {
                         <blockquote>
                             <div className="ml-2 mt-2">
                                 <div>
-                                    <footer className="blockquote-footer">
+                                    <footer className="blockquote-footer" title={contextState.admin ? props.post.author : ""}>
                                         {props.post.isAnon ? 'Anonymous' : props.post.author},{' '}
                                         {moment(props.post.time).fromNow()}
                                     </footer>
